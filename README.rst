@@ -9,8 +9,8 @@ Installation
 
 To build from source::
 
-    git clone https://github.com/kcleal/pywfa
-    cd pywfa/WFA2-lib && make && cd ..
+    git clone --recursive https://github.com/kcleal/pywfa
+    cd pywfa/pywfa/WFA2-lib && make && cd ..
     python setup.py install
 
 Overview
