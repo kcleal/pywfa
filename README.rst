@@ -47,17 +47,17 @@ Cigartuples follow the pysam convention:
      - 1
    * - D
      - 2
-   * - 3
-     - >
+   * - N
+     - 3
    * - S
      - 4
    * - H
      - 5
-   * - ?
+   * - =
      - 7
    * - X
      - 8
-   * - ?
+   * - B
      - 9
 
 For convenience, a results object can be obtained by calling with a pattern and text:
