@@ -77,9 +77,6 @@ For convenience, a results object can be obtained by calling with a pattern and 
     a(text, pattern)
 
 
-Supplying a pattern during initialization will cache the pattern
-
-
 To configure the `WaveFrontAligner`, options can be provided during initialization:
 
 
