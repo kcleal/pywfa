@@ -13,3 +13,4 @@ pywfa/WFA2-lib/bin
 pywfa/WFA2-lib/scripts
 pywfa/WFA2-lib/tools
 pywfa/WFA2-lib/bindings
+pywfa/__pycache__/
