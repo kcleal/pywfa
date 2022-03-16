@@ -108,7 +108,7 @@ cpdef clip_cigartuples(align_result, min_aligned_bases_left=5, min_aligned_bases
         return align_result
 
     cdef int i, j, start_l, end_l, left_clip, right_clip
-
+    i = 0
     text_start = 0
     pattern_start = 0
     for i in range(len(ct)):
@@ -128,6 +128,7 @@ cpdef clip_cigartuples(align_result, min_aligned_bases_left=5, min_aligned_bases
 
     text_end = align_result.text_length
     pattern_end = align_result.pattern_length
+    j = len(ct) - 1
     for j in range(len(ct) -1, -1, -1):
         if ct[j][0] == 0 :
             if ct[j][1] >= min_aligned_bases_right:
