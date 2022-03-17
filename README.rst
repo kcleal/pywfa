@@ -8,6 +8,10 @@ A python wrapper for wavefront alignment using `WFA2-lib
 Installation
 ------------
 
+To download from pypi::
+
+    pip install pywfa
+
 Build from source::
 
     git clone https://github.com/kcleal/pywfa
