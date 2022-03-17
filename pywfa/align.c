@@ -944,33 +944,34 @@ static const char *__pyx_f[] = {
 
 /*--- Type declarations ---*/
 struct __pyx_obj_5pywfa_5align_WavefrontAligner;
-struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align;
 struct __pyx_opt_args_5pywfa_5align_clip_cigartuples;
+struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align;
 
-/* "pywfa/align.pxd":13
- *     cpdef public int match_score, alignment_score
+/* "pywfa/align.pxd":5
  * 
- *     cpdef int wavefront_align(self, text, pattern=*)             # <<<<<<<<<<<<<<
+ * 
+ * cdef clip_cigartuples(object align_result, int min_aligned_bases_left=*, int min_aligned_bases_right=*)             # <<<<<<<<<<<<<<
+ * cdef elide_mismatches_from_cigar(object cigartuples)
+ * cdef cigartuples_to_str(object cigartuples)
+ */
+struct __pyx_opt_args_5pywfa_5align_clip_cigartuples {
+  int __pyx_n;
+  int min_aligned_bases_left;
+  int min_aligned_bases_right;
+};
+
+/* "pywfa/align.pxd":18
+ *     cdef public int match_score, alignment_score
+ * 
+ *     cdef int wavefront_align(self, text, pattern=*)             # <<<<<<<<<<<<<<
+ * 
  */
 struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align {
   int __pyx_n;
   PyObject *pattern;
 };
 
-/* "pywfa/align.pyx":99
- * 
- * 
- * cpdef clip_cigartuples(align_result, min_aligned_bases_left=5, min_aligned_bases_right=5):             # <<<<<<<<<<<<<<
- *     """Returns cigartuples with blocks of aligned bases < threshold removed from each end
- *     Returns
- */
-struct __pyx_opt_args_5pywfa_5align_clip_cigartuples {
-  int __pyx_n;
-  PyObject *min_aligned_bases_left;
-  PyObject *min_aligned_bases_right;
-};
-
-/* "pywfa/align.pxd":5
+/* "pywfa/align.pxd":10
  * 
  * 
  * cdef class WavefrontAligner:             # <<<<<<<<<<<<<<
@@ -990,7 +991,7 @@ struct __pyx_obj_5pywfa_5align_WavefrontAligner {
 
 
 
-/* "pywfa/align.pyx":205
+/* "pywfa/align.pyx":207
  * 
  * 
  * cdef class WavefrontAligner:             # <<<<<<<<<<<<<<
@@ -999,7 +1000,7 @@ struct __pyx_obj_5pywfa_5align_WavefrontAligner {
  */
 
 struct __pyx_vtabstruct_5pywfa_5align_WavefrontAligner {
-  int (*wavefront_align)(struct __pyx_obj_5pywfa_5align_WavefrontAligner *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args);
+  int (*wavefront_align)(struct __pyx_obj_5pywfa_5align_WavefrontAligner *, PyObject *, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args);
 };
 static struct __pyx_vtabstruct_5pywfa_5align_WavefrontAligner *__pyx_vtabptr_5pywfa_5align_WavefrontAligner;
 
@@ -1270,32 +1271,6 @@ static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int eq
 /* UnicodeEquals.proto */
 static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals);
 
-/* PyDictVersioning.proto */
-#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
-#define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
-#define __PYX_GET_DICT_VERSION(dict)  (((PyDictObject*)(dict))->ma_version_tag)
-#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)\
-    (version_var) = __PYX_GET_DICT_VERSION(dict);\
-    (cache_var) = (value);
-#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP) {\
-    static PY_UINT64_T __pyx_dict_version = 0;\
-    static PyObject *__pyx_dict_cached_value = NULL;\
-    if (likely(__PYX_GET_DICT_VERSION(DICT) == __pyx_dict_version)) {\
-        (VAR) = __pyx_dict_cached_value;\
-    } else {\
-        (VAR) = __pyx_dict_cached_value = (LOOKUP);\
-        __pyx_dict_version = __PYX_GET_DICT_VERSION(DICT);\
-    }\
-}
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj);
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj);
-static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version);
-#else
-#define __PYX_GET_DICT_VERSION(dict)  (0)
-#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)
-#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP)  (VAR) = (LOOKUP);
-#endif
-
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -1339,6 +1314,32 @@ static void __Pyx_WriteUnraisable(const char *name, int clineno,
 
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
+
+/* PyDictVersioning.proto */
+#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
+#define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
+#define __PYX_GET_DICT_VERSION(dict)  (((PyDictObject*)(dict))->ma_version_tag)
+#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)\
+    (version_var) = __PYX_GET_DICT_VERSION(dict);\
+    (cache_var) = (value);
+#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP) {\
+    static PY_UINT64_T __pyx_dict_version = 0;\
+    static PyObject *__pyx_dict_cached_value = NULL;\
+    if (likely(__PYX_GET_DICT_VERSION(DICT) == __pyx_dict_version)) {\
+        (VAR) = __pyx_dict_cached_value;\
+    } else {\
+        (VAR) = __pyx_dict_cached_value = (LOOKUP);\
+        __pyx_dict_version = __PYX_GET_DICT_VERSION(DICT);\
+    }\
+}
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj);
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj);
+static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version);
+#else
+#define __PYX_GET_DICT_VERSION(dict)  (0)
+#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)
+#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP)  (VAR) = (LOOKUP);
+#endif
 
 /* GetModuleGlobalName.proto */
 #if CYTHON_USE_DICT_VERSIONS
@@ -1538,10 +1539,13 @@ static CYTHON_INLINE int __Pyx_PyErr_GivenExceptionMatches2(PyObject *err, PyObj
 /* CheckBinaryVersion.proto */
 static int __Pyx_check_binary_version(void);
 
+/* FunctionExport.proto */
+static int __Pyx_ExportFunction(const char *name, void (*f)(void), const char *sig);
+
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, int __pyx_skip_dispatch, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args); /* proto*/
+static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args); /* proto*/
 
 /* Module declarations from 'pywfa' */
 
@@ -1556,9 +1560,8 @@ static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx
 /* Module declarations from 'pywfa.align' */
 static PyTypeObject *__pyx_ptype_5pywfa_5align_WavefrontAligner = 0;
 static int __pyx_v_5pywfa_5align_codes[89];
-static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_5pywfa_5align_clip_cigartuples *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *, int __pyx_skip_dispatch); /*proto*/
-static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *, struct __pyx_opt_args_5pywfa_5align_clip_cigartuples *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *); /*proto*/
 #define __Pyx_MODULE_NAME "pywfa.align"
 extern int __pyx_module_is_main_pywfa__align;
 int __pyx_module_is_main_pywfa__align = 0;
@@ -1661,7 +1664,6 @@ static const char __pyx_k_pattern_end[] = "pattern_end";
 static const char __pyx_k_pywfa_align[] = "pywfa.align";
 static const char __pyx_k_text_length[] = "text_length";
 static const char __pyx_k_tuple_cigar[] = "tuple_cigar";
-static const char __pyx_k_align_result[] = "align_result";
 static const char __pyx_k_aligned_text[] = "aligned_text";
 static const char __pyx_k_gap_opening2[] = "gap_opening2";
 static const char __pyx_k_gap_extension[] = "gap_extension";
@@ -1676,7 +1678,6 @@ static const char __pyx_k_pattern_is_None[] = "pattern is None";
 static const char __pyx_k_pywfa_align_pyx[] = "pywfa/align.pyx";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_text_begin_free[] = "text_begin_free";
-static const char __pyx_k_wavefront_align[] = "wavefront_align";
 static const char __pyx_k_WavefrontAligner[] = "WavefrontAligner";
 static const char __pyx_k_aligned_sequence[] = "aligned_sequence";
 static const char __pyx_k_clip_cigartuples[] = "clip_cigartuples";
@@ -1733,7 +1734,6 @@ static PyObject *__pyx_kp_u__3;
 static PyObject *__pyx_n_u_adaptive;
 static PyObject *__pyx_n_u_affine;
 static PyObject *__pyx_n_u_affine2p;
-static PyObject *__pyx_n_s_align_result;
 static PyObject *__pyx_n_s_aligned_pattern;
 static PyObject *__pyx_n_s_aligned_sequence;
 static PyObject *__pyx_n_s_aligned_text;
@@ -1838,31 +1838,26 @@ static PyObject *__pyx_n_s_text_start;
 static PyObject *__pyx_n_s_tl;
 static PyObject *__pyx_n_s_ts;
 static PyObject *__pyx_n_s_tuple_cigar;
-static PyObject *__pyx_n_s_wavefront_align;
 static PyObject *__pyx_n_s_xdrop;
 static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_pl, PyObject *__pyx_v_tl, PyObject *__pyx_v_ps, PyObject *__pyx_v_pe, PyObject *__pyx_v_ts, PyObject *__pyx_v_te, PyObject *__pyx_v_ct, PyObject *__pyx_v_s, PyObject *__pyx_v_p, PyObject *__pyx_v_t, PyObject *__pyx_v_status); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_2__repr__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_sequence, PyObject *__pyx_v_tuple_cigar, PyObject *__pyx_v_begin, PyObject *__pyx_v_end, PyObject *__pyx_v_gap_type); /* proto */
-static PyObject *__pyx_pf_5pywfa_5align_clip_cigartuples(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_align_result, PyObject *__pyx_v_min_aligned_bases_left, PyObject *__pyx_v_min_aligned_bases_right); /* proto */
-static PyObject *__pyx_pf_5pywfa_5align_2elide_mismatches_from_cigar(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cigartuples); /* proto */
-static PyObject *__pyx_pf_5pywfa_5align_4cigartuples_to_str(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cigartuples); /* proto */
 static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_pattern, PyObject *__pyx_v_distance, int __pyx_v_match, int __pyx_v_mismatch, int __pyx_v_gap_opening, int __pyx_v_gap_extension, int __pyx_v_gap_opening2, int __pyx_v_gap_extension2, PyObject *__pyx_v_scope, PyObject *__pyx_v_span, int __pyx_v_pattern_begin_free, int __pyx_v_pattern_end_free, int __pyx_v_text_begin_free, int __pyx_v_text_end_free, PyObject *__pyx_v_heuristic, int __pyx_v_min_wavefront_length, int __pyx_v_max_distance_threshold, int __pyx_v_steps_between_cutoffs, int __pyx_v_xdrop); /* proto */
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_2wavefront_align(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, PyObject *__pyx_v_pattern); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_6status___get__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_5score___get__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, PyObject *__pyx_v_pattern, PyObject *__pyx_v_clip_cigar, PyObject *__pyx_v_min_aligned_bases_left, PyObject *__pyx_v_min_aligned_bases_right, PyObject *__pyx_v_elide_mismatches, PyObject *__pyx_v_supress_sequences); /* proto */
-static void __pyx_pf_5pywfa_5align_16WavefrontAligner_6__dealloc__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_2__call__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, PyObject *__pyx_v_pattern, PyObject *__pyx_v_clip_cigar, PyObject *__pyx_v_min_aligned_bases_left, PyObject *__pyx_v_min_aligned_bases_right, PyObject *__pyx_v_elide_mismatches, PyObject *__pyx_v_supress_sequences); /* proto */
+static void __pyx_pf_5pywfa_5align_16WavefrontAligner_4__dealloc__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11match_score___get__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
 static int __pyx_pf_5pywfa_5align_16WavefrontAligner_11match_score_2__set__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_15alignment_score___get__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
 static int __pyx_pf_5pywfa_5align_16WavefrontAligner_15alignment_score_2__set__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_5pywfa_5align_WavefrontAligner(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
@@ -1885,7 +1880,7 @@ static PyObject *__pyx_codeobj__14;
 static PyObject *__pyx_codeobj__16;
 /* Late includes */
 
-/* "pywfa/align.pyx":31
+/* "pywfa/align.pyx":32
  *     text: str
  *     status: int
  *     def __init__(self, pl, tl, ps, pe, ts, te, ct, s, p, t, status):             # <<<<<<<<<<<<<<
@@ -1958,71 +1953,71 @@ static PyObject *__pyx_pw_5pywfa_5align_15AlignmentResult_1__init__(PyObject *__
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pl)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 1); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 1); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_tl)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 2); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 2); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ps)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 3); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 3); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pe)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 4); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 4); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ts)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 5); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 5); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_te)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 6); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 6); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ct)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 7); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 7); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 8); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 8); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_p)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 9); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 9); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 10); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 10); __PYX_ERR(0, 32, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_status)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 11); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, 11); __PYX_ERR(0, 32, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 31, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 32, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 12) {
       goto __pyx_L5_argtuple_error;
@@ -2055,7 +2050,7 @@ static PyObject *__pyx_pw_5pywfa_5align_15AlignmentResult_1__init__(PyObject *__
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 31, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 12, 12, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 32, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pywfa.align.AlignmentResult.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2076,106 +2071,106 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult___init__(CYTHON_UNUSED
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "pywfa/align.pyx":32
+  /* "pywfa/align.pyx":33
  *     status: int
  *     def __init__(self, pl, tl, ps, pe, ts, te, ct, s, p, t, status):
  *         self.pattern_length = pl             # <<<<<<<<<<<<<<
  *         self.text_length = tl
  *         self.pattern_start = ps
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern_length, __pyx_v_pl) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern_length, __pyx_v_pl) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":33
+  /* "pywfa/align.pyx":34
  *     def __init__(self, pl, tl, ps, pe, ts, te, ct, s, p, t, status):
  *         self.pattern_length = pl
  *         self.text_length = tl             # <<<<<<<<<<<<<<
  *         self.pattern_start = ps
  *         self.pattern_end = pe
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text_length, __pyx_v_tl) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text_length, __pyx_v_tl) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":34
+  /* "pywfa/align.pyx":35
  *         self.pattern_length = pl
  *         self.text_length = tl
  *         self.pattern_start = ps             # <<<<<<<<<<<<<<
  *         self.pattern_end = pe
  *         self.text_start = ts
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern_start, __pyx_v_ps) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern_start, __pyx_v_ps) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":35
+  /* "pywfa/align.pyx":36
  *         self.text_length = tl
  *         self.pattern_start = ps
  *         self.pattern_end = pe             # <<<<<<<<<<<<<<
  *         self.text_start = ts
  *         self.text_end = te
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern_end, __pyx_v_pe) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern_end, __pyx_v_pe) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":36
+  /* "pywfa/align.pyx":37
  *         self.pattern_start = ps
  *         self.pattern_end = pe
  *         self.text_start = ts             # <<<<<<<<<<<<<<
  *         self.text_end = te
  *         self.cigartuples = ct
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text_start, __pyx_v_ts) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text_start, __pyx_v_ts) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":37
+  /* "pywfa/align.pyx":38
  *         self.pattern_end = pe
  *         self.text_start = ts
  *         self.text_end = te             # <<<<<<<<<<<<<<
  *         self.cigartuples = ct
  *         self.score = s
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text_end, __pyx_v_te) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text_end, __pyx_v_te) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":38
+  /* "pywfa/align.pyx":39
  *         self.text_start = ts
  *         self.text_end = te
  *         self.cigartuples = ct             # <<<<<<<<<<<<<<
  *         self.score = s
  *         self.pattern = p
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_cigartuples, __pyx_v_ct) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_cigartuples, __pyx_v_ct) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":39
+  /* "pywfa/align.pyx":40
  *         self.text_end = te
  *         self.cigartuples = ct
  *         self.score = s             # <<<<<<<<<<<<<<
  *         self.pattern = p
  *         self.text = t
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_score, __pyx_v_s) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_score, __pyx_v_s) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":40
+  /* "pywfa/align.pyx":41
  *         self.cigartuples = ct
  *         self.score = s
  *         self.pattern = p             # <<<<<<<<<<<<<<
  *         self.text = t
  *         self.status = status
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern, __pyx_v_p) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pattern, __pyx_v_p) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":41
+  /* "pywfa/align.pyx":42
  *         self.score = s
  *         self.pattern = p
  *         self.text = t             # <<<<<<<<<<<<<<
  *         self.status = status
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text, __pyx_v_t) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_text, __pyx_v_t) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":42
+  /* "pywfa/align.pyx":43
  *         self.pattern = p
  *         self.text = t
  *         self.status = status             # <<<<<<<<<<<<<<
  * 
  *     def __repr__(self):
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_status, __pyx_v_status) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_status, __pyx_v_status) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":31
+  /* "pywfa/align.pyx":32
  *     text: str
  *     status: int
  *     def __init__(self, pl, tl, ps, pe, ts, te, ct, s, p, t, status):             # <<<<<<<<<<<<<<
@@ -2195,7 +2190,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult___init__(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":44
+/* "pywfa/align.pyx":45
  *         self.status = status
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -2227,7 +2222,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_2__repr__(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__repr__", 0);
 
-  /* "pywfa/align.pyx":45
+  /* "pywfa/align.pyx":46
  * 
  *     def __repr__(self):
  *         return str(self.__dict__)             # <<<<<<<<<<<<<<
@@ -2235,16 +2230,16 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_2__repr__(CYTHON_UNUSE
  *     @property
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":44
+  /* "pywfa/align.pyx":45
  *         self.status = status
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -2264,7 +2259,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_2__repr__(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":48
+/* "pywfa/align.pyx":49
  * 
  *     @property
  *     def aligned_pattern(self):             # <<<<<<<<<<<<<<
@@ -2305,20 +2300,20 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("aligned_pattern", 0);
 
-  /* "pywfa/align.pyx":59
+  /* "pywfa/align.pyx":60
  *         object was created
  *         """
  *         if self.pattern:             # <<<<<<<<<<<<<<
  *             return self._get_aligned_sequence(self.pattern,
  *                                               self.cigartuples,
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pywfa/align.pyx":60
+    /* "pywfa/align.pyx":61
  *         """
  *         if self.pattern:
  *             return self._get_aligned_sequence(self.pattern,             # <<<<<<<<<<<<<<
@@ -2326,31 +2321,31 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
  *                                               self.pattern_start, self.pattern_end,
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_aligned_sequence); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_aligned_sequence); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
 
-    /* "pywfa/align.pyx":61
+    /* "pywfa/align.pyx":62
  *         if self.pattern:
  *             return self._get_aligned_sequence(self.pattern,
  *                                               self.cigartuples,             # <<<<<<<<<<<<<<
  *                                               self.pattern_start, self.pattern_end,
  *                                               "D")
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
 
-    /* "pywfa/align.pyx":62
+    /* "pywfa/align.pyx":63
  *             return self._get_aligned_sequence(self.pattern,
  *                                               self.cigartuples,
  *                                               self.pattern_start, self.pattern_end,             # <<<<<<<<<<<<<<
  *                                               "D")
  * 
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern_start); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern_start); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern_end); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pattern_end); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_8 = NULL;
     __pyx_t_9 = 0;
@@ -2367,7 +2362,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[6] = {__pyx_t_8, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_n_u_D};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2379,7 +2374,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[6] = {__pyx_t_8, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_n_u_D};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2389,7 +2384,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(5+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(5+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       if (__pyx_t_8) {
         __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -2409,7 +2404,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
       __pyx_t_5 = 0;
       __pyx_t_6 = 0;
       __pyx_t_7 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
@@ -2418,7 +2413,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":59
+    /* "pywfa/align.pyx":60
  *         object was created
  *         """
  *         if self.pattern:             # <<<<<<<<<<<<<<
@@ -2427,7 +2422,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
  */
   }
 
-  /* "pywfa/align.pyx":48
+  /* "pywfa/align.pyx":49
  * 
  *     @property
  *     def aligned_pattern(self):             # <<<<<<<<<<<<<<
@@ -2455,7 +2450,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_4aligned_pattern(CYTHO
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":66
+/* "pywfa/align.pyx":67
  * 
  *     @property
  *     def aligned_text(self):             # <<<<<<<<<<<<<<
@@ -2496,20 +2491,20 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("aligned_text", 0);
 
-  /* "pywfa/align.pyx":77
+  /* "pywfa/align.pyx":78
  *         object was created
  *         """
  *         if self.text:             # <<<<<<<<<<<<<<
  *             return self._get_aligned_sequence(self.text,
  *                                               self.cigartuples,
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pywfa/align.pyx":78
+    /* "pywfa/align.pyx":79
  *         """
  *         if self.text:
  *             return self._get_aligned_sequence(self.text,             # <<<<<<<<<<<<<<
@@ -2517,39 +2512,39 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
  *                                               self.text_start,
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_aligned_sequence); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_aligned_sequence); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
 
-    /* "pywfa/align.pyx":79
+    /* "pywfa/align.pyx":80
  *         if self.text:
  *             return self._get_aligned_sequence(self.text,
  *                                               self.cigartuples,             # <<<<<<<<<<<<<<
  *                                               self.text_start,
  *                                               self.text_end,
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
 
-    /* "pywfa/align.pyx":80
+    /* "pywfa/align.pyx":81
  *             return self._get_aligned_sequence(self.text,
  *                                               self.cigartuples,
  *                                               self.text_start,             # <<<<<<<<<<<<<<
  *                                               self.text_end,
  *                                               "I")
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text_start); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 80, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text_start); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
 
-    /* "pywfa/align.pyx":81
+    /* "pywfa/align.pyx":82
  *                                               self.cigartuples,
  *                                               self.text_start,
  *                                               self.text_end,             # <<<<<<<<<<<<<<
  *                                               "I")
  * 
  */
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text_end); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_text_end); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_8 = NULL;
     __pyx_t_9 = 0;
@@ -2566,7 +2561,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[6] = {__pyx_t_8, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_n_u_I};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2578,7 +2573,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[6] = {__pyx_t_8, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_n_u_I};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 5+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2588,7 +2583,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(5+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(5+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       if (__pyx_t_8) {
         __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -2608,7 +2603,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
       __pyx_t_5 = 0;
       __pyx_t_6 = 0;
       __pyx_t_7 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
@@ -2617,7 +2612,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":77
+    /* "pywfa/align.pyx":78
  *         object was created
  *         """
  *         if self.text:             # <<<<<<<<<<<<<<
@@ -2626,7 +2621,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
  */
   }
 
-  /* "pywfa/align.pyx":66
+  /* "pywfa/align.pyx":67
  * 
  *     @property
  *     def aligned_text(self):             # <<<<<<<<<<<<<<
@@ -2654,7 +2649,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_6aligned_text(CYTHON_U
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":84
+/* "pywfa/align.pyx":85
  *                                               "I")
  * 
  *     def _get_aligned_sequence(self, sequence, tuple_cigar, begin, end,             # <<<<<<<<<<<<<<
@@ -2709,35 +2704,35 @@ static PyObject *__pyx_pw_5pywfa_5align_15AlignmentResult_9_get_aligned_sequence
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_sequence)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 1); __PYX_ERR(0, 84, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 1); __PYX_ERR(0, 85, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_tuple_cigar)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 2); __PYX_ERR(0, 84, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 2); __PYX_ERR(0, 85, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_begin)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 3); __PYX_ERR(0, 84, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 3); __PYX_ERR(0, 85, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_end)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 4); __PYX_ERR(0, 84, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 4); __PYX_ERR(0, 85, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_gap_type)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 5); __PYX_ERR(0, 84, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, 5); __PYX_ERR(0, 85, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_get_aligned_sequence") < 0)) __PYX_ERR(0, 84, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_get_aligned_sequence") < 0)) __PYX_ERR(0, 85, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -2758,7 +2753,7 @@ static PyObject *__pyx_pw_5pywfa_5align_15AlignmentResult_9_get_aligned_sequence
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 84, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_get_aligned_sequence", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 85, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pywfa.align.AlignmentResult._get_aligned_sequence", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2793,31 +2788,31 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_get_aligned_sequence", 0);
 
-  /* "pywfa/align.pyx":86
+  /* "pywfa/align.pyx":87
  *     def _get_aligned_sequence(self, sequence, tuple_cigar, begin, end,
  *                               gap_type):
  *         aligned_sequence = []             # <<<<<<<<<<<<<<
  *         seq = sequence[begin:end]
  *         index = 0
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_aligned_sequence = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":87
+  /* "pywfa/align.pyx":88
  *                               gap_type):
  *         aligned_sequence = []
  *         seq = sequence[begin:end]             # <<<<<<<<<<<<<<
  *         index = 0
  *         for length, mid in tuple_cigar:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_v_sequence, 0, 0, &__pyx_v_begin, &__pyx_v_end, NULL, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_v_sequence, 0, 0, &__pyx_v_begin, &__pyx_v_end, NULL, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_seq = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":88
+  /* "pywfa/align.pyx":89
  *         aligned_sequence = []
  *         seq = sequence[begin:end]
  *         index = 0             # <<<<<<<<<<<<<<
@@ -2827,7 +2822,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_index = __pyx_int_0;
 
-  /* "pywfa/align.pyx":89
+  /* "pywfa/align.pyx":90
  *         seq = sequence[begin:end]
  *         index = 0
  *         for length, mid in tuple_cigar:             # <<<<<<<<<<<<<<
@@ -2838,26 +2833,26 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
     __pyx_t_1 = __pyx_v_tuple_cigar; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_tuple_cigar); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_tuple_cigar); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 89, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 90, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 89, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 89, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 90, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 89, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -2867,7 +2862,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 89, __pyx_L1_error)
+          else __PYX_ERR(0, 90, __pyx_L1_error)
         }
         break;
       }
@@ -2879,7 +2874,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 89, __pyx_L1_error)
+        __PYX_ERR(0, 90, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -2892,15 +2887,15 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
       __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(__pyx_t_6);
       #else
-      __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       #endif
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_7 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_7 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_8 = Py_TYPE(__pyx_t_7)->tp_iternext;
@@ -2908,7 +2903,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
       __Pyx_GOTREF(__pyx_t_5);
       index = 1; __pyx_t_6 = __pyx_t_8(__pyx_t_7); if (unlikely(!__pyx_t_6)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_6);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 2) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 2) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
       __pyx_t_8 = NULL;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       goto __pyx_L6_unpacking_done;
@@ -2916,7 +2911,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_8 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 89, __pyx_L1_error)
+      __PYX_ERR(0, 90, __pyx_L1_error)
       __pyx_L6_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_length, __pyx_t_5);
@@ -2924,39 +2919,39 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
     __Pyx_XDECREF_SET(__pyx_v_mid, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "pywfa/align.pyx":90
+    /* "pywfa/align.pyx":91
  *         index = 0
  *         for length, mid in tuple_cigar:
  *             if mid == gap_type:             # <<<<<<<<<<<<<<
  *                 aligned_sequence += ['-' * length]
  *             else:
  */
-    __pyx_t_4 = PyObject_RichCompare(__pyx_v_mid, __pyx_v_gap_type, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
-    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __pyx_t_4 = PyObject_RichCompare(__pyx_v_mid, __pyx_v_gap_type, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_9) {
 
-      /* "pywfa/align.pyx":91
+      /* "pywfa/align.pyx":92
  *         for length, mid in tuple_cigar:
  *             if mid == gap_type:
  *                 aligned_sequence += ['-' * length]             # <<<<<<<<<<<<<<
  *             else:
  *                 aligned_sequence += [seq[index:index + length]]
  */
-      __pyx_t_4 = PyNumber_Multiply(__pyx_kp_u_, __pyx_v_length); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_Multiply(__pyx_kp_u_, __pyx_v_length); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L1_error)
+      __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_4);
       PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_v_aligned_sequence, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_v_aligned_sequence, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF_SET(__pyx_v_aligned_sequence, ((PyObject*)__pyx_t_4));
       __pyx_t_4 = 0;
 
-      /* "pywfa/align.pyx":90
+      /* "pywfa/align.pyx":91
  *         index = 0
  *         for length, mid in tuple_cigar:
  *             if mid == gap_type:             # <<<<<<<<<<<<<<
@@ -2966,7 +2961,7 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
       goto __pyx_L7;
     }
 
-    /* "pywfa/align.pyx":93
+    /* "pywfa/align.pyx":94
  *                 aligned_sequence += ['-' * length]
  *             else:
  *                 aligned_sequence += [seq[index:index + length]]             # <<<<<<<<<<<<<<
@@ -2974,37 +2969,37 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
  *         aligned_sequence += [seq[index:end - begin]]
  */
     /*else*/ {
-      __pyx_t_4 = PyNumber_Add(__pyx_v_index, __pyx_v_length); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 93, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_Add(__pyx_v_index, __pyx_v_length); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 94, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_seq, 0, 0, &__pyx_v_index, &__pyx_t_4, NULL, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 93, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_seq, 0, 0, &__pyx_v_index, &__pyx_t_4, NULL, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 94, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 93, __pyx_L1_error)
+      __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 94, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_6);
       PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_6);
       __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_aligned_sequence, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 93, __pyx_L1_error)
+      __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_aligned_sequence, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 94, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF_SET(__pyx_v_aligned_sequence, ((PyObject*)__pyx_t_6));
       __pyx_t_6 = 0;
 
-      /* "pywfa/align.pyx":94
+      /* "pywfa/align.pyx":95
  *             else:
  *                 aligned_sequence += [seq[index:index + length]]
  *                 index += length             # <<<<<<<<<<<<<<
  *         aligned_sequence += [seq[index:end - begin]]
  *         return "".join(aligned_sequence)
  */
-      __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_index, __pyx_v_length); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 94, __pyx_L1_error)
+      __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_index, __pyx_v_length); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 95, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF_SET(__pyx_v_index, __pyx_t_6);
       __pyx_t_6 = 0;
     }
     __pyx_L7:;
 
-    /* "pywfa/align.pyx":89
+    /* "pywfa/align.pyx":90
  *         seq = sequence[begin:end]
  *         index = 0
  *         for length, mid in tuple_cigar:             # <<<<<<<<<<<<<<
@@ -3014,30 +3009,30 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":95
+  /* "pywfa/align.pyx":96
  *                 aligned_sequence += [seq[index:index + length]]
  *                 index += length
  *         aligned_sequence += [seq[index:end - begin]]             # <<<<<<<<<<<<<<
  *         return "".join(aligned_sequence)
  * 
  */
-  __pyx_t_1 = PyNumber_Subtract(__pyx_v_end, __pyx_v_begin); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Subtract(__pyx_v_end, __pyx_v_begin); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_seq, 0, 0, &__pyx_v_index, &__pyx_t_1, NULL, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_seq, 0, 0, &__pyx_v_index, &__pyx_t_1, NULL, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_6);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_aligned_sequence, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_aligned_sequence, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_aligned_sequence, ((PyObject*)__pyx_t_6));
   __pyx_t_6 = 0;
 
-  /* "pywfa/align.pyx":96
+  /* "pywfa/align.pyx":97
  *                 index += length
  *         aligned_sequence += [seq[index:end - begin]]
  *         return "".join(aligned_sequence)             # <<<<<<<<<<<<<<
@@ -3045,13 +3040,13 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_6 = PyUnicode_Join(__pyx_kp_u__2, __pyx_v_aligned_sequence); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_6 = PyUnicode_Join(__pyx_kp_u__2, __pyx_v_aligned_sequence); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_r = __pyx_t_6;
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":84
+  /* "pywfa/align.pyx":85
  *                                               "I")
  * 
  *     def _get_aligned_sequence(self, sequence, tuple_cigar, begin, end,             # <<<<<<<<<<<<<<
@@ -3079,18 +3074,17 @@ static PyObject *__pyx_pf_5pywfa_5align_15AlignmentResult_8_get_aligned_sequence
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":99
+/* "pywfa/align.pyx":100
  * 
  * 
- * cpdef clip_cigartuples(align_result, min_aligned_bases_left=5, min_aligned_bases_right=5):             # <<<<<<<<<<<<<<
+ * cdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min_aligned_bases_right=5):             # <<<<<<<<<<<<<<
  *     """Returns cigartuples with blocks of aligned bases < threshold removed from each end
  *     Returns
  */
 
-static PyObject *__pyx_pw_5pywfa_5align_1clip_cigartuples(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_result, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_5pywfa_5align_clip_cigartuples *__pyx_optional_args) {
-  PyObject *__pyx_v_min_aligned_bases_left = ((PyObject *)__pyx_int_5);
-  PyObject *__pyx_v_min_aligned_bases_right = ((PyObject *)__pyx_int_5);
+static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_result, struct __pyx_opt_args_5pywfa_5align_clip_cigartuples *__pyx_optional_args) {
+  int __pyx_v_min_aligned_bases_left = ((int)5);
+  int __pyx_v_min_aligned_bases_right = ((int)5);
   PyObject *__pyx_v_ct = NULL;
   int __pyx_v_i;
   int __pyx_v_j;
@@ -3108,7 +3102,8 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   Py_ssize_t __pyx_t_5;
   int __pyx_t_6;
   PyObject *__pyx_t_7 = NULL;
-  int __pyx_t_8;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_t_9;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3122,30 +3117,30 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
     }
   }
 
-  /* "pywfa/align.pyx":106
+  /* "pywfa/align.pyx":107
  *         cigartuples
  *     """
  *     ct = align_result.cigartuples             # <<<<<<<<<<<<<<
  *     if not ct:
  *         return align_result
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 106, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ct = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":107
+  /* "pywfa/align.pyx":108
  *     """
  *     ct = align_result.cigartuples
  *     if not ct:             # <<<<<<<<<<<<<<
  *         return align_result
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ct); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ct); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 108, __pyx_L1_error)
   __pyx_t_3 = ((!__pyx_t_2) != 0);
   if (__pyx_t_3) {
 
-    /* "pywfa/align.pyx":108
+    /* "pywfa/align.pyx":109
  *     ct = align_result.cigartuples
  *     if not ct:
  *         return align_result             # <<<<<<<<<<<<<<
@@ -3157,7 +3152,7 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
     __pyx_r = __pyx_v_align_result;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":107
+    /* "pywfa/align.pyx":108
  *     """
  *     ct = align_result.cigartuples
  *     if not ct:             # <<<<<<<<<<<<<<
@@ -3167,8 +3162,17 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   }
 
   /* "pywfa/align.pyx":112
- *     cdef int i, j, start_l, end_l, left_clip, right_clip
  * 
+ *     cdef int i, j, start_l, end_l, left_clip, right_clip
+ *     i = 0             # <<<<<<<<<<<<<<
+ *     text_start = 0
+ *     pattern_start = 0
+ */
+  __pyx_v_i = 0;
+
+  /* "pywfa/align.pyx":113
+ *     cdef int i, j, start_l, end_l, left_clip, right_clip
+ *     i = 0
  *     text_start = 0             # <<<<<<<<<<<<<<
  *     pattern_start = 0
  *     for i in range(len(ct)):
@@ -3176,8 +3180,8 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_text_start = __pyx_int_0;
 
-  /* "pywfa/align.pyx":113
- * 
+  /* "pywfa/align.pyx":114
+ *     i = 0
  *     text_start = 0
  *     pattern_start = 0             # <<<<<<<<<<<<<<
  *     for i in range(len(ct)):
@@ -3186,56 +3190,59 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_pattern_start = __pyx_int_0;
 
-  /* "pywfa/align.pyx":114
+  /* "pywfa/align.pyx":115
  *     text_start = 0
  *     pattern_start = 0
  *     for i in range(len(ct)):             # <<<<<<<<<<<<<<
  *         if ct[i][0] == 0:
  *             if ct[i][1] >= min_aligned_bases_left:
  */
-  __pyx_t_4 = PyObject_Length(__pyx_v_ct); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_ct); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 115, __pyx_L1_error)
   __pyx_t_5 = __pyx_t_4;
   for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
     __pyx_v_i = __pyx_t_6;
 
-    /* "pywfa/align.pyx":115
+    /* "pywfa/align.pyx":116
  *     pattern_start = 0
  *     for i in range(len(ct)):
  *         if ct[i][0] == 0:             # <<<<<<<<<<<<<<
  *             if ct[i][1] >= min_aligned_bases_left:
  *                 break
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":116
+      /* "pywfa/align.pyx":117
  *     for i in range(len(ct)):
  *         if ct[i][0] == 0:
  *             if ct[i][1] >= min_aligned_bases_left:             # <<<<<<<<<<<<<<
  *                 break
  *             else:
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyObject_RichCompare(__pyx_t_7, __pyx_v_min_aligned_bases_left, Py_GE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_min_aligned_bases_left); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_8 = PyObject_RichCompare(__pyx_t_7, __pyx_t_1, Py_GE); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 116, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       if (__pyx_t_3) {
 
-        /* "pywfa/align.pyx":117
+        /* "pywfa/align.pyx":118
  *         if ct[i][0] == 0:
  *             if ct[i][1] >= min_aligned_bases_left:
  *                 break             # <<<<<<<<<<<<<<
@@ -3244,7 +3251,7 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  */
         goto __pyx_L5_break;
 
-        /* "pywfa/align.pyx":116
+        /* "pywfa/align.pyx":117
  *     for i in range(len(ct)):
  *         if ct[i][0] == 0:
  *             if ct[i][1] >= min_aligned_bases_left:             # <<<<<<<<<<<<<<
@@ -3253,7 +3260,7 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  */
       }
 
-      /* "pywfa/align.pyx":119
+      /* "pywfa/align.pyx":120
  *                 break
  *             else:
  *                 text_start += ct[i][1]             # <<<<<<<<<<<<<<
@@ -3261,37 +3268,37 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  *         elif ct[i][0] == 2:  # deletion
  */
       /*else*/ {
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 119, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_text_start, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_text_start, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __Pyx_DECREF_SET(__pyx_v_text_start, __pyx_t_1);
-        __pyx_t_1 = 0;
+        __Pyx_DECREF_SET(__pyx_v_text_start, __pyx_t_8);
+        __pyx_t_8 = 0;
 
-        /* "pywfa/align.pyx":120
+        /* "pywfa/align.pyx":121
  *             else:
  *                 text_start += ct[i][1]
  *                 pattern_start += ct[i][1]             # <<<<<<<<<<<<<<
  *         elif ct[i][0] == 2:  # deletion
  *             pattern_start += ct[i][1]
  */
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 120, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_pattern_start, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_pattern_start, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __Pyx_DECREF_SET(__pyx_v_pattern_start, __pyx_t_1);
-        __pyx_t_1 = 0;
+        __Pyx_DECREF_SET(__pyx_v_pattern_start, __pyx_t_8);
+        __pyx_t_8 = 0;
       }
 
-      /* "pywfa/align.pyx":115
+      /* "pywfa/align.pyx":116
  *     pattern_start = 0
  *     for i in range(len(ct)):
  *         if ct[i][0] == 0:             # <<<<<<<<<<<<<<
@@ -3301,44 +3308,44 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
       goto __pyx_L6;
     }
 
-    /* "pywfa/align.pyx":121
+    /* "pywfa/align.pyx":122
  *                 text_start += ct[i][1]
  *                 pattern_start += ct[i][1]
  *         elif ct[i][0] == 2:  # deletion             # <<<<<<<<<<<<<<
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 8 :  # mismatch
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 121, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_8 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 121, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":122
+      /* "pywfa/align.pyx":123
  *                 pattern_start += ct[i][1]
  *         elif ct[i][0] == 2:  # deletion
  *             pattern_start += ct[i][1]             # <<<<<<<<<<<<<<
  *         elif ct[i][0] == 8 :  # mismatch
  *             text_start += ct[i][1]
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 122, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_pattern_start, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_pattern_start, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_pattern_start, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __Pyx_DECREF_SET(__pyx_v_pattern_start, __pyx_t_8);
+      __pyx_t_8 = 0;
 
-      /* "pywfa/align.pyx":121
+      /* "pywfa/align.pyx":122
  *                 text_start += ct[i][1]
  *                 pattern_start += ct[i][1]
  *         elif ct[i][0] == 2:  # deletion             # <<<<<<<<<<<<<<
@@ -3348,62 +3355,62 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
       goto __pyx_L6;
     }
 
-    /* "pywfa/align.pyx":123
+    /* "pywfa/align.pyx":124
  *         elif ct[i][0] == 2:  # deletion
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 8 :  # mismatch             # <<<<<<<<<<<<<<
  *             text_start += ct[i][1]
  *             pattern_start += ct[i][1]
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 123, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_8 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 123, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":124
+      /* "pywfa/align.pyx":125
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 8 :  # mismatch
  *             text_start += ct[i][1]             # <<<<<<<<<<<<<<
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 1: # insertion
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 124, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_text_start, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_text_start, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_text_start, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __Pyx_DECREF_SET(__pyx_v_text_start, __pyx_t_8);
+      __pyx_t_8 = 0;
 
-      /* "pywfa/align.pyx":125
+      /* "pywfa/align.pyx":126
  *         elif ct[i][0] == 8 :  # mismatch
  *             text_start += ct[i][1]
  *             pattern_start += ct[i][1]             # <<<<<<<<<<<<<<
  *         elif ct[i][0] == 1: # insertion
  *             text_start += ct[i][1]
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 125, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_pattern_start, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_pattern_start, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_pattern_start, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __Pyx_DECREF_SET(__pyx_v_pattern_start, __pyx_t_8);
+      __pyx_t_8 = 0;
 
-      /* "pywfa/align.pyx":123
+      /* "pywfa/align.pyx":124
  *         elif ct[i][0] == 2:  # deletion
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 8 :  # mismatch             # <<<<<<<<<<<<<<
@@ -3413,44 +3420,44 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
       goto __pyx_L6;
     }
 
-    /* "pywfa/align.pyx":126
+    /* "pywfa/align.pyx":127
  *             text_start += ct[i][1]
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 1: # insertion             # <<<<<<<<<<<<<<
  *             text_start += ct[i][1]
  * 
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 126, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_8 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 126, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":127
+      /* "pywfa/align.pyx":128
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 1: # insertion
  *             text_start += ct[i][1]             # <<<<<<<<<<<<<<
  * 
  *     text_end = align_result.text_length
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 128, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 127, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_text_start, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 128, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_text_start, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_text_start, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __Pyx_DECREF_SET(__pyx_v_text_start, __pyx_t_8);
+      __pyx_t_8 = 0;
 
-      /* "pywfa/align.pyx":126
+      /* "pywfa/align.pyx":127
  *             text_start += ct[i][1]
  *             pattern_start += ct[i][1]
  *         elif ct[i][0] == 1: # insertion             # <<<<<<<<<<<<<<
@@ -3462,79 +3469,92 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   }
   __pyx_L5_break:;
 
-  /* "pywfa/align.pyx":129
+  /* "pywfa/align.pyx":130
  *             text_start += ct[i][1]
  * 
  *     text_end = align_result.text_length             # <<<<<<<<<<<<<<
  *     pattern_end = align_result.pattern_length
- *     for j in range(len(ct) -1, -1, -1):
+ *     j = len(ct) - 1
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_length); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_text_end = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_length); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_v_text_end = __pyx_t_8;
+  __pyx_t_8 = 0;
 
-  /* "pywfa/align.pyx":130
+  /* "pywfa/align.pyx":131
  * 
  *     text_end = align_result.text_length
  *     pattern_end = align_result.pattern_length             # <<<<<<<<<<<<<<
+ *     j = len(ct) - 1
+ *     for j in range(len(ct) -1, -1, -1):
+ */
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_pattern_length); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_v_pattern_end = __pyx_t_8;
+  __pyx_t_8 = 0;
+
+  /* "pywfa/align.pyx":132
+ *     text_end = align_result.text_length
+ *     pattern_end = align_result.pattern_length
+ *     j = len(ct) - 1             # <<<<<<<<<<<<<<
  *     for j in range(len(ct) -1, -1, -1):
  *         if ct[j][0] == 0 :
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_pattern_length); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_pattern_end = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_4 = PyObject_Length(__pyx_v_ct); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_v_j = (__pyx_t_4 - 1);
 
-  /* "pywfa/align.pyx":131
- *     text_end = align_result.text_length
+  /* "pywfa/align.pyx":133
  *     pattern_end = align_result.pattern_length
+ *     j = len(ct) - 1
  *     for j in range(len(ct) -1, -1, -1):             # <<<<<<<<<<<<<<
  *         if ct[j][0] == 0 :
  *             if ct[j][1] >= min_aligned_bases_right:
  */
-  __pyx_t_4 = PyObject_Length(__pyx_v_ct); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_ct); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 133, __pyx_L1_error)
   for (__pyx_t_6 = (__pyx_t_4 - 1); __pyx_t_6 > -1; __pyx_t_6-=1) {
     __pyx_v_j = __pyx_t_6;
 
-    /* "pywfa/align.pyx":132
- *     pattern_end = align_result.pattern_length
+    /* "pywfa/align.pyx":134
+ *     j = len(ct) - 1
  *     for j in range(len(ct) -1, -1, -1):
  *         if ct[j][0] == 0 :             # <<<<<<<<<<<<<<
  *             if ct[j][1] >= min_aligned_bases_right:
  *                 break
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 132, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_8 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":133
+      /* "pywfa/align.pyx":135
  *     for j in range(len(ct) -1, -1, -1):
  *         if ct[j][0] == 0 :
  *             if ct[j][1] >= min_aligned_bases_right:             # <<<<<<<<<<<<<<
  *                 break
  *             else:
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 135, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 133, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_min_aligned_bases_right); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 135, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_7 = PyObject_RichCompare(__pyx_t_1, __pyx_t_8, Py_GE); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 135, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyObject_RichCompare(__pyx_t_7, __pyx_v_min_aligned_bases_right, Py_GE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 135, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 133, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (__pyx_t_3) {
 
-        /* "pywfa/align.pyx":134
+        /* "pywfa/align.pyx":136
  *         if ct[j][0] == 0 :
  *             if ct[j][1] >= min_aligned_bases_right:
  *                 break             # <<<<<<<<<<<<<<
@@ -3543,7 +3563,7 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  */
         goto __pyx_L9_break;
 
-        /* "pywfa/align.pyx":133
+        /* "pywfa/align.pyx":135
  *     for j in range(len(ct) -1, -1, -1):
  *         if ct[j][0] == 0 :
  *             if ct[j][1] >= min_aligned_bases_right:             # <<<<<<<<<<<<<<
@@ -3552,7 +3572,7 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  */
       }
 
-      /* "pywfa/align.pyx":136
+      /* "pywfa/align.pyx":138
  *                 break
  *             else:
  *                 text_end -= ct[j][1]             # <<<<<<<<<<<<<<
@@ -3560,38 +3580,38 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  *         elif ct[j][0] == 2:
  */
       /*else*/ {
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 136, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 138, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = PyNumber_InPlaceSubtract(__pyx_v_text_end, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 138, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __Pyx_DECREF_SET(__pyx_v_text_end, __pyx_t_1);
-        __pyx_t_1 = 0;
+        __pyx_t_7 = PyNumber_InPlaceSubtract(__pyx_v_text_end, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 138, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __Pyx_DECREF_SET(__pyx_v_text_end, __pyx_t_7);
+        __pyx_t_7 = 0;
 
-        /* "pywfa/align.pyx":137
+        /* "pywfa/align.pyx":139
  *             else:
  *                 text_end -= ct[j][1]
  *                 pattern_end -= ct[j][1]             # <<<<<<<<<<<<<<
  *         elif ct[j][0] == 2:
  *             pattern_end -= ct[j][1]
  */
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 137, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 139, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = PyNumber_InPlaceSubtract(__pyx_v_pattern_end, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 139, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __Pyx_DECREF_SET(__pyx_v_pattern_end, __pyx_t_1);
-        __pyx_t_1 = 0;
+        __pyx_t_7 = PyNumber_InPlaceSubtract(__pyx_v_pattern_end, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 139, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __Pyx_DECREF_SET(__pyx_v_pattern_end, __pyx_t_7);
+        __pyx_t_7 = 0;
       }
 
-      /* "pywfa/align.pyx":132
- *     pattern_end = align_result.pattern_length
+      /* "pywfa/align.pyx":134
+ *     j = len(ct) - 1
  *     for j in range(len(ct) -1, -1, -1):
  *         if ct[j][0] == 0 :             # <<<<<<<<<<<<<<
  *             if ct[j][1] >= min_aligned_bases_right:
@@ -3600,44 +3620,44 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
       goto __pyx_L10;
     }
 
-    /* "pywfa/align.pyx":138
+    /* "pywfa/align.pyx":140
  *                 text_end -= ct[j][1]
  *                 pattern_end -= ct[j][1]
  *         elif ct[j][0] == 2:             # <<<<<<<<<<<<<<
  *             pattern_end -= ct[j][1]
  *         elif ct[j][0] == 8:
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 138, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 138, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 140, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 138, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_8, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 140, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 140, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":139
+      /* "pywfa/align.pyx":141
  *                 pattern_end -= ct[j][1]
  *         elif ct[j][0] == 2:
  *             pattern_end -= ct[j][1]             # <<<<<<<<<<<<<<
  *         elif ct[j][0] == 8:
  *             pattern_end -= ct[j][1]
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 139, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 141, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceSubtract(__pyx_v_pattern_end, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 141, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_pattern_end, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __pyx_t_7 = PyNumber_InPlaceSubtract(__pyx_v_pattern_end, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 141, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_DECREF_SET(__pyx_v_pattern_end, __pyx_t_7);
+      __pyx_t_7 = 0;
 
-      /* "pywfa/align.pyx":138
+      /* "pywfa/align.pyx":140
  *                 text_end -= ct[j][1]
  *                 pattern_end -= ct[j][1]
  *         elif ct[j][0] == 2:             # <<<<<<<<<<<<<<
@@ -3647,62 +3667,62 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
       goto __pyx_L10;
     }
 
-    /* "pywfa/align.pyx":140
+    /* "pywfa/align.pyx":142
  *         elif ct[j][0] == 2:
  *             pattern_end -= ct[j][1]
  *         elif ct[j][0] == 8:             # <<<<<<<<<<<<<<
  *             pattern_end -= ct[j][1]
  *             text_end -= ct[j][1]
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 140, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 140, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 142, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 140, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 140, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_8, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":141
+      /* "pywfa/align.pyx":143
  *             pattern_end -= ct[j][1]
  *         elif ct[j][0] == 8:
  *             pattern_end -= ct[j][1]             # <<<<<<<<<<<<<<
  *             text_end -= ct[j][1]
  *         elif ct[j][0] == 1:
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 141, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 143, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceSubtract(__pyx_v_pattern_end, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 143, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_pattern_end, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __pyx_t_7 = PyNumber_InPlaceSubtract(__pyx_v_pattern_end, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 143, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_DECREF_SET(__pyx_v_pattern_end, __pyx_t_7);
+      __pyx_t_7 = 0;
 
-      /* "pywfa/align.pyx":142
+      /* "pywfa/align.pyx":144
  *         elif ct[j][0] == 8:
  *             pattern_end -= ct[j][1]
  *             text_end -= ct[j][1]             # <<<<<<<<<<<<<<
  *         elif ct[j][0] == 1:
  *             text_end -= ct[j][1]
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 142, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 144, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceSubtract(__pyx_v_text_end, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 144, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_text_end, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __pyx_t_7 = PyNumber_InPlaceSubtract(__pyx_v_text_end, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 144, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_DECREF_SET(__pyx_v_text_end, __pyx_t_7);
+      __pyx_t_7 = 0;
 
-      /* "pywfa/align.pyx":140
+      /* "pywfa/align.pyx":142
  *         elif ct[j][0] == 2:
  *             pattern_end -= ct[j][1]
  *         elif ct[j][0] == 8:             # <<<<<<<<<<<<<<
@@ -3712,44 +3732,44 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
       goto __pyx_L10;
     }
 
-    /* "pywfa/align.pyx":143
+    /* "pywfa/align.pyx":145
  *             pattern_end -= ct[j][1]
  *             text_end -= ct[j][1]
  *         elif ct[j][0] == 1:             # <<<<<<<<<<<<<<
  *             text_end -= ct[j][1]
  * 
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 143, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 145, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 145, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 143, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_8, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 145, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 145, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":144
+      /* "pywfa/align.pyx":146
  *             text_end -= ct[j][1]
  *         elif ct[j][0] == 1:
  *             text_end -= ct[j][1]             # <<<<<<<<<<<<<<
  * 
  *     modified = []
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 144, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ct, __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 146, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_InPlaceSubtract(__pyx_v_text_end, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 146, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF_SET(__pyx_v_text_end, __pyx_t_1);
-      __pyx_t_1 = 0;
+      __pyx_t_7 = PyNumber_InPlaceSubtract(__pyx_v_text_end, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 146, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_DECREF_SET(__pyx_v_text_end, __pyx_t_7);
+      __pyx_t_7 = 0;
 
-      /* "pywfa/align.pyx":143
+      /* "pywfa/align.pyx":145
  *             pattern_end -= ct[j][1]
  *             text_end -= ct[j][1]
  *         elif ct[j][0] == 1:             # <<<<<<<<<<<<<<
@@ -3761,60 +3781,60 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   }
   __pyx_L9_break:;
 
-  /* "pywfa/align.pyx":146
+  /* "pywfa/align.pyx":148
  *             text_end -= ct[j][1]
  * 
  *     modified = []             # <<<<<<<<<<<<<<
  *     if align_result.text_start + text_start > 0:
  *         modified.append((4, align_result.text_start + text_start))
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_modified = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_v_modified = __pyx_t_7;
+  __pyx_t_7 = 0;
 
-  /* "pywfa/align.pyx":147
+  /* "pywfa/align.pyx":149
  * 
  *     modified = []
  *     if align_result.text_start + text_start > 0:             # <<<<<<<<<<<<<<
  *         modified.append((4, align_result.text_start + text_start))
  *     modified += ct[i:j+1]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_start); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyNumber_Add(__pyx_t_1, __pyx_v_text_start); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_start); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyObject_RichCompare(__pyx_t_7, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_t_8 = PyNumber_Add(__pyx_t_7, __pyx_v_text_start); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_7 = PyObject_RichCompare(__pyx_t_8, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   if (__pyx_t_3) {
 
-    /* "pywfa/align.pyx":148
+    /* "pywfa/align.pyx":150
  *     modified = []
  *     if align_result.text_start + text_start > 0:
  *         modified.append((4, align_result.text_start + text_start))             # <<<<<<<<<<<<<<
  *     modified += ct[i:j+1]
  *     if align_result.text_length - text_end > 0:
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_start); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = PyNumber_Add(__pyx_t_1, __pyx_v_text_start); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_start); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 150, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_8 = PyNumber_Add(__pyx_t_7, __pyx_v_text_start); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 150, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 150, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
     __Pyx_INCREF(__pyx_int_4);
     __Pyx_GIVEREF(__pyx_int_4);
-    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_int_4);
-    __Pyx_GIVEREF(__pyx_t_7);
-    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_7);
-    __pyx_t_7 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Append(__pyx_v_modified, __pyx_t_1); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 148, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_int_4);
+    __Pyx_GIVEREF(__pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_8);
+    __pyx_t_8 = 0;
+    __pyx_t_9 = __Pyx_PyObject_Append(__pyx_v_modified, __pyx_t_7); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 150, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "pywfa/align.pyx":147
+    /* "pywfa/align.pyx":149
  * 
  *     modified = []
  *     if align_result.text_start + text_start > 0:             # <<<<<<<<<<<<<<
@@ -3823,63 +3843,63 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  */
   }
 
-  /* "pywfa/align.pyx":149
+  /* "pywfa/align.pyx":151
  *     if align_result.text_start + text_start > 0:
  *         modified.append((4, align_result.text_start + text_start))
  *     modified += ct[i:j+1]             # <<<<<<<<<<<<<<
  *     if align_result.text_length - text_end > 0:
  *         modified.append((4, align_result.text_length - text_end))
  */
-  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_v_ct, __pyx_v_i, (__pyx_v_j + 1), NULL, NULL, NULL, 1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 149, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyNumber_InPlaceAdd(__pyx_v_modified, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetSlice(__pyx_v_ct, __pyx_v_i, (__pyx_v_j + 1), NULL, NULL, NULL, 1, 1, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF_SET(__pyx_v_modified, __pyx_t_7);
-  __pyx_t_7 = 0;
+  __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_modified, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF_SET(__pyx_v_modified, __pyx_t_8);
+  __pyx_t_8 = 0;
 
-  /* "pywfa/align.pyx":150
+  /* "pywfa/align.pyx":152
  *         modified.append((4, align_result.text_start + text_start))
  *     modified += ct[i:j+1]
  *     if align_result.text_length - text_end > 0:             # <<<<<<<<<<<<<<
  *         modified.append((4, align_result.text_length - text_end))
  *     align_result.cigartuples = modified
  */
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_length); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 150, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_length); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_7 = PyNumber_Subtract(__pyx_t_8, __pyx_v_text_end); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_1 = PyNumber_Subtract(__pyx_t_7, __pyx_v_text_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_8 = PyObject_RichCompare(__pyx_t_7, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyObject_RichCompare(__pyx_t_1, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 150, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 150, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   if (__pyx_t_3) {
 
-    /* "pywfa/align.pyx":151
+    /* "pywfa/align.pyx":153
  *     modified += ct[i:j+1]
  *     if align_result.text_length - text_end > 0:
  *         modified.append((4, align_result.text_length - text_end))             # <<<<<<<<<<<<<<
  *     align_result.cigartuples = modified
  * 
  */
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_length); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_align_result, __pyx_n_s_text_length); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_7 = PyNumber_Subtract(__pyx_t_8, __pyx_v_text_end); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 153, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_1 = PyNumber_Subtract(__pyx_t_7, __pyx_v_text_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_INCREF(__pyx_int_4);
     __Pyx_GIVEREF(__pyx_int_4);
-    PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_int_4);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Append(__pyx_v_modified, __pyx_t_7); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_int_4);
+    __Pyx_GIVEREF(__pyx_t_7);
+    PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_7);
+    __pyx_t_7 = 0;
+    __pyx_t_9 = __Pyx_PyObject_Append(__pyx_v_modified, __pyx_t_8); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 153, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "pywfa/align.pyx":150
+    /* "pywfa/align.pyx":152
  *         modified.append((4, align_result.text_start + text_start))
  *     modified += ct[i:j+1]
  *     if align_result.text_length - text_end > 0:             # <<<<<<<<<<<<<<
@@ -3888,52 +3908,52 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
  */
   }
 
-  /* "pywfa/align.pyx":152
+  /* "pywfa/align.pyx":154
  *     if align_result.text_length - text_end > 0:
  *         modified.append((4, align_result.text_length - text_end))
  *     align_result.cigartuples = modified             # <<<<<<<<<<<<<<
  * 
  *     align_result.text_start = text_start
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_cigartuples, __pyx_v_modified) < 0) __PYX_ERR(0, 152, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_cigartuples, __pyx_v_modified) < 0) __PYX_ERR(0, 154, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":154
+  /* "pywfa/align.pyx":156
  *     align_result.cigartuples = modified
  * 
  *     align_result.text_start = text_start             # <<<<<<<<<<<<<<
  *     align_result.text_end = text_end
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_text_start, __pyx_v_text_start) < 0) __PYX_ERR(0, 154, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_text_start, __pyx_v_text_start) < 0) __PYX_ERR(0, 156, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":155
+  /* "pywfa/align.pyx":157
  * 
  *     align_result.text_start = text_start
  *     align_result.text_end = text_end             # <<<<<<<<<<<<<<
  * 
  *     align_result.pattern_start = pattern_start
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_text_end, __pyx_v_text_end) < 0) __PYX_ERR(0, 155, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_text_end, __pyx_v_text_end) < 0) __PYX_ERR(0, 157, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":157
+  /* "pywfa/align.pyx":159
  *     align_result.text_end = text_end
  * 
  *     align_result.pattern_start = pattern_start             # <<<<<<<<<<<<<<
  *     align_result.pattern_end = pattern_end
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_pattern_start, __pyx_v_pattern_start) < 0) __PYX_ERR(0, 157, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_pattern_start, __pyx_v_pattern_start) < 0) __PYX_ERR(0, 159, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":158
+  /* "pywfa/align.pyx":160
  * 
  *     align_result.pattern_start = pattern_start
  *     align_result.pattern_end = pattern_end             # <<<<<<<<<<<<<<
  * 
  *     return align_result
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_pattern_end, __pyx_v_pattern_end) < 0) __PYX_ERR(0, 158, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_align_result, __pyx_n_s_pattern_end, __pyx_v_pattern_end) < 0) __PYX_ERR(0, 160, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":160
+  /* "pywfa/align.pyx":162
  *     align_result.pattern_end = pattern_end
  * 
  *     return align_result             # <<<<<<<<<<<<<<
@@ -3945,10 +3965,10 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   __pyx_r = __pyx_v_align_result;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":99
+  /* "pywfa/align.pyx":100
  * 
  * 
- * cpdef clip_cigartuples(align_result, min_aligned_bases_left=5, min_aligned_bases_right=5):             # <<<<<<<<<<<<<<
+ * cdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min_aligned_bases_right=5):             # <<<<<<<<<<<<<<
  *     """Returns cigartuples with blocks of aligned bases < threshold removed from each end
  *     Returns
  */
@@ -3957,6 +3977,7 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
   __Pyx_AddTraceback("pywfa.align.clip_cigartuples", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -3971,128 +3992,15 @@ static PyObject *__pyx_f_5pywfa_5align_clip_cigartuples(PyObject *__pyx_v_align_
   return __pyx_r;
 }
 
-/* Python wrapper */
-static PyObject *__pyx_pw_5pywfa_5align_1clip_cigartuples(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5pywfa_5align_clip_cigartuples[] = "Returns cigartuples with blocks of aligned bases < threshold removed from each end\n    Returns\n    -------\n    list\n        cigartuples\n    ";
-static PyObject *__pyx_pw_5pywfa_5align_1clip_cigartuples(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_align_result = 0;
-  PyObject *__pyx_v_min_aligned_bases_left = 0;
-  PyObject *__pyx_v_min_aligned_bases_right = 0;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("clip_cigartuples (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_align_result,&__pyx_n_s_min_aligned_bases_left,&__pyx_n_s_min_aligned_bases_right,0};
-    PyObject* values[3] = {0,0,0};
-    values[1] = ((PyObject *)__pyx_int_5);
-    values[2] = ((PyObject *)__pyx_int_5);
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        CYTHON_FALLTHROUGH;
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_align_result)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_min_aligned_bases_left);
-          if (value) { values[1] = value; kw_args--; }
-        }
-        CYTHON_FALLTHROUGH;
-        case  2:
-        if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_min_aligned_bases_right);
-          if (value) { values[2] = value; kw_args--; }
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "clip_cigartuples") < 0)) __PYX_ERR(0, 99, __pyx_L3_error)
-      }
-    } else {
-      switch (PyTuple_GET_SIZE(__pyx_args)) {
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        CYTHON_FALLTHROUGH;
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-    }
-    __pyx_v_align_result = values[0];
-    __pyx_v_min_aligned_bases_left = values[1];
-    __pyx_v_min_aligned_bases_right = values[2];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("clip_cigartuples", 0, 1, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 99, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("pywfa.align.clip_cigartuples", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pywfa_5align_clip_cigartuples(__pyx_self, __pyx_v_align_result, __pyx_v_min_aligned_bases_left, __pyx_v_min_aligned_bases_right);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_5pywfa_5align_clip_cigartuples(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_align_result, PyObject *__pyx_v_min_aligned_bases_left, PyObject *__pyx_v_min_aligned_bases_right) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_5pywfa_5align_clip_cigartuples __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("clip_cigartuples", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 2;
-  __pyx_t_2.min_aligned_bases_left = __pyx_v_min_aligned_bases_left;
-  __pyx_t_2.min_aligned_bases_right = __pyx_v_min_aligned_bases_right;
-  __pyx_t_1 = __pyx_f_5pywfa_5align_clip_cigartuples(__pyx_v_align_result, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pywfa.align.clip_cigartuples", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "pywfa/align.pyx":163
+/* "pywfa/align.pyx":165
  * 
  * 
- * cpdef elide_mismatches_from_cigar(cigartuples):             # <<<<<<<<<<<<<<
+ * cdef elide_mismatches_from_cigar(cigartuples):             # <<<<<<<<<<<<<<
  *     """Returns cigartuples with mismatched 'X' merged into aligned blocks 'M'
  *     Returns
  */
 
-static PyObject *__pyx_pw_5pywfa_5align_3elide_mismatches_from_cigar(PyObject *__pyx_self, PyObject *__pyx_v_cigartuples); /*proto*/
-static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__pyx_v_cigartuples, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__pyx_v_cigartuples) {
   PyObject *__pyx_v_modified = NULL;
   int __pyx_v_l;
   PyObject *__pyx_v_block = NULL;
@@ -4116,18 +4024,18 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("elide_mismatches_from_cigar", 0);
 
-  /* "pywfa/align.pyx":170
+  /* "pywfa/align.pyx":172
  *         cigartuples
  *     """
  *     if not cigartuples:             # <<<<<<<<<<<<<<
  *         return []
  *     modified = []
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_cigartuples); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_cigartuples); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 172, __pyx_L1_error)
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "pywfa/align.pyx":171
+    /* "pywfa/align.pyx":173
  *     """
  *     if not cigartuples:
  *         return []             # <<<<<<<<<<<<<<
@@ -4135,13 +4043,13 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
  *     cdef int l
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 173, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":170
+    /* "pywfa/align.pyx":172
  *         cigartuples
  *     """
  *     if not cigartuples:             # <<<<<<<<<<<<<<
@@ -4150,19 +4058,19 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
  */
   }
 
-  /* "pywfa/align.pyx":172
+  /* "pywfa/align.pyx":174
  *     if not cigartuples:
  *         return []
  *     modified = []             # <<<<<<<<<<<<<<
  *     cdef int l
  *     block = 0
  */
-  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_modified = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":174
+  /* "pywfa/align.pyx":176
  *     modified = []
  *     cdef int l
  *     block = 0             # <<<<<<<<<<<<<<
@@ -4172,7 +4080,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_block = __pyx_int_0;
 
-  /* "pywfa/align.pyx":175
+  /* "pywfa/align.pyx":177
  *     cdef int l
  *     block = 0
  *     for opp, l in cigartuples:             # <<<<<<<<<<<<<<
@@ -4183,26 +4091,26 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
     __pyx_t_3 = __pyx_v_cigartuples; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 175, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 175, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 177, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_5)) {
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 175, __pyx_L1_error)
+        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 177, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 175, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 177, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 175, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 177, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 175, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 177, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       }
@@ -4212,7 +4120,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 175, __pyx_L1_error)
+          else __PYX_ERR(0, 177, __pyx_L1_error)
         }
         break;
       }
@@ -4224,7 +4132,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 175, __pyx_L1_error)
+        __PYX_ERR(0, 177, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -4237,15 +4145,15 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
       __Pyx_INCREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_t_8);
       #else
-      __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 175, __pyx_L1_error)
+      __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 177, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 175, __pyx_L1_error)
+      __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 177, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       #endif
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_9 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 175, __pyx_L1_error)
+      __pyx_t_9 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 177, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_10 = Py_TYPE(__pyx_t_9)->tp_iternext;
@@ -4253,7 +4161,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
       __Pyx_GOTREF(__pyx_t_7);
       index = 1; __pyx_t_8 = __pyx_t_10(__pyx_t_9); if (unlikely(!__pyx_t_8)) goto __pyx_L6_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_8);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 2) < 0) __PYX_ERR(0, 175, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 2) < 0) __PYX_ERR(0, 177, __pyx_L1_error)
       __pyx_t_10 = NULL;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       goto __pyx_L7_unpacking_done;
@@ -4261,57 +4169,57 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 175, __pyx_L1_error)
+      __PYX_ERR(0, 177, __pyx_L1_error)
       __pyx_L7_unpacking_done:;
     }
-    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 175, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 177, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_XDECREF_SET(__pyx_v_opp, __pyx_t_7);
     __pyx_t_7 = 0;
     __pyx_v_l = __pyx_t_11;
 
-    /* "pywfa/align.pyx":176
+    /* "pywfa/align.pyx":178
  *     block = 0
  *     for opp, l in cigartuples:
  *         if opp != 8 and opp != 0:             # <<<<<<<<<<<<<<
  *             if block:
  *                 modified.append((0, block))
  */
-    __pyx_t_6 = __Pyx_PyInt_NeObjC(__pyx_v_opp, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 176, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_NeObjC(__pyx_v_opp, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 178, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 176, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 178, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     if (__pyx_t_1) {
     } else {
       __pyx_t_2 = __pyx_t_1;
       goto __pyx_L9_bool_binop_done;
     }
-    __pyx_t_6 = __Pyx_PyInt_NeObjC(__pyx_v_opp, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 176, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_NeObjC(__pyx_v_opp, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 178, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 176, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 178, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_2 = __pyx_t_1;
     __pyx_L9_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "pywfa/align.pyx":177
+      /* "pywfa/align.pyx":179
  *     for opp, l in cigartuples:
  *         if opp != 8 and opp != 0:
  *             if block:             # <<<<<<<<<<<<<<
  *                 modified.append((0, block))
  *                 block = 0
  */
-      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_block); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 177, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_block); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 179, __pyx_L1_error)
       if (__pyx_t_2) {
 
-        /* "pywfa/align.pyx":178
+        /* "pywfa/align.pyx":180
  *         if opp != 8 and opp != 0:
  *             if block:
  *                 modified.append((0, block))             # <<<<<<<<<<<<<<
  *                 block = 0
  *             modified.append((opp, l))
  */
-        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 178, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 180, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_INCREF(__pyx_int_0);
         __Pyx_GIVEREF(__pyx_int_0);
@@ -4319,10 +4227,10 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
         __Pyx_INCREF(__pyx_v_block);
         __Pyx_GIVEREF(__pyx_v_block);
         PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_block);
-        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_modified, __pyx_t_6); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 178, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_modified, __pyx_t_6); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 180, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "pywfa/align.pyx":179
+        /* "pywfa/align.pyx":181
  *             if block:
  *                 modified.append((0, block))
  *                 block = 0             # <<<<<<<<<<<<<<
@@ -4332,7 +4240,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
         __Pyx_INCREF(__pyx_int_0);
         __Pyx_DECREF_SET(__pyx_v_block, __pyx_int_0);
 
-        /* "pywfa/align.pyx":177
+        /* "pywfa/align.pyx":179
  *     for opp, l in cigartuples:
  *         if opp != 8 and opp != 0:
  *             if block:             # <<<<<<<<<<<<<<
@@ -4341,16 +4249,16 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
  */
       }
 
-      /* "pywfa/align.pyx":180
+      /* "pywfa/align.pyx":182
  *                 modified.append((0, block))
  *                 block = 0
  *             modified.append((opp, l))             # <<<<<<<<<<<<<<
  *         else:
  *             block += l
  */
-      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_l); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_l); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_INCREF(__pyx_v_opp);
       __Pyx_GIVEREF(__pyx_v_opp);
@@ -4358,10 +4266,10 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
       __Pyx_GIVEREF(__pyx_t_6);
       PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_6);
       __pyx_t_6 = 0;
-      __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_modified, __pyx_t_8); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_modified, __pyx_t_8); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "pywfa/align.pyx":176
+      /* "pywfa/align.pyx":178
  *     block = 0
  *     for opp, l in cigartuples:
  *         if opp != 8 and opp != 0:             # <<<<<<<<<<<<<<
@@ -4371,7 +4279,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
       goto __pyx_L8;
     }
 
-    /* "pywfa/align.pyx":182
+    /* "pywfa/align.pyx":184
  *             modified.append((opp, l))
  *         else:
  *             block += l             # <<<<<<<<<<<<<<
@@ -4379,9 +4287,9 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
  *         modified.append((0, block))
  */
     /*else*/ {
-      __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_l); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 182, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_l); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 184, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_block, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 182, __pyx_L1_error)
+      __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_v_block, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 184, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF_SET(__pyx_v_block, __pyx_t_6);
@@ -4389,7 +4297,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
     }
     __pyx_L8:;
 
-    /* "pywfa/align.pyx":175
+    /* "pywfa/align.pyx":177
  *     cdef int l
  *     block = 0
  *     for opp, l in cigartuples:             # <<<<<<<<<<<<<<
@@ -4399,24 +4307,24 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":183
+  /* "pywfa/align.pyx":185
  *         else:
  *             block += l
  *     if block:             # <<<<<<<<<<<<<<
  *         modified.append((0, block))
  *     return modified
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_block); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_block); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 185, __pyx_L1_error)
   if (__pyx_t_2) {
 
-    /* "pywfa/align.pyx":184
+    /* "pywfa/align.pyx":186
  *             block += l
  *     if block:
  *         modified.append((0, block))             # <<<<<<<<<<<<<<
  *     return modified
  * 
  */
-    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 186, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_GIVEREF(__pyx_int_0);
@@ -4424,10 +4332,10 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
     __Pyx_INCREF(__pyx_v_block);
     __Pyx_GIVEREF(__pyx_v_block);
     PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_block);
-    __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_modified, __pyx_t_3); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 184, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_modified, __pyx_t_3); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 186, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pywfa/align.pyx":183
+    /* "pywfa/align.pyx":185
  *         else:
  *             block += l
  *     if block:             # <<<<<<<<<<<<<<
@@ -4436,7 +4344,7 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
  */
   }
 
-  /* "pywfa/align.pyx":185
+  /* "pywfa/align.pyx":187
  *     if block:
  *         modified.append((0, block))
  *     return modified             # <<<<<<<<<<<<<<
@@ -4448,10 +4356,10 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
   __pyx_r = __pyx_v_modified;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":163
+  /* "pywfa/align.pyx":165
  * 
  * 
- * cpdef elide_mismatches_from_cigar(cigartuples):             # <<<<<<<<<<<<<<
+ * cdef elide_mismatches_from_cigar(cigartuples):             # <<<<<<<<<<<<<<
  *     """Returns cigartuples with mismatched 'X' merged into aligned blocks 'M'
  *     Returns
  */
@@ -4474,56 +4382,15 @@ static PyObject *__pyx_f_5pywfa_5align_elide_mismatches_from_cigar(PyObject *__p
   return __pyx_r;
 }
 
-/* Python wrapper */
-static PyObject *__pyx_pw_5pywfa_5align_3elide_mismatches_from_cigar(PyObject *__pyx_self, PyObject *__pyx_v_cigartuples); /*proto*/
-static char __pyx_doc_5pywfa_5align_2elide_mismatches_from_cigar[] = "Returns cigartuples with mismatched 'X' merged into aligned blocks 'M'\n    Returns\n    -------\n    list\n        cigartuples\n    ";
-static PyObject *__pyx_pw_5pywfa_5align_3elide_mismatches_from_cigar(PyObject *__pyx_self, PyObject *__pyx_v_cigartuples) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("elide_mismatches_from_cigar (wrapper)", 0);
-  __pyx_r = __pyx_pf_5pywfa_5align_2elide_mismatches_from_cigar(__pyx_self, ((PyObject *)__pyx_v_cigartuples));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_5pywfa_5align_2elide_mismatches_from_cigar(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cigartuples) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("elide_mismatches_from_cigar", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_5pywfa_5align_elide_mismatches_from_cigar(__pyx_v_cigartuples, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pywfa.align.elide_mismatches_from_cigar", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "pywfa/align.pyx":188
+/* "pywfa/align.pyx":190
  * 
  * 
- * cpdef cigartuples_to_str(cigartuples):             # <<<<<<<<<<<<<<
+ * cdef cigartuples_to_str(cigartuples):             # <<<<<<<<<<<<<<
  *     """Returns string format of cigartuples
  *     Returns
  */
 
-static PyObject *__pyx_pw_5pywfa_5align_5cigartuples_to_str(PyObject *__pyx_self, PyObject *__pyx_v_cigartuples); /*proto*/
-static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_cigartuples, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_cigartuples) {
   int __pyx_v_l;
   PyObject *__pyx_v_str_codes = NULL;
   PyObject *__pyx_v_cigarstring = NULL;
@@ -4546,18 +4413,18 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("cigartuples_to_str", 0);
 
-  /* "pywfa/align.pyx":195
+  /* "pywfa/align.pyx":197
  *         cigar in string format
  *     """
  *     if not cigartuples:             # <<<<<<<<<<<<<<
  *         return ""
  *     cdef int l
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_cigartuples); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 195, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_cigartuples); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 197, __pyx_L1_error)
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "pywfa/align.pyx":196
+    /* "pywfa/align.pyx":198
  *     """
  *     if not cigartuples:
  *         return ""             # <<<<<<<<<<<<<<
@@ -4569,7 +4436,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
     __pyx_r = __pyx_kp_u__2;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":195
+    /* "pywfa/align.pyx":197
  *         cigar in string format
  *     """
  *     if not cigartuples:             # <<<<<<<<<<<<<<
@@ -4578,14 +4445,14 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
  */
   }
 
-  /* "pywfa/align.pyx":198
+  /* "pywfa/align.pyx":200
  *         return ""
  *     cdef int l
  *     str_codes = ["M", "I", "D", "N", "S", "H", "P", "=", "X", "B"]             # <<<<<<<<<<<<<<
  *     cigarstring = ""
  *     for opp, l in cigartuples:
  */
-  __pyx_t_3 = PyList_New(10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_n_u_M);
   __Pyx_GIVEREF(__pyx_n_u_M);
@@ -4620,7 +4487,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
   __pyx_v_str_codes = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":199
+  /* "pywfa/align.pyx":201
  *     cdef int l
  *     str_codes = ["M", "I", "D", "N", "S", "H", "P", "=", "X", "B"]
  *     cigarstring = ""             # <<<<<<<<<<<<<<
@@ -4630,7 +4497,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
   __Pyx_INCREF(__pyx_kp_u__2);
   __pyx_v_cigarstring = __pyx_kp_u__2;
 
-  /* "pywfa/align.pyx":200
+  /* "pywfa/align.pyx":202
  *     str_codes = ["M", "I", "D", "N", "S", "H", "P", "=", "X", "B"]
  *     cigarstring = ""
  *     for opp, l in cigartuples:             # <<<<<<<<<<<<<<
@@ -4641,26 +4508,26 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
     __pyx_t_3 = __pyx_v_cigartuples; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 200, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 202, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 200, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 202, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_5)) {
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 200, __pyx_L1_error)
+        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 202, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 200, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 202, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 200, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 202, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 200, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 202, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       }
@@ -4670,7 +4537,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 200, __pyx_L1_error)
+          else __PYX_ERR(0, 202, __pyx_L1_error)
         }
         break;
       }
@@ -4682,7 +4549,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 200, __pyx_L1_error)
+        __PYX_ERR(0, 202, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -4695,15 +4562,15 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
       __Pyx_INCREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_t_8);
       #else
-      __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 200, __pyx_L1_error)
+      __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 202, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 200, __pyx_L1_error)
+      __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 202, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       #endif
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_9 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 200, __pyx_L1_error)
+      __pyx_t_9 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 202, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_10 = Py_TYPE(__pyx_t_9)->tp_iternext;
@@ -4711,7 +4578,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
       __Pyx_GOTREF(__pyx_t_7);
       index = 1; __pyx_t_8 = __pyx_t_10(__pyx_t_9); if (unlikely(!__pyx_t_8)) goto __pyx_L6_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_8);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 2) < 0) __PYX_ERR(0, 200, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 2) < 0) __PYX_ERR(0, 202, __pyx_L1_error)
       __pyx_t_10 = NULL;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       goto __pyx_L7_unpacking_done;
@@ -4719,40 +4586,40 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 200, __pyx_L1_error)
+      __PYX_ERR(0, 202, __pyx_L1_error)
       __pyx_L7_unpacking_done:;
     }
-    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 202, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_XDECREF_SET(__pyx_v_opp, __pyx_t_7);
     __pyx_t_7 = 0;
     __pyx_v_l = __pyx_t_11;
 
-    /* "pywfa/align.pyx":201
+    /* "pywfa/align.pyx":203
  *     cigarstring = ""
  *     for opp, l in cigartuples:
  *         cigarstring += f"{l}{str_codes[opp]}"             # <<<<<<<<<<<<<<
  *     return cigarstring
  * 
  */
-    __pyx_t_6 = __Pyx_PyUnicode_From_int(__pyx_v_l, 0, ' ', 'd'); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyUnicode_From_int(__pyx_v_l, 0, ' ', 'd'); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_8 = __Pyx_PyObject_GetItem(__pyx_v_str_codes, __pyx_v_opp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetItem(__pyx_v_str_codes, __pyx_v_opp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_v_cigarstring, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_v_cigarstring, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF_SET(__pyx_v_cigarstring, ((PyObject*)__pyx_t_7));
     __pyx_t_7 = 0;
 
-    /* "pywfa/align.pyx":200
+    /* "pywfa/align.pyx":202
  *     str_codes = ["M", "I", "D", "N", "S", "H", "P", "=", "X", "B"]
  *     cigarstring = ""
  *     for opp, l in cigartuples:             # <<<<<<<<<<<<<<
@@ -4762,7 +4629,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":202
+  /* "pywfa/align.pyx":204
  *     for opp, l in cigartuples:
  *         cigarstring += f"{l}{str_codes[opp]}"
  *     return cigarstring             # <<<<<<<<<<<<<<
@@ -4774,10 +4641,10 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
   __pyx_r = __pyx_v_cigarstring;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":188
+  /* "pywfa/align.pyx":190
  * 
  * 
- * cpdef cigartuples_to_str(cigartuples):             # <<<<<<<<<<<<<<
+ * cdef cigartuples_to_str(cigartuples):             # <<<<<<<<<<<<<<
  *     """Returns string format of cigartuples
  *     Returns
  */
@@ -4800,47 +4667,7 @@ static PyObject *__pyx_f_5pywfa_5align_cigartuples_to_str(PyObject *__pyx_v_ciga
   return __pyx_r;
 }
 
-/* Python wrapper */
-static PyObject *__pyx_pw_5pywfa_5align_5cigartuples_to_str(PyObject *__pyx_self, PyObject *__pyx_v_cigartuples); /*proto*/
-static char __pyx_doc_5pywfa_5align_4cigartuples_to_str[] = "Returns string format of cigartuples\n    Returns\n    -------\n    str\n        cigar in string format\n    ";
-static PyObject *__pyx_pw_5pywfa_5align_5cigartuples_to_str(PyObject *__pyx_self, PyObject *__pyx_v_cigartuples) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("cigartuples_to_str (wrapper)", 0);
-  __pyx_r = __pyx_pf_5pywfa_5align_4cigartuples_to_str(__pyx_self, ((PyObject *)__pyx_v_cigartuples));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_5pywfa_5align_4cigartuples_to_str(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cigartuples) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("cigartuples_to_str", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_5pywfa_5align_cigartuples_to_str(__pyx_v_cigartuples, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pywfa.align.cigartuples_to_str", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "pywfa/align.pyx":208
+/* "pywfa/align.pyx":210
  *     """Wrapper class for WFA2-lib. If a pattern is supplied, it will be cached for re-use
  *     """
  *     def __init__(self,             # <<<<<<<<<<<<<<
@@ -4880,7 +4707,7 @@ static int __pyx_pw_5pywfa_5align_16WavefrontAligner_1__init__(PyObject *__pyx_v
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_pattern,&__pyx_n_s_distance,&__pyx_n_s_match,&__pyx_n_s_mismatch,&__pyx_n_s_gap_opening,&__pyx_n_s_gap_extension,&__pyx_n_s_gap_opening2,&__pyx_n_s_gap_extension2,&__pyx_n_s_scope,&__pyx_n_s_span,&__pyx_n_s_pattern_begin_free,&__pyx_n_s_pattern_end_free,&__pyx_n_s_text_begin_free,&__pyx_n_s_text_end_free,&__pyx_n_s_heuristic,&__pyx_n_s_min_wavefront_length,&__pyx_n_s_max_distance_threshold,&__pyx_n_s_steps_between_cutoffs,&__pyx_n_s_xdrop,0};
     PyObject* values[19] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-    /* "pywfa/align.pyx":209
+    /* "pywfa/align.pyx":211
  *     """
  *     def __init__(self,
  *                  pattern=None,             # <<<<<<<<<<<<<<
@@ -4892,7 +4719,7 @@ static int __pyx_pw_5pywfa_5align_16WavefrontAligner_1__init__(PyObject *__pyx_v
     values[8] = ((PyObject *)__pyx_n_u_full);
     values[9] = ((PyObject *)__pyx_kp_u_ends_free);
 
-    /* "pywfa/align.pyx":223
+    /* "pywfa/align.pyx":225
  *                  int text_begin_free=0,
  *                  int text_end_free=0,
  *                  heuristic=None,             # <<<<<<<<<<<<<<
@@ -5062,7 +4889,7 @@ static int __pyx_pw_5pywfa_5align_16WavefrontAligner_1__init__(PyObject *__pyx_v
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 208, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 210, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5111,82 +4938,82 @@ static int __pyx_pw_5pywfa_5align_16WavefrontAligner_1__init__(PyObject *__pyx_v
     __pyx_v_pattern = values[0];
     __pyx_v_distance = values[1];
     if (values[2]) {
-      __pyx_v_match = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_match == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 211, __pyx_L3_error)
+      __pyx_v_match = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_match == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
     } else {
       __pyx_v_match = ((int)-1);
     }
     if (values[3]) {
-      __pyx_v_mismatch = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_mismatch == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 212, __pyx_L3_error)
+      __pyx_v_mismatch = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_mismatch == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L3_error)
     } else {
       __pyx_v_mismatch = ((int)4);
     }
     if (values[4]) {
-      __pyx_v_gap_opening = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_gap_opening == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
+      __pyx_v_gap_opening = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_gap_opening == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L3_error)
     } else {
       __pyx_v_gap_opening = ((int)6);
     }
     if (values[5]) {
-      __pyx_v_gap_extension = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_gap_extension == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L3_error)
+      __pyx_v_gap_extension = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_gap_extension == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 216, __pyx_L3_error)
     } else {
       __pyx_v_gap_extension = ((int)2);
     }
     if (values[6]) {
-      __pyx_v_gap_opening2 = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_gap_opening2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L3_error)
+      __pyx_v_gap_opening2 = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_gap_opening2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 217, __pyx_L3_error)
     } else {
       __pyx_v_gap_opening2 = ((int)24);
     }
     if (values[7]) {
-      __pyx_v_gap_extension2 = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_gap_extension2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 216, __pyx_L3_error)
+      __pyx_v_gap_extension2 = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_gap_extension2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L3_error)
     } else {
       __pyx_v_gap_extension2 = ((int)1);
     }
     __pyx_v_scope = values[8];
     __pyx_v_span = values[9];
     if (values[10]) {
-      __pyx_v_pattern_begin_free = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_pattern_begin_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 219, __pyx_L3_error)
+      __pyx_v_pattern_begin_free = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_pattern_begin_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
     } else {
       __pyx_v_pattern_begin_free = ((int)0);
     }
     if (values[11]) {
-      __pyx_v_pattern_end_free = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_pattern_end_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 220, __pyx_L3_error)
+      __pyx_v_pattern_end_free = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_pattern_end_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 222, __pyx_L3_error)
     } else {
       __pyx_v_pattern_end_free = ((int)0);
     }
     if (values[12]) {
-      __pyx_v_text_begin_free = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_text_begin_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
+      __pyx_v_text_begin_free = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_text_begin_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 223, __pyx_L3_error)
     } else {
       __pyx_v_text_begin_free = ((int)0);
     }
     if (values[13]) {
-      __pyx_v_text_end_free = __Pyx_PyInt_As_int(values[13]); if (unlikely((__pyx_v_text_end_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 222, __pyx_L3_error)
+      __pyx_v_text_end_free = __Pyx_PyInt_As_int(values[13]); if (unlikely((__pyx_v_text_end_free == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
     } else {
       __pyx_v_text_end_free = ((int)0);
     }
     __pyx_v_heuristic = values[14];
     if (values[15]) {
-      __pyx_v_min_wavefront_length = __Pyx_PyInt_As_int(values[15]); if (unlikely((__pyx_v_min_wavefront_length == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 226, __pyx_L3_error)
+      __pyx_v_min_wavefront_length = __Pyx_PyInt_As_int(values[15]); if (unlikely((__pyx_v_min_wavefront_length == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 228, __pyx_L3_error)
     } else {
       __pyx_v_min_wavefront_length = ((int)10);
     }
     if (values[16]) {
-      __pyx_v_max_distance_threshold = __Pyx_PyInt_As_int(values[16]); if (unlikely((__pyx_v_max_distance_threshold == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 227, __pyx_L3_error)
+      __pyx_v_max_distance_threshold = __Pyx_PyInt_As_int(values[16]); if (unlikely((__pyx_v_max_distance_threshold == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 229, __pyx_L3_error)
     } else {
       __pyx_v_max_distance_threshold = ((int)50);
     }
     if (values[17]) {
-      __pyx_v_steps_between_cutoffs = __Pyx_PyInt_As_int(values[17]); if (unlikely((__pyx_v_steps_between_cutoffs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 228, __pyx_L3_error)
+      __pyx_v_steps_between_cutoffs = __Pyx_PyInt_As_int(values[17]); if (unlikely((__pyx_v_steps_between_cutoffs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 230, __pyx_L3_error)
     } else {
       __pyx_v_steps_between_cutoffs = ((int)1);
     }
     if (values[18]) {
-      __pyx_v_xdrop = __Pyx_PyInt_As_int(values[18]); if (unlikely((__pyx_v_xdrop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 229, __pyx_L3_error)
+      __pyx_v_xdrop = __Pyx_PyInt_As_int(values[18]); if (unlikely((__pyx_v_xdrop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 231, __pyx_L3_error)
     } else {
       __pyx_v_xdrop = ((int)20);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 19, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 208, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 19, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 210, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pywfa.align.WavefrontAligner.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5194,7 +5021,7 @@ static int __pyx_pw_5pywfa_5align_16WavefrontAligner_1__init__(PyObject *__pyx_v
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self), __pyx_v_pattern, __pyx_v_distance, __pyx_v_match, __pyx_v_mismatch, __pyx_v_gap_opening, __pyx_v_gap_extension, __pyx_v_gap_opening2, __pyx_v_gap_extension2, __pyx_v_scope, __pyx_v_span, __pyx_v_pattern_begin_free, __pyx_v_pattern_end_free, __pyx_v_text_begin_free, __pyx_v_text_end_free, __pyx_v_heuristic, __pyx_v_min_wavefront_length, __pyx_v_max_distance_threshold, __pyx_v_steps_between_cutoffs, __pyx_v_xdrop);
 
-  /* "pywfa/align.pyx":208
+  /* "pywfa/align.pyx":210
  *     """Wrapper class for WFA2-lib. If a pattern is supplied, it will be cached for re-use
  *     """
  *     def __init__(self,             # <<<<<<<<<<<<<<
@@ -5219,24 +5046,24 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "pywfa/align.pyx":232
+  /* "pywfa/align.pyx":234
  *                  ):
  * 
  *         if pattern:             # <<<<<<<<<<<<<<
  *             self._pattern = pattern
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_pattern); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 232, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_pattern); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 234, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":233
+    /* "pywfa/align.pyx":235
  * 
  *         if pattern:
  *             self._pattern = pattern             # <<<<<<<<<<<<<<
  * 
  *         # could get a malloc version working
  */
-    if (!(likely(PyString_CheckExact(__pyx_v_pattern))||((__pyx_v_pattern) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_pattern)->tp_name), 0))) __PYX_ERR(0, 233, __pyx_L1_error)
+    if (!(likely(PyString_CheckExact(__pyx_v_pattern))||((__pyx_v_pattern) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_pattern)->tp_name), 0))) __PYX_ERR(0, 235, __pyx_L1_error)
     __pyx_t_2 = __pyx_v_pattern;
     __Pyx_INCREF(__pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
@@ -5245,7 +5072,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     __pyx_v_self->_pattern = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "pywfa/align.pyx":232
+    /* "pywfa/align.pyx":234
  *                  ):
  * 
  *         if pattern:             # <<<<<<<<<<<<<<
@@ -5254,7 +5081,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
   }
 
-  /* "pywfa/align.pyx":237
+  /* "pywfa/align.pyx":239
  *         # could get a malloc version working
  *         # self.attributes = <wfa.wavefront_aligner_attr_t* > malloc(sizeof(wfa.wavefront_aligner_attr_default))
  *         self.attributes = &wfa.wavefront_aligner_attr_default             # <<<<<<<<<<<<<<
@@ -5263,17 +5090,17 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
   __pyx_v_self->attributes = (&wavefront_aligner_attr_default);
 
-  /* "pywfa/align.pyx":239
+  /* "pywfa/align.pyx":241
  *         self.attributes = &wfa.wavefront_aligner_attr_default
  * 
  *         if distance == "affine":             # <<<<<<<<<<<<<<
  *             self.attributes.distance_metric = wfa.gap_affine
  *             self.attributes.affine_penalties.match = match
  */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_distance, __pyx_n_u_affine, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_distance, __pyx_n_u_affine, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 241, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":240
+    /* "pywfa/align.pyx":242
  * 
  *         if distance == "affine":
  *             self.attributes.distance_metric = wfa.gap_affine             # <<<<<<<<<<<<<<
@@ -5282,7 +5109,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->distance_metric = gap_affine;
 
-    /* "pywfa/align.pyx":241
+    /* "pywfa/align.pyx":243
  *         if distance == "affine":
  *             self.attributes.distance_metric = wfa.gap_affine
  *             self.attributes.affine_penalties.match = match             # <<<<<<<<<<<<<<
@@ -5291,7 +5118,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine_penalties.match = __pyx_v_match;
 
-    /* "pywfa/align.pyx":242
+    /* "pywfa/align.pyx":244
  *             self.attributes.distance_metric = wfa.gap_affine
  *             self.attributes.affine_penalties.match = match
  *             self.match_score = match             # <<<<<<<<<<<<<<
@@ -5300,7 +5127,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->match_score = __pyx_v_match;
 
-    /* "pywfa/align.pyx":243
+    /* "pywfa/align.pyx":245
  *             self.attributes.affine_penalties.match = match
  *             self.match_score = match
  *             self.attributes.affine_penalties.mismatch = mismatch             # <<<<<<<<<<<<<<
@@ -5309,7 +5136,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine_penalties.mismatch = __pyx_v_mismatch;
 
-    /* "pywfa/align.pyx":244
+    /* "pywfa/align.pyx":246
  *             self.match_score = match
  *             self.attributes.affine_penalties.mismatch = mismatch
  *             self.attributes.affine_penalties.gap_opening = gap_opening             # <<<<<<<<<<<<<<
@@ -5318,7 +5145,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine_penalties.gap_opening = __pyx_v_gap_opening;
 
-    /* "pywfa/align.pyx":245
+    /* "pywfa/align.pyx":247
  *             self.attributes.affine_penalties.mismatch = mismatch
  *             self.attributes.affine_penalties.gap_opening = gap_opening
  *             self.attributes.affine_penalties.gap_extension = gap_extension             # <<<<<<<<<<<<<<
@@ -5327,7 +5154,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine_penalties.gap_extension = __pyx_v_gap_extension;
 
-    /* "pywfa/align.pyx":239
+    /* "pywfa/align.pyx":241
  *         self.attributes = &wfa.wavefront_aligner_attr_default
  * 
  *         if distance == "affine":             # <<<<<<<<<<<<<<
@@ -5337,17 +5164,17 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L4;
   }
 
-  /* "pywfa/align.pyx":246
+  /* "pywfa/align.pyx":248
  *             self.attributes.affine_penalties.gap_opening = gap_opening
  *             self.attributes.affine_penalties.gap_extension = gap_extension
  *         elif distance == "affine2p":             # <<<<<<<<<<<<<<
  *             self.attributes.distance_metric = wfa.gap_affine_2p
  *             self.attributes.affine2p_penalties.match = match
  */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_distance, __pyx_n_u_affine2p, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 246, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_distance, __pyx_n_u_affine2p, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 248, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":247
+    /* "pywfa/align.pyx":249
  *             self.attributes.affine_penalties.gap_extension = gap_extension
  *         elif distance == "affine2p":
  *             self.attributes.distance_metric = wfa.gap_affine_2p             # <<<<<<<<<<<<<<
@@ -5356,7 +5183,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->distance_metric = gap_affine_2p;
 
-    /* "pywfa/align.pyx":248
+    /* "pywfa/align.pyx":250
  *         elif distance == "affine2p":
  *             self.attributes.distance_metric = wfa.gap_affine_2p
  *             self.attributes.affine2p_penalties.match = match             # <<<<<<<<<<<<<<
@@ -5365,7 +5192,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine2p_penalties.match = __pyx_v_match;
 
-    /* "pywfa/align.pyx":249
+    /* "pywfa/align.pyx":251
  *             self.attributes.distance_metric = wfa.gap_affine_2p
  *             self.attributes.affine2p_penalties.match = match
  *             self.match_score = match             # <<<<<<<<<<<<<<
@@ -5374,7 +5201,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->match_score = __pyx_v_match;
 
-    /* "pywfa/align.pyx":250
+    /* "pywfa/align.pyx":252
  *             self.attributes.affine2p_penalties.match = match
  *             self.match_score = match
  *             self.attributes.affine2p_penalties.mismatch = mismatch             # <<<<<<<<<<<<<<
@@ -5383,7 +5210,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine2p_penalties.mismatch = __pyx_v_mismatch;
 
-    /* "pywfa/align.pyx":251
+    /* "pywfa/align.pyx":253
  *             self.match_score = match
  *             self.attributes.affine2p_penalties.mismatch = mismatch
  *             self.attributes.affine2p_penalties.gap_opening1 = gap_opening             # <<<<<<<<<<<<<<
@@ -5392,7 +5219,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine2p_penalties.gap_opening1 = __pyx_v_gap_opening;
 
-    /* "pywfa/align.pyx":252
+    /* "pywfa/align.pyx":254
  *             self.attributes.affine2p_penalties.mismatch = mismatch
  *             self.attributes.affine2p_penalties.gap_opening1 = gap_opening
  *             self.attributes.affine2p_penalties.gap_extension1 = gap_extension             # <<<<<<<<<<<<<<
@@ -5401,7 +5228,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine2p_penalties.gap_extension1 = __pyx_v_gap_extension;
 
-    /* "pywfa/align.pyx":253
+    /* "pywfa/align.pyx":255
  *             self.attributes.affine2p_penalties.gap_opening1 = gap_opening
  *             self.attributes.affine2p_penalties.gap_extension1 = gap_extension
  *             self.attributes.affine2p_penalties.gap_opening2 = gap_opening2             # <<<<<<<<<<<<<<
@@ -5410,7 +5237,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine2p_penalties.gap_opening2 = __pyx_v_gap_opening2;
 
-    /* "pywfa/align.pyx":254
+    /* "pywfa/align.pyx":256
  *             self.attributes.affine2p_penalties.gap_extension1 = gap_extension
  *             self.attributes.affine2p_penalties.gap_opening2 = gap_opening2
  *             self.attributes.affine2p_penalties.gap_extension2 = gap_extension2             # <<<<<<<<<<<<<<
@@ -5419,7 +5246,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->affine2p_penalties.gap_extension2 = __pyx_v_gap_extension2;
 
-    /* "pywfa/align.pyx":246
+    /* "pywfa/align.pyx":248
  *             self.attributes.affine_penalties.gap_opening = gap_opening
  *             self.attributes.affine_penalties.gap_extension = gap_extension
  *         elif distance == "affine2p":             # <<<<<<<<<<<<<<
@@ -5429,7 +5256,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L4;
   }
 
-  /* "pywfa/align.pyx":256
+  /* "pywfa/align.pyx":258
  *             self.attributes.affine2p_penalties.gap_extension2 = gap_extension2
  *         else:
  *             print(NotImplementedError(f'{distance} distance not implemented'))             # <<<<<<<<<<<<<<
@@ -5437,32 +5264,32 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  *         if scope == "full":
  */
   /*else*/ {
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_distance, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_distance, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_Concat(__pyx_t_2, __pyx_kp_u_distance_not_implemented); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_Concat(__pyx_t_2, __pyx_kp_u_distance_not_implemented); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_NotImplementedError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_NotImplementedError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __pyx_L4:;
 
-  /* "pywfa/align.pyx":258
+  /* "pywfa/align.pyx":260
  *             print(NotImplementedError(f'{distance} distance not implemented'))
  *             # raise NotImplementedError(f'{distance} distance not implemented')
  *         if scope == "full":             # <<<<<<<<<<<<<<
  *             self.attributes.alignment_scope = wfa.compute_alignment
  *         elif scope == "score":
  */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_scope, __pyx_n_u_full, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_scope, __pyx_n_u_full, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 260, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":259
+    /* "pywfa/align.pyx":261
  *             # raise NotImplementedError(f'{distance} distance not implemented')
  *         if scope == "full":
  *             self.attributes.alignment_scope = wfa.compute_alignment             # <<<<<<<<<<<<<<
@@ -5471,7 +5298,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->alignment_scope = compute_alignment;
 
-    /* "pywfa/align.pyx":258
+    /* "pywfa/align.pyx":260
  *             print(NotImplementedError(f'{distance} distance not implemented'))
  *             # raise NotImplementedError(f'{distance} distance not implemented')
  *         if scope == "full":             # <<<<<<<<<<<<<<
@@ -5481,17 +5308,17 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L5;
   }
 
-  /* "pywfa/align.pyx":260
+  /* "pywfa/align.pyx":262
  *         if scope == "full":
  *             self.attributes.alignment_scope = wfa.compute_alignment
  *         elif scope == "score":             # <<<<<<<<<<<<<<
  *             self.attributes.alignment_scope = wfa.compute_score
  *             self.score_only = True
  */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_scope, __pyx_n_u_score, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_scope, __pyx_n_u_score, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 262, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":261
+    /* "pywfa/align.pyx":263
  *             self.attributes.alignment_scope = wfa.compute_alignment
  *         elif scope == "score":
  *             self.attributes.alignment_scope = wfa.compute_score             # <<<<<<<<<<<<<<
@@ -5500,7 +5327,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->alignment_scope = compute_score;
 
-    /* "pywfa/align.pyx":262
+    /* "pywfa/align.pyx":264
  *         elif scope == "score":
  *             self.attributes.alignment_scope = wfa.compute_score
  *             self.score_only = True             # <<<<<<<<<<<<<<
@@ -5509,7 +5336,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->score_only = 1;
 
-    /* "pywfa/align.pyx":260
+    /* "pywfa/align.pyx":262
  *         if scope == "full":
  *             self.attributes.alignment_scope = wfa.compute_alignment
  *         elif scope == "score":             # <<<<<<<<<<<<<<
@@ -5519,7 +5346,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L5;
   }
 
-  /* "pywfa/align.pyx":264
+  /* "pywfa/align.pyx":266
  *             self.score_only = True
  *         else:
  *             print(ValueError(f'{scope} scope not understood'))             # <<<<<<<<<<<<<<
@@ -5527,22 +5354,22 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  * 
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_v_scope, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 264, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_v_scope, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_t_3, __pyx_kp_u_scope_not_understood); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 264, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_t_3, __pyx_kp_u_scope_not_understood); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 264, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 264, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __pyx_L5:;
 
-  /* "pywfa/align.pyx":267
+  /* "pywfa/align.pyx":269
  *             # raise ValueError(f'{scope} scope not understood')
  * 
  *         self.attributes.alignment_form.pattern_begin_free = pattern_begin_free             # <<<<<<<<<<<<<<
@@ -5551,7 +5378,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
   __pyx_v_self->attributes->alignment_form.pattern_begin_free = __pyx_v_pattern_begin_free;
 
-  /* "pywfa/align.pyx":268
+  /* "pywfa/align.pyx":270
  * 
  *         self.attributes.alignment_form.pattern_begin_free = pattern_begin_free
  *         self.attributes.alignment_form.pattern_end_free = pattern_end_free             # <<<<<<<<<<<<<<
@@ -5560,7 +5387,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
   __pyx_v_self->attributes->alignment_form.pattern_end_free = __pyx_v_pattern_end_free;
 
-  /* "pywfa/align.pyx":269
+  /* "pywfa/align.pyx":271
  *         self.attributes.alignment_form.pattern_begin_free = pattern_begin_free
  *         self.attributes.alignment_form.pattern_end_free = pattern_end_free
  *         self.attributes.alignment_form.text_begin_free = text_begin_free             # <<<<<<<<<<<<<<
@@ -5569,7 +5396,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
   __pyx_v_self->attributes->alignment_form.text_begin_free = __pyx_v_text_begin_free;
 
-  /* "pywfa/align.pyx":270
+  /* "pywfa/align.pyx":272
  *         self.attributes.alignment_form.pattern_end_free = pattern_end_free
  *         self.attributes.alignment_form.text_begin_free = text_begin_free
  *         self.attributes.alignment_form.text_end_free = text_end_free             # <<<<<<<<<<<<<<
@@ -5578,17 +5405,17 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
   __pyx_v_self->attributes->alignment_form.text_end_free = __pyx_v_text_end_free;
 
-  /* "pywfa/align.pyx":271
+  /* "pywfa/align.pyx":273
  *         self.attributes.alignment_form.text_begin_free = text_begin_free
  *         self.attributes.alignment_form.text_end_free = text_end_free
  *         if span == "ends-free":             # <<<<<<<<<<<<<<
  *             self.attributes.alignment_form.span = wfa.alignment_endsfree
  * 
  */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_span, __pyx_kp_u_ends_free, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_span, __pyx_kp_u_ends_free, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 273, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":272
+    /* "pywfa/align.pyx":274
  *         self.attributes.alignment_form.text_end_free = text_end_free
  *         if span == "ends-free":
  *             self.attributes.alignment_form.span = wfa.alignment_endsfree             # <<<<<<<<<<<<<<
@@ -5597,7 +5424,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->alignment_form.span = alignment_endsfree;
 
-    /* "pywfa/align.pyx":271
+    /* "pywfa/align.pyx":273
  *         self.attributes.alignment_form.text_begin_free = text_begin_free
  *         self.attributes.alignment_form.text_end_free = text_end_free
  *         if span == "ends-free":             # <<<<<<<<<<<<<<
@@ -5607,17 +5434,17 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L6;
   }
 
-  /* "pywfa/align.pyx":274
+  /* "pywfa/align.pyx":276
  *             self.attributes.alignment_form.span = wfa.alignment_endsfree
  * 
  *         elif span == "end-to-end":             # <<<<<<<<<<<<<<
  *             self.attributes.alignment_form.span = wfa.alignment_end2end
  *         else:
  */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_span, __pyx_kp_u_end_to_end, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 274, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_span, __pyx_kp_u_end_to_end, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 276, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":275
+    /* "pywfa/align.pyx":277
  * 
  *         elif span == "end-to-end":
  *             self.attributes.alignment_form.span = wfa.alignment_end2end             # <<<<<<<<<<<<<<
@@ -5626,7 +5453,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->alignment_form.span = alignment_end2end;
 
-    /* "pywfa/align.pyx":274
+    /* "pywfa/align.pyx":276
  *             self.attributes.alignment_form.span = wfa.alignment_endsfree
  * 
  *         elif span == "end-to-end":             # <<<<<<<<<<<<<<
@@ -5636,7 +5463,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L6;
   }
 
-  /* "pywfa/align.pyx":277
+  /* "pywfa/align.pyx":279
  *             self.attributes.alignment_form.span = wfa.alignment_end2end
  *         else:
  *             print(NotImplementedError(f'{span} span not implemented'))             # <<<<<<<<<<<<<<
@@ -5644,22 +5471,22 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  * 
  */
   /*else*/ {
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_span, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_span, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 279, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_Concat(__pyx_t_2, __pyx_kp_u_span_not_implemented); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_Concat(__pyx_t_2, __pyx_kp_u_span_not_implemented); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 279, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_NotImplementedError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_NotImplementedError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 279, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 279, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __pyx_L6:;
 
-  /* "pywfa/align.pyx":280
+  /* "pywfa/align.pyx":282
  *             # raise NotImplementedError(f'{span} span not implemented')
  * 
  *         if heuristic is None:             # <<<<<<<<<<<<<<
@@ -5670,7 +5497,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
   __pyx_t_4 = (__pyx_t_1 != 0);
   if (__pyx_t_4) {
 
-    /* "pywfa/align.pyx":281
+    /* "pywfa/align.pyx":283
  * 
  *         if heuristic is None:
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_none             # <<<<<<<<<<<<<<
@@ -5679,7 +5506,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.strategy = wf_heuristic_none;
 
-    /* "pywfa/align.pyx":280
+    /* "pywfa/align.pyx":282
  *             # raise NotImplementedError(f'{span} span not implemented')
  * 
  *         if heuristic is None:             # <<<<<<<<<<<<<<
@@ -5689,17 +5516,17 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L7;
   }
 
-  /* "pywfa/align.pyx":282
+  /* "pywfa/align.pyx":284
  *         if heuristic is None:
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_none
  *         elif heuristic == "adaptive":             # <<<<<<<<<<<<<<
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_wfadaptive
  *             self.attributes.heuristic.min_wavefront_length = min_wavefront_length
  */
-  __pyx_t_4 = (__Pyx_PyUnicode_Equals(__pyx_v_heuristic, __pyx_n_u_adaptive, Py_EQ)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 282, __pyx_L1_error)
+  __pyx_t_4 = (__Pyx_PyUnicode_Equals(__pyx_v_heuristic, __pyx_n_u_adaptive, Py_EQ)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 284, __pyx_L1_error)
   if (__pyx_t_4) {
 
-    /* "pywfa/align.pyx":283
+    /* "pywfa/align.pyx":285
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_none
  *         elif heuristic == "adaptive":
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_wfadaptive             # <<<<<<<<<<<<<<
@@ -5708,7 +5535,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.strategy = wf_heuristic_wfadaptive;
 
-    /* "pywfa/align.pyx":284
+    /* "pywfa/align.pyx":286
  *         elif heuristic == "adaptive":
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_wfadaptive
  *             self.attributes.heuristic.min_wavefront_length = min_wavefront_length             # <<<<<<<<<<<<<<
@@ -5717,7 +5544,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.min_wavefront_length = __pyx_v_min_wavefront_length;
 
-    /* "pywfa/align.pyx":285
+    /* "pywfa/align.pyx":287
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_wfadaptive
  *             self.attributes.heuristic.min_wavefront_length = min_wavefront_length
  *             self.attributes.heuristic.max_distance_threshold = max_distance_threshold             # <<<<<<<<<<<<<<
@@ -5726,7 +5553,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.max_distance_threshold = __pyx_v_max_distance_threshold;
 
-    /* "pywfa/align.pyx":286
+    /* "pywfa/align.pyx":288
  *             self.attributes.heuristic.min_wavefront_length = min_wavefront_length
  *             self.attributes.heuristic.max_distance_threshold = max_distance_threshold
  *             self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs             # <<<<<<<<<<<<<<
@@ -5735,7 +5562,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.steps_between_cutoffs = __pyx_v_steps_between_cutoffs;
 
-    /* "pywfa/align.pyx":282
+    /* "pywfa/align.pyx":284
  *         if heuristic is None:
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_none
  *         elif heuristic == "adaptive":             # <<<<<<<<<<<<<<
@@ -5745,17 +5572,17 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L7;
   }
 
-  /* "pywfa/align.pyx":287
+  /* "pywfa/align.pyx":289
  *             self.attributes.heuristic.max_distance_threshold = max_distance_threshold
  *             self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
  *         elif heuristic == "X-drop":             # <<<<<<<<<<<<<<
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_xdrop
  *             self.attributes.heuristic.xdrop = xdrop
  */
-  __pyx_t_4 = (__Pyx_PyUnicode_Equals(__pyx_v_heuristic, __pyx_kp_u_X_drop, Py_EQ)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 287, __pyx_L1_error)
+  __pyx_t_4 = (__Pyx_PyUnicode_Equals(__pyx_v_heuristic, __pyx_kp_u_X_drop, Py_EQ)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 289, __pyx_L1_error)
   if (__pyx_t_4) {
 
-    /* "pywfa/align.pyx":288
+    /* "pywfa/align.pyx":290
  *             self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
  *         elif heuristic == "X-drop":
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_xdrop             # <<<<<<<<<<<<<<
@@ -5764,7 +5591,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.strategy = wf_heuristic_xdrop;
 
-    /* "pywfa/align.pyx":289
+    /* "pywfa/align.pyx":291
  *         elif heuristic == "X-drop":
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_xdrop
  *             self.attributes.heuristic.xdrop = xdrop             # <<<<<<<<<<<<<<
@@ -5773,7 +5600,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.xdrop = __pyx_v_xdrop;
 
-    /* "pywfa/align.pyx":290
+    /* "pywfa/align.pyx":292
  *             self.attributes.heuristic.strategy = wfa.wf_heuristic_xdrop
  *             self.attributes.heuristic.xdrop = xdrop
  *             self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs             # <<<<<<<<<<<<<<
@@ -5782,7 +5609,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  */
     __pyx_v_self->attributes->heuristic.steps_between_cutoffs = __pyx_v_steps_between_cutoffs;
 
-    /* "pywfa/align.pyx":287
+    /* "pywfa/align.pyx":289
  *             self.attributes.heuristic.max_distance_threshold = max_distance_threshold
  *             self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
  *         elif heuristic == "X-drop":             # <<<<<<<<<<<<<<
@@ -5792,7 +5619,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
     goto __pyx_L7;
   }
 
-  /* "pywfa/align.pyx":292
+  /* "pywfa/align.pyx":294
  *             self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
  *         else:
  *             print(NotImplementedError(f'{heuristic} heuristic not implemented'))             # <<<<<<<<<<<<<<
@@ -5800,31 +5627,31 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
  * 
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_v_heuristic, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_v_heuristic, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_t_3, __pyx_kp_u_heuristic_not_implemented); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_t_3, __pyx_kp_u_heuristic_not_implemented); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_NotImplementedError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_NotImplementedError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __pyx_L7:;
 
-  /* "pywfa/align.pyx":295
+  /* "pywfa/align.pyx":297
  *             # raise NotImplementedError(f'{heuristic} heuristic not implemented')
  * 
  *         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)             # <<<<<<<<<<<<<<
  * 
- *     cpdef int wavefront_align(self, text, pattern=None):
+ *     cdef int wavefront_align(self, text, pattern=None):
  */
   __pyx_v_self->wf_aligner = wavefront_aligner_new(__pyx_v_self->attributes);
 
-  /* "pywfa/align.pyx":208
+  /* "pywfa/align.pyx":210
  *     """Wrapper class for WFA2-lib. If a pattern is supplied, it will be cached for re-use
  *     """
  *     def __init__(self,             # <<<<<<<<<<<<<<
@@ -5845,33 +5672,29 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner___init__(struct __pyx_obj_5
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":297
+/* "pywfa/align.pyx":299
  *         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
  * 
- *     cpdef int wavefront_align(self, text, pattern=None):             # <<<<<<<<<<<<<<
+ *     cdef int wavefront_align(self, text, pattern=None):             # <<<<<<<<<<<<<<
  *         """The main alignment function. Returns alignment score
  *         Returns
  */
 
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_3wavefront_align(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, int __pyx_skip_dispatch, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args) {
+static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args) {
   PyObject *__pyx_v_pattern = ((PyObject *)Py_None);
   PyObject *__pyx_v_p = 0;
   PyObject *__pyx_v_t = 0;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
+  int __pyx_t_1;
+  int __pyx_t_2;
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
-  int __pyx_t_5;
-  PyObject *__pyx_t_6 = NULL;
-  int __pyx_t_7;
-  int __pyx_t_8;
-  char const *__pyx_t_9;
-  Py_ssize_t __pyx_t_10;
-  char const *__pyx_t_11;
-  Py_ssize_t __pyx_t_12;
+  PyObject *__pyx_t_5 = NULL;
+  char const *__pyx_t_6;
+  Py_ssize_t __pyx_t_7;
+  char const *__pyx_t_8;
+  Py_ssize_t __pyx_t_9;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -5881,139 +5704,63 @@ static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx
       __pyx_v_pattern = __pyx_optional_args->pattern;
     }
   }
-  /* Check if called by wrapper */
-  if (unlikely(__pyx_skip_dispatch)) ;
-  /* Check if overridden in Python */
-  else if (unlikely((Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0) || (Py_TYPE(((PyObject *)__pyx_v_self))->tp_flags & (Py_TPFLAGS_IS_ABSTRACT | Py_TPFLAGS_HEAPTYPE)))) {
-    #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
-    static PY_UINT64_T __pyx_tp_dict_version = __PYX_DICT_VERSION_INIT, __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
-    if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
-      PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
-      #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_wavefront_align); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_5pywfa_5align_16WavefrontAligner_3wavefront_align)) {
-        __Pyx_INCREF(__pyx_t_1);
-        __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
-        __pyx_t_5 = 0;
-        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-          __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
-          if (likely(__pyx_t_4)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-            __Pyx_INCREF(__pyx_t_4);
-            __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_3, function);
-            __pyx_t_5 = 1;
-          }
-        }
-        #if CYTHON_FAST_PYCALL
-        if (PyFunction_Check(__pyx_t_3)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_text, __pyx_v_pattern};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 297, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __Pyx_GOTREF(__pyx_t_2);
-        } else
-        #endif
-        #if CYTHON_FAST_PYCCALL
-        if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_text, __pyx_v_pattern};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 297, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __Pyx_GOTREF(__pyx_t_2);
-        } else
-        #endif
-        {
-          __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 297, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          if (__pyx_t_4) {
-            __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
-          }
-          __Pyx_INCREF(__pyx_v_text);
-          __Pyx_GIVEREF(__pyx_v_text);
-          PyTuple_SET_ITEM(__pyx_t_6, 0+__pyx_t_5, __pyx_v_text);
-          __Pyx_INCREF(__pyx_v_pattern);
-          __Pyx_GIVEREF(__pyx_v_pattern);
-          PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_v_pattern);
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 297, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_2);
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        }
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 297, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_r = __pyx_t_5;
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        goto __pyx_L0;
-      }
-      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
-      __pyx_tp_dict_version = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
-      __pyx_obj_dict_version = __Pyx_get_object_dict_version(((PyObject *)__pyx_v_self));
-      if (unlikely(__pyx_type_dict_guard != __pyx_tp_dict_version)) {
-        __pyx_tp_dict_version = __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
-      }
-      #endif
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
-    }
-    #endif
-  }
 
-  /* "pywfa/align.pyx":305
+  /* "pywfa/align.pyx":307
  *         """
  *         cdef bytes p
  *         if pattern is not None:             # <<<<<<<<<<<<<<
  *             p = pattern.encode('ascii')
  *             self._pattern = pattern
  */
-  __pyx_t_7 = (__pyx_v_pattern != Py_None);
-  __pyx_t_8 = (__pyx_t_7 != 0);
-  if (__pyx_t_8) {
+  __pyx_t_1 = (__pyx_v_pattern != Py_None);
+  __pyx_t_2 = (__pyx_t_1 != 0);
+  if (__pyx_t_2) {
 
-    /* "pywfa/align.pyx":306
+    /* "pywfa/align.pyx":308
  *         cdef bytes p
  *         if pattern is not None:
  *             p = pattern.encode('ascii')             # <<<<<<<<<<<<<<
  *             self._pattern = pattern
  *         else:
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_pattern, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 306, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = NULL;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      if (likely(__pyx_t_3)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-        __Pyx_INCREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_pattern, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_5);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_2, function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
       }
     }
-    __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_n_u_ascii) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_n_u_ascii);
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 306, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 306, __pyx_L1_error)
-    __pyx_v_p = ((PyObject*)__pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_5, __pyx_n_u_ascii) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_n_u_ascii);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (!(likely(PyBytes_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_3)->tp_name), 0))) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_v_p = ((PyObject*)__pyx_t_3);
+    __pyx_t_3 = 0;
 
-    /* "pywfa/align.pyx":307
+    /* "pywfa/align.pyx":309
  *         if pattern is not None:
  *             p = pattern.encode('ascii')
  *             self._pattern = pattern             # <<<<<<<<<<<<<<
  *         else:
  *             p = self._pattern.encode('ascii')
  */
-    if (!(likely(PyString_CheckExact(__pyx_v_pattern))||((__pyx_v_pattern) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_pattern)->tp_name), 0))) __PYX_ERR(0, 307, __pyx_L1_error)
-    __pyx_t_1 = __pyx_v_pattern;
-    __Pyx_INCREF(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
+    if (!(likely(PyString_CheckExact(__pyx_v_pattern))||((__pyx_v_pattern) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_pattern)->tp_name), 0))) __PYX_ERR(0, 309, __pyx_L1_error)
+    __pyx_t_3 = __pyx_v_pattern;
+    __Pyx_INCREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->_pattern);
     __Pyx_DECREF(__pyx_v_self->_pattern);
-    __pyx_v_self->_pattern = ((PyObject*)__pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_v_self->_pattern = ((PyObject*)__pyx_t_3);
+    __pyx_t_3 = 0;
 
-    /* "pywfa/align.pyx":305
+    /* "pywfa/align.pyx":307
  *         """
  *         cdef bytes p
  *         if pattern is not None:             # <<<<<<<<<<<<<<
@@ -6023,7 +5770,7 @@ static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "pywfa/align.pyx":309
+  /* "pywfa/align.pyx":311
  *             self._pattern = pattern
  *         else:
  *             p = self._pattern.encode('ascii')             # <<<<<<<<<<<<<<
@@ -6031,58 +5778,58 @@ static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx
  *         wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
  */
   /*else*/ {
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->_pattern, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 309, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = NULL;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      if (likely(__pyx_t_3)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-        __Pyx_INCREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->_pattern, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_5);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_2, function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
       }
     }
-    __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_n_u_ascii) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_n_u_ascii);
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 309, __pyx_L1_error)
-    __pyx_v_p = ((PyObject*)__pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_5, __pyx_n_u_ascii) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_n_u_ascii);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 311, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (!(likely(PyBytes_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_3)->tp_name), 0))) __PYX_ERR(0, 311, __pyx_L1_error)
+    __pyx_v_p = ((PyObject*)__pyx_t_3);
+    __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "pywfa/align.pyx":310
+  /* "pywfa/align.pyx":312
  *         else:
  *             p = self._pattern.encode('ascii')
  *         cdef bytes t = text.encode('ascii')             # <<<<<<<<<<<<<<
  *         wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
  *         return self.wf_aligner.cigar.score
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_text, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 310, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_text, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+      __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __Pyx_DECREF_SET(__pyx_t_4, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_n_u_ascii) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_n_u_ascii);
-  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 310, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 310, __pyx_L1_error)
-  __pyx_v_t = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
+  __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_5, __pyx_n_u_ascii) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_n_u_ascii);
+  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(PyBytes_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_3)->tp_name), 0))) __PYX_ERR(0, 312, __pyx_L1_error)
+  __pyx_v_t = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":311
+  /* "pywfa/align.pyx":313
  *             p = self._pattern.encode('ascii')
  *         cdef bytes t = text.encode('ascii')
  *         wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))             # <<<<<<<<<<<<<<
@@ -6091,23 +5838,23 @@ static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx
  */
   if (unlikely(__pyx_v_p == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-    __PYX_ERR(0, 311, __pyx_L1_error)
+    __PYX_ERR(0, 313, __pyx_L1_error)
   }
-  __pyx_t_9 = __Pyx_PyBytes_AsString(__pyx_v_p); if (unlikely((!__pyx_t_9) && PyErr_Occurred())) __PYX_ERR(0, 311, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyBytes_AsString(__pyx_v_p); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L1_error)
   if (unlikely(__pyx_v_p == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 311, __pyx_L1_error)
+    __PYX_ERR(0, 313, __pyx_L1_error)
   }
-  __pyx_t_10 = PyBytes_GET_SIZE(__pyx_v_p); if (unlikely(__pyx_t_10 == ((Py_ssize_t)-1))) __PYX_ERR(0, 311, __pyx_L1_error)
+  __pyx_t_7 = PyBytes_GET_SIZE(__pyx_v_p); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 313, __pyx_L1_error)
   if (unlikely(__pyx_v_t == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-    __PYX_ERR(0, 311, __pyx_L1_error)
+    __PYX_ERR(0, 313, __pyx_L1_error)
   }
-  __pyx_t_11 = __Pyx_PyBytes_AsString(__pyx_v_t); if (unlikely((!__pyx_t_11) && PyErr_Occurred())) __PYX_ERR(0, 311, __pyx_L1_error)
-  __pyx_t_12 = PyObject_Length(__pyx_v_text); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 311, __pyx_L1_error)
-  (void)(wavefront_align(__pyx_v_self->wf_aligner, __pyx_t_9, ((size_t)__pyx_t_10), __pyx_t_11, ((size_t)__pyx_t_12)));
+  __pyx_t_8 = __Pyx_PyBytes_AsString(__pyx_v_t); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L1_error)
+  __pyx_t_9 = PyObject_Length(__pyx_v_text); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 313, __pyx_L1_error)
+  (void)(wavefront_align(__pyx_v_self->wf_aligner, __pyx_t_6, ((size_t)__pyx_t_7), __pyx_t_8, ((size_t)__pyx_t_9)));
 
-  /* "pywfa/align.pyx":312
+  /* "pywfa/align.pyx":314
  *         cdef bytes t = text.encode('ascii')
  *         wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
  *         return self.wf_aligner.cigar.score             # <<<<<<<<<<<<<<
@@ -6117,21 +5864,19 @@ static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx
   __pyx_r = __pyx_v_self->wf_aligner->cigar.score;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":297
+  /* "pywfa/align.pyx":299
  *         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
  * 
- *     cpdef int wavefront_align(self, text, pattern=None):             # <<<<<<<<<<<<<<
+ *     cdef int wavefront_align(self, text, pattern=None):             # <<<<<<<<<<<<<<
  *         """The main alignment function. Returns alignment score
  *         Returns
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_WriteUnraisable("pywfa.align.WavefrontAligner.wavefront_align", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
@@ -6141,107 +5886,7 @@ static int __pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align(struct __pyx
   return __pyx_r;
 }
 
-/* Python wrapper */
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_3wavefront_align(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5pywfa_5align_16WavefrontAligner_2wavefront_align[] = "The main alignment function. Returns alignment score\n        Returns\n        -------\n        int\n            alignment score\n        ";
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_3wavefront_align(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_text = 0;
-  PyObject *__pyx_v_pattern = 0;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("wavefront_align (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_text,&__pyx_n_s_pattern,0};
-    PyObject* values[2] = {0,0};
-    values[1] = ((PyObject *)Py_None);
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_text)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pattern);
-          if (value) { values[1] = value; kw_args--; }
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wavefront_align") < 0)) __PYX_ERR(0, 297, __pyx_L3_error)
-      }
-    } else {
-      switch (PyTuple_GET_SIZE(__pyx_args)) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-    }
-    __pyx_v_text = values[0];
-    __pyx_v_pattern = values[1];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wavefront_align", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 297, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("pywfa.align.WavefrontAligner.wavefront_align", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner_2wavefront_align(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self), __pyx_v_text, __pyx_v_pattern);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_2wavefront_align(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, PyObject *__pyx_v_pattern) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("wavefront_align", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 1;
-  __pyx_t_2.pattern = __pyx_v_pattern;
-  __pyx_t_1 = __pyx_vtabptr_5pywfa_5align_WavefrontAligner->wavefront_align(__pyx_v_self, __pyx_v_text, 1, &__pyx_t_2); 
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 297, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_r = __pyx_t_3;
-  __pyx_t_3 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("pywfa.align.WavefrontAligner.wavefront_align", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "pywfa/align.pyx":315
+/* "pywfa/align.pyx":317
  * 
  *     @property
  *     def status(self):             # <<<<<<<<<<<<<<
@@ -6271,7 +5916,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_6status___get__(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pywfa/align.pyx":316
+  /* "pywfa/align.pyx":318
  *     @property
  *     def status(self):
  *         return self.wf_aligner.align_status.status             # <<<<<<<<<<<<<<
@@ -6279,13 +5924,13 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_6status___get__(struc
  *     @property
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->wf_aligner->align_status.status); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 316, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->wf_aligner->align_status.status); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":315
+  /* "pywfa/align.pyx":317
  * 
  *     @property
  *     def status(self):             # <<<<<<<<<<<<<<
@@ -6304,7 +5949,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_6status___get__(struc
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":319
+/* "pywfa/align.pyx":321
  * 
  *     @property
  *     def score(self):             # <<<<<<<<<<<<<<
@@ -6334,7 +5979,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_5score___get__(struct
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pywfa/align.pyx":320
+  /* "pywfa/align.pyx":322
  *     @property
  *     def score(self):
  *         return self.wf_aligner.cigar.score             # <<<<<<<<<<<<<<
@@ -6342,13 +5987,13 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_5score___get__(struct
  *     @property
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->wf_aligner->cigar.score); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 320, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->wf_aligner->cigar.score); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":319
+  /* "pywfa/align.pyx":321
  * 
  *     @property
  *     def score(self):             # <<<<<<<<<<<<<<
@@ -6367,7 +6012,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_5score___get__(struct
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":323
+/* "pywfa/align.pyx":325
  * 
  *     @property
  *     def cigarstring(self):             # <<<<<<<<<<<<<<
@@ -6409,7 +6054,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pywfa/align.pyx":328
+  /* "pywfa/align.pyx":330
  *         cdef int last_op_length, i, length
  * 
  *         cigar = &self.wf_aligner.cigar             # <<<<<<<<<<<<<<
@@ -6418,7 +6063,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
   __pyx_v_cigar = (&__pyx_v_self->wf_aligner->cigar);
 
-  /* "pywfa/align.pyx":331
+  /* "pywfa/align.pyx":333
  * 
  *         # Check null CIGAR
  *         if cigar.begin_offset >= cigar.end_offset:             # <<<<<<<<<<<<<<
@@ -6428,7 +6073,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
   __pyx_t_1 = ((__pyx_v_cigar->begin_offset >= __pyx_v_cigar->end_offset) != 0);
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":332
+    /* "pywfa/align.pyx":334
  *         # Check null CIGAR
  *         if cigar.begin_offset >= cigar.end_offset:
  *             return ""             # <<<<<<<<<<<<<<
@@ -6440,7 +6085,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
     __pyx_r = __pyx_kp_u__2;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":331
+    /* "pywfa/align.pyx":333
  * 
  *         # Check null CIGAR
  *         if cigar.begin_offset >= cigar.end_offset:             # <<<<<<<<<<<<<<
@@ -6449,7 +6094,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
   }
 
-  /* "pywfa/align.pyx":334
+  /* "pywfa/align.pyx":336
  *             return ""
  *         # Print operations
  *         last_op = cigar.operations[cigar.begin_offset]             # <<<<<<<<<<<<<<
@@ -6458,7 +6103,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
   __pyx_v_last_op = (__pyx_v_cigar->operations[__pyx_v_cigar->begin_offset]);
 
-  /* "pywfa/align.pyx":335
+  /* "pywfa/align.pyx":337
  *         # Print operations
  *         last_op = cigar.operations[cigar.begin_offset]
  *         last_op_length = 1             # <<<<<<<<<<<<<<
@@ -6467,7 +6112,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
   __pyx_v_last_op_length = 1;
 
-  /* "pywfa/align.pyx":336
+  /* "pywfa/align.pyx":338
  *         last_op = cigar.operations[cigar.begin_offset]
  *         last_op_length = 1
  *         length = 1             # <<<<<<<<<<<<<<
@@ -6476,7 +6121,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
   __pyx_v_length = 1;
 
-  /* "pywfa/align.pyx":337
+  /* "pywfa/align.pyx":339
  *         last_op_length = 1
  *         length = 1
  *         result = ""             # <<<<<<<<<<<<<<
@@ -6486,7 +6131,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
   __Pyx_INCREF(__pyx_kp_u__2);
   __pyx_v_result = __pyx_kp_u__2;
 
-  /* "pywfa/align.pyx":338
+  /* "pywfa/align.pyx":340
  *         length = 1
  *         result = ""
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):             # <<<<<<<<<<<<<<
@@ -6498,7 +6143,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
   for (__pyx_t_4 = (__pyx_v_cigar->begin_offset + 1); __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "pywfa/align.pyx":339
+    /* "pywfa/align.pyx":341
  *         result = ""
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):
  *             if cigar.operations[i] == last_op:             # <<<<<<<<<<<<<<
@@ -6508,7 +6153,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
     __pyx_t_1 = (((__pyx_v_cigar->operations[__pyx_v_i]) == __pyx_v_last_op) != 0);
     if (__pyx_t_1) {
 
-      /* "pywfa/align.pyx":340
+      /* "pywfa/align.pyx":342
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):
  *             if cigar.operations[i] == last_op:
  *                 last_op_length += 1             # <<<<<<<<<<<<<<
@@ -6517,7 +6162,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
       __pyx_v_last_op_length = (__pyx_v_last_op_length + 1);
 
-      /* "pywfa/align.pyx":341
+      /* "pywfa/align.pyx":343
  *             if cigar.operations[i] == last_op:
  *                 last_op_length += 1
  *                 length += 1             # <<<<<<<<<<<<<<
@@ -6526,7 +6171,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
       __pyx_v_length = (__pyx_v_length + 1);
 
-      /* "pywfa/align.pyx":339
+      /* "pywfa/align.pyx":341
  *         result = ""
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):
  *             if cigar.operations[i] == last_op:             # <<<<<<<<<<<<<<
@@ -6536,7 +6181,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
       goto __pyx_L6;
     }
 
-    /* "pywfa/align.pyx":343
+    /* "pywfa/align.pyx":345
  *                 length += 1
  *             else:
  *                 result += f"{length}{chr(last_op)}"             # <<<<<<<<<<<<<<
@@ -6544,27 +6189,27 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  *             last_op = cigar.operations[i]
  */
     /*else*/ {
-      __pyx_t_5 = __Pyx_PyUnicode_From_int(__pyx_v_length, 0, ' ', 'd'); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 343, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyUnicode_From_int(__pyx_v_length, 0, ' ', 'd'); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = __Pyx_PyInt_From_char(__pyx_v_last_op); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 343, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_From_char(__pyx_v_last_op); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_builtin_chr, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 343, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_builtin_chr, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_7, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 343, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_7, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 343, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_v_result, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 343, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_v_result, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF_SET(__pyx_v_result, ((PyObject*)__pyx_t_6));
       __pyx_t_6 = 0;
 
-      /* "pywfa/align.pyx":344
+      /* "pywfa/align.pyx":346
  *             else:
  *                 result += f"{length}{chr(last_op)}"
  *                 length = 1             # <<<<<<<<<<<<<<
@@ -6575,7 +6220,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
     }
     __pyx_L6:;
 
-    /* "pywfa/align.pyx":345
+    /* "pywfa/align.pyx":347
  *                 result += f"{length}{chr(last_op)}"
  *                 length = 1
  *             last_op = cigar.operations[i]             # <<<<<<<<<<<<<<
@@ -6584,7 +6229,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
  */
     __pyx_v_last_op = (__pyx_v_cigar->operations[__pyx_v_i]);
 
-    /* "pywfa/align.pyx":346
+    /* "pywfa/align.pyx":348
  *                 length = 1
  *             last_op = cigar.operations[i]
  *             last_op_length = 1             # <<<<<<<<<<<<<<
@@ -6594,34 +6239,34 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
     __pyx_v_last_op_length = 1;
   }
 
-  /* "pywfa/align.pyx":347
+  /* "pywfa/align.pyx":349
  *             last_op = cigar.operations[i]
  *             last_op_length = 1
  *         result += f"{length}{chr(last_op)}"             # <<<<<<<<<<<<<<
  *         return result
  * 
  */
-  __pyx_t_6 = __Pyx_PyUnicode_From_int(__pyx_v_length, 0, ' ', 'd'); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyUnicode_From_int(__pyx_v_length, 0, ' ', 'd'); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyInt_From_char(__pyx_v_last_op); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_char(__pyx_v_last_op); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_chr, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_chr, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_v_result, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_v_result, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF_SET(__pyx_v_result, ((PyObject*)__pyx_t_7));
   __pyx_t_7 = 0;
 
-  /* "pywfa/align.pyx":348
+  /* "pywfa/align.pyx":350
  *             last_op_length = 1
  *         result += f"{length}{chr(last_op)}"
  *         return result             # <<<<<<<<<<<<<<
@@ -6633,7 +6278,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":323
+  /* "pywfa/align.pyx":325
  * 
  *     @property
  *     def cigarstring(self):             # <<<<<<<<<<<<<<
@@ -6655,7 +6300,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigarstring___get__
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":351
+/* "pywfa/align.pyx":353
  * 
  *     @property
  *     def cigartuples(self):             # <<<<<<<<<<<<<<
@@ -6698,7 +6343,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pywfa/align.pyx":356
+  /* "pywfa/align.pyx":358
  *         cdef int last_op_length, i, length
  * 
  *         cigar = &self.wf_aligner.cigar             # <<<<<<<<<<<<<<
@@ -6707,7 +6352,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
   __pyx_v_cigar = (&__pyx_v_self->wf_aligner->cigar);
 
-  /* "pywfa/align.pyx":359
+  /* "pywfa/align.pyx":361
  * 
  *         # Check null CIGAR
  *         if cigar.begin_offset >= cigar.end_offset:             # <<<<<<<<<<<<<<
@@ -6717,7 +6362,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
   __pyx_t_1 = ((__pyx_v_cigar->begin_offset >= __pyx_v_cigar->end_offset) != 0);
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":360
+    /* "pywfa/align.pyx":362
  *         # Check null CIGAR
  *         if cigar.begin_offset >= cigar.end_offset:
  *             return []             # <<<<<<<<<<<<<<
@@ -6725,13 +6370,13 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  *         last_op = cigar.operations[cigar.begin_offset]
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 360, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 362, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":359
+    /* "pywfa/align.pyx":361
  * 
  *         # Check null CIGAR
  *         if cigar.begin_offset >= cigar.end_offset:             # <<<<<<<<<<<<<<
@@ -6740,7 +6385,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
   }
 
-  /* "pywfa/align.pyx":362
+  /* "pywfa/align.pyx":364
  *             return []
  *         # Print operations
  *         last_op = cigar.operations[cigar.begin_offset]             # <<<<<<<<<<<<<<
@@ -6749,7 +6394,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
   __pyx_v_last_op = (__pyx_v_cigar->operations[__pyx_v_cigar->begin_offset]);
 
-  /* "pywfa/align.pyx":363
+  /* "pywfa/align.pyx":365
  *         # Print operations
  *         last_op = cigar.operations[cigar.begin_offset]
  *         last_op_length = 1             # <<<<<<<<<<<<<<
@@ -6758,7 +6403,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
   __pyx_v_last_op_length = 1;
 
-  /* "pywfa/align.pyx":364
+  /* "pywfa/align.pyx":366
  *         last_op = cigar.operations[cigar.begin_offset]
  *         last_op_length = 1
  *         length = 1             # <<<<<<<<<<<<<<
@@ -6767,19 +6412,19 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
   __pyx_v_length = 1;
 
-  /* "pywfa/align.pyx":366
+  /* "pywfa/align.pyx":368
  *         length = 1
  *         # codes = {"M": 0, "I": 1, "D": 2, "N": 3, "S": 4, "H": 5, "P": 6, "=": 7, "X": 8, "B": 9}
  *         result = []             # <<<<<<<<<<<<<<
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):
  *             if cigar.operations[i] == last_op:
  */
-  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 366, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 368, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_result = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "pywfa/align.pyx":367
+  /* "pywfa/align.pyx":369
  *         # codes = {"M": 0, "I": 1, "D": 2, "N": 3, "S": 4, "H": 5, "P": 6, "=": 7, "X": 8, "B": 9}
  *         result = []
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):             # <<<<<<<<<<<<<<
@@ -6791,7 +6436,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
   for (__pyx_t_5 = (__pyx_v_cigar->begin_offset + 1); __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "pywfa/align.pyx":368
+    /* "pywfa/align.pyx":370
  *         result = []
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):
  *             if cigar.operations[i] == last_op:             # <<<<<<<<<<<<<<
@@ -6801,7 +6446,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
     __pyx_t_1 = (((__pyx_v_cigar->operations[__pyx_v_i]) == __pyx_v_last_op) != 0);
     if (__pyx_t_1) {
 
-      /* "pywfa/align.pyx":369
+      /* "pywfa/align.pyx":371
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):
  *             if cigar.operations[i] == last_op:
  *                 last_op_length += 1             # <<<<<<<<<<<<<<
@@ -6810,7 +6455,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
       __pyx_v_last_op_length = (__pyx_v_last_op_length + 1);
 
-      /* "pywfa/align.pyx":370
+      /* "pywfa/align.pyx":372
  *             if cigar.operations[i] == last_op:
  *                 last_op_length += 1
  *                 length += 1             # <<<<<<<<<<<<<<
@@ -6819,7 +6464,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
       __pyx_v_length = (__pyx_v_length + 1);
 
-      /* "pywfa/align.pyx":368
+      /* "pywfa/align.pyx":370
  *         result = []
  *         for i in range(cigar.begin_offset+1, cigar.end_offset):
  *             if cigar.operations[i] == last_op:             # <<<<<<<<<<<<<<
@@ -6829,7 +6474,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
       goto __pyx_L6;
     }
 
-    /* "pywfa/align.pyx":372
+    /* "pywfa/align.pyx":374
  *                 length += 1
  *             else:
  *                 result.append((codes[<int>last_op], length))             # <<<<<<<<<<<<<<
@@ -6837,11 +6482,11 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  *             last_op = cigar.operations[i]
  */
     /*else*/ {
-      __pyx_t_2 = __Pyx_PyInt_From_int((__pyx_v_5pywfa_5align_codes[((int)__pyx_v_last_op)])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 372, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int((__pyx_v_5pywfa_5align_codes[((int)__pyx_v_last_op)])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 374, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_length); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 372, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_length); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 374, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 372, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 374, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GIVEREF(__pyx_t_2);
       PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_2);
@@ -6849,10 +6494,10 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
       PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_6);
       __pyx_t_2 = 0;
       __pyx_t_6 = 0;
-      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_result, __pyx_t_7); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 372, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_result, __pyx_t_7); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 374, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "pywfa/align.pyx":373
+      /* "pywfa/align.pyx":375
  *             else:
  *                 result.append((codes[<int>last_op], length))
  *                 length = 1             # <<<<<<<<<<<<<<
@@ -6863,7 +6508,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
     }
     __pyx_L6:;
 
-    /* "pywfa/align.pyx":374
+    /* "pywfa/align.pyx":376
  *                 result.append((codes[<int>last_op], length))
  *                 length = 1
  *             last_op = cigar.operations[i]             # <<<<<<<<<<<<<<
@@ -6872,7 +6517,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
  */
     __pyx_v_last_op = (__pyx_v_cigar->operations[__pyx_v_i]);
 
-    /* "pywfa/align.pyx":375
+    /* "pywfa/align.pyx":377
  *                 length = 1
  *             last_op = cigar.operations[i]
  *             last_op_length = 1             # <<<<<<<<<<<<<<
@@ -6882,18 +6527,18 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
     __pyx_v_last_op_length = 1;
   }
 
-  /* "pywfa/align.pyx":376
+  /* "pywfa/align.pyx":378
  *             last_op = cigar.operations[i]
  *             last_op_length = 1
  *         result.append((codes[<int>last_op], length))             # <<<<<<<<<<<<<<
  *         return result
  * 
  */
-  __pyx_t_7 = __Pyx_PyInt_From_int((__pyx_v_5pywfa_5align_codes[((int)__pyx_v_last_op)])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 376, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int((__pyx_v_5pywfa_5align_codes[((int)__pyx_v_last_op)])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_length); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 376, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_length); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 376, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_7);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7);
@@ -6901,10 +6546,10 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
   PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
   __pyx_t_7 = 0;
   __pyx_t_6 = 0;
-  __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_result, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 376, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_result, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pywfa/align.pyx":377
+  /* "pywfa/align.pyx":379
  *             last_op_length = 1
  *         result.append((codes[<int>last_op], length))
  *         return result             # <<<<<<<<<<<<<<
@@ -6916,7 +6561,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":351
+  /* "pywfa/align.pyx":353
  * 
  *     @property
  *     def cigartuples(self):             # <<<<<<<<<<<<<<
@@ -6938,7 +6583,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11cigartuples___get__
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":380
+/* "pywfa/align.pyx":382
  * 
  *     @property
  *     def locations(self):             # <<<<<<<<<<<<<<
@@ -6991,7 +6636,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pywfa/align.pyx":381
+  /* "pywfa/align.pyx":383
  *     @property
  *     def locations(self):
  *         if self.score_only:             # <<<<<<<<<<<<<<
@@ -7001,7 +6646,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
   __pyx_t_1 = (__pyx_v_self->score_only != 0);
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":382
+    /* "pywfa/align.pyx":384
  *     def locations(self):
  *         if self.score_only:
  *             return [0, 0, 0, 0]             # <<<<<<<<<<<<<<
@@ -7009,7 +6654,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  *         if not cigartuples:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = PyList_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 382, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 384, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_GIVEREF(__pyx_int_0);
@@ -7027,7 +6672,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":381
+    /* "pywfa/align.pyx":383
  *     @property
  *     def locations(self):
  *         if self.score_only:             # <<<<<<<<<<<<<<
@@ -7036,30 +6681,30 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
   }
 
-  /* "pywfa/align.pyx":383
+  /* "pywfa/align.pyx":385
  *         if self.score_only:
  *             return [0, 0, 0, 0]
  *         cigartuples = self.cigartuples             # <<<<<<<<<<<<<<
  *         if not cigartuples:
  *             return [0, 0, 0, 0]
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 383, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 385, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_cigartuples = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "pywfa/align.pyx":384
+  /* "pywfa/align.pyx":386
  *             return [0, 0, 0, 0]
  *         cigartuples = self.cigartuples
  *         if not cigartuples:             # <<<<<<<<<<<<<<
  *             return [0, 0, 0, 0]
  *         cdef int ps, pe, ts, te, index, opp, l
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_cigartuples); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 384, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_cigartuples); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 386, __pyx_L1_error)
   __pyx_t_3 = ((!__pyx_t_1) != 0);
   if (__pyx_t_3) {
 
-    /* "pywfa/align.pyx":385
+    /* "pywfa/align.pyx":387
  *         cigartuples = self.cigartuples
  *         if not cigartuples:
  *             return [0, 0, 0, 0]             # <<<<<<<<<<<<<<
@@ -7067,7 +6712,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  *         ps = 0
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = PyList_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 385, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 387, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_GIVEREF(__pyx_int_0);
@@ -7085,7 +6730,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "pywfa/align.pyx":384
+    /* "pywfa/align.pyx":386
  *             return [0, 0, 0, 0]
  *         cigartuples = self.cigartuples
  *         if not cigartuples:             # <<<<<<<<<<<<<<
@@ -7094,7 +6739,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
   }
 
-  /* "pywfa/align.pyx":387
+  /* "pywfa/align.pyx":389
  *             return [0, 0, 0, 0]
  *         cdef int ps, pe, ts, te, index, opp, l
  *         ps = 0             # <<<<<<<<<<<<<<
@@ -7103,7 +6748,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
   __pyx_v_ps = 0;
 
-  /* "pywfa/align.pyx":388
+  /* "pywfa/align.pyx":390
  *         cdef int ps, pe, ts, te, index, opp, l
  *         ps = 0
  *         pe = 0             # <<<<<<<<<<<<<<
@@ -7112,7 +6757,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
   __pyx_v_pe = 0;
 
-  /* "pywfa/align.pyx":389
+  /* "pywfa/align.pyx":391
  *         ps = 0
  *         pe = 0
  *         ts = 0             # <<<<<<<<<<<<<<
@@ -7121,7 +6766,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
   __pyx_v_ts = 0;
 
-  /* "pywfa/align.pyx":390
+  /* "pywfa/align.pyx":392
  *         pe = 0
  *         ts = 0
  *         te = 0             # <<<<<<<<<<<<<<
@@ -7130,7 +6775,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
   __pyx_v_te = 0;
 
-  /* "pywfa/align.pyx":391
+  /* "pywfa/align.pyx":393
  *         ts = 0
  *         te = 0
  *         cdef bint started = False             # <<<<<<<<<<<<<<
@@ -7139,7 +6784,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
   __pyx_v_started = 0;
 
-  /* "pywfa/align.pyx":392
+  /* "pywfa/align.pyx":394
  *         te = 0
  *         cdef bint started = False
  *         for index, (opp, l) in enumerate(cigartuples):             # <<<<<<<<<<<<<<
@@ -7151,26 +6796,26 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
     __pyx_t_2 = __pyx_v_cigartuples; __Pyx_INCREF(__pyx_t_2); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_cigartuples); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 392, __pyx_L1_error)
+    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_cigartuples); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 394, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 392, __pyx_L1_error)
+    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 394, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_6)) {
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_7 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 392, __pyx_L1_error)
+        __pyx_t_7 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 394, __pyx_L1_error)
         #else
-        __pyx_t_7 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 392, __pyx_L1_error)
+        __pyx_t_7 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 394, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 392, __pyx_L1_error)
+        __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 394, __pyx_L1_error)
         #else
-        __pyx_t_7 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 392, __pyx_L1_error)
+        __pyx_t_7 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 394, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         #endif
       }
@@ -7180,7 +6825,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 392, __pyx_L1_error)
+          else __PYX_ERR(0, 394, __pyx_L1_error)
         }
         break;
       }
@@ -7192,7 +6837,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 392, __pyx_L1_error)
+        __PYX_ERR(0, 394, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -7205,15 +6850,15 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
       __Pyx_INCREF(__pyx_t_8);
       __Pyx_INCREF(__pyx_t_9);
       #else
-      __pyx_t_8 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 392, __pyx_L1_error)
+      __pyx_t_8 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 394, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_9 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 392, __pyx_L1_error)
+      __pyx_t_9 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 394, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       #endif
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_10 = PyObject_GetIter(__pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 392, __pyx_L1_error)
+      __pyx_t_10 = PyObject_GetIter(__pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 394, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_11 = Py_TYPE(__pyx_t_10)->tp_iternext;
@@ -7221,7 +6866,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
       __Pyx_GOTREF(__pyx_t_8);
       index = 1; __pyx_t_9 = __pyx_t_11(__pyx_t_10); if (unlikely(!__pyx_t_9)) goto __pyx_L7_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_9);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_11(__pyx_t_10), 2) < 0) __PYX_ERR(0, 392, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_11(__pyx_t_10), 2) < 0) __PYX_ERR(0, 394, __pyx_L1_error)
       __pyx_t_11 = NULL;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       goto __pyx_L8_unpacking_done;
@@ -7229,19 +6874,19 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __pyx_t_11 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 392, __pyx_L1_error)
+      __PYX_ERR(0, 394, __pyx_L1_error)
       __pyx_L8_unpacking_done:;
     }
-    __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 392, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 394, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_t_9); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 392, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_t_9); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 394, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_v_opp = __pyx_t_12;
     __pyx_v_l = __pyx_t_13;
     __pyx_v_index = __pyx_t_4;
     __pyx_t_4 = (__pyx_t_4 + 1);
 
-    /* "pywfa/align.pyx":393
+    /* "pywfa/align.pyx":395
  *         cdef bint started = False
  *         for index, (opp, l) in enumerate(cigartuples):
  *             if not started:             # <<<<<<<<<<<<<<
@@ -7251,7 +6896,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
     __pyx_t_3 = ((!(__pyx_v_started != 0)) != 0);
     if (__pyx_t_3) {
 
-      /* "pywfa/align.pyx":394
+      /* "pywfa/align.pyx":396
  *         for index, (opp, l) in enumerate(cigartuples):
  *             if not started:
  *                 if opp == 0:             # <<<<<<<<<<<<<<
@@ -7261,7 +6906,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
       switch (__pyx_v_opp) {
         case 0:
 
-        /* "pywfa/align.pyx":395
+        /* "pywfa/align.pyx":397
  *             if not started:
  *                 if opp == 0:
  *                     started = True             # <<<<<<<<<<<<<<
@@ -7270,7 +6915,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_started = 1;
 
-        /* "pywfa/align.pyx":396
+        /* "pywfa/align.pyx":398
  *                 if opp == 0:
  *                     started = True
  *                     te += l             # <<<<<<<<<<<<<<
@@ -7279,7 +6924,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_te = (__pyx_v_te + __pyx_v_l);
 
-        /* "pywfa/align.pyx":397
+        /* "pywfa/align.pyx":399
  *                     started = True
  *                     te += l
  *                     pe += l             # <<<<<<<<<<<<<<
@@ -7288,7 +6933,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_pe = (__pyx_v_pe + __pyx_v_l);
 
-        /* "pywfa/align.pyx":394
+        /* "pywfa/align.pyx":396
  *         for index, (opp, l) in enumerate(cigartuples):
  *             if not started:
  *                 if opp == 0:             # <<<<<<<<<<<<<<
@@ -7298,7 +6943,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         break;
         case 2:
 
-        /* "pywfa/align.pyx":399
+        /* "pywfa/align.pyx":401
  *                     pe += l
  *                 elif opp == 2:  # delete pattern
  *                     ps += l             # <<<<<<<<<<<<<<
@@ -7307,7 +6952,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_ps = (__pyx_v_ps + __pyx_v_l);
 
-        /* "pywfa/align.pyx":400
+        /* "pywfa/align.pyx":402
  *                 elif opp == 2:  # delete pattern
  *                     ps += l
  *                     pe += l             # <<<<<<<<<<<<<<
@@ -7316,7 +6961,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_pe = (__pyx_v_pe + __pyx_v_l);
 
-        /* "pywfa/align.pyx":398
+        /* "pywfa/align.pyx":400
  *                     te += l
  *                     pe += l
  *                 elif opp == 2:  # delete pattern             # <<<<<<<<<<<<<<
@@ -7326,7 +6971,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         break;
         case 8:
 
-        /* "pywfa/align.pyx":402
+        /* "pywfa/align.pyx":404
  *                     pe += l
  *                 elif opp == 8:  # mismatch, alignment not started
  *                     ps += l             # <<<<<<<<<<<<<<
@@ -7335,7 +6980,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_ps = (__pyx_v_ps + __pyx_v_l);
 
-        /* "pywfa/align.pyx":403
+        /* "pywfa/align.pyx":405
  *                 elif opp == 8:  # mismatch, alignment not started
  *                     ps += l
  *                     pe += l             # <<<<<<<<<<<<<<
@@ -7344,7 +6989,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_pe = (__pyx_v_pe + __pyx_v_l);
 
-        /* "pywfa/align.pyx":404
+        /* "pywfa/align.pyx":406
  *                     ps += l
  *                     pe += l
  *                     ts += l             # <<<<<<<<<<<<<<
@@ -7353,7 +6998,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_ts = (__pyx_v_ts + __pyx_v_l);
 
-        /* "pywfa/align.pyx":405
+        /* "pywfa/align.pyx":407
  *                     pe += l
  *                     ts += l
  *                     te += l             # <<<<<<<<<<<<<<
@@ -7362,7 +7007,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_te = (__pyx_v_te + __pyx_v_l);
 
-        /* "pywfa/align.pyx":401
+        /* "pywfa/align.pyx":403
  *                     ps += l
  *                     pe += l
  *                 elif opp == 8:  # mismatch, alignment not started             # <<<<<<<<<<<<<<
@@ -7372,7 +7017,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         break;
         case 1:
 
-        /* "pywfa/align.pyx":407
+        /* "pywfa/align.pyx":409
  *                     te += l
  *                 elif opp == 1:
  *                     ts += l             # <<<<<<<<<<<<<<
@@ -7381,7 +7026,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_ts = (__pyx_v_ts + __pyx_v_l);
 
-        /* "pywfa/align.pyx":408
+        /* "pywfa/align.pyx":410
  *                 elif opp == 1:
  *                     ts += l
  *                     te += l             # <<<<<<<<<<<<<<
@@ -7390,7 +7035,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_te = (__pyx_v_te + __pyx_v_l);
 
-        /* "pywfa/align.pyx":406
+        /* "pywfa/align.pyx":408
  *                     ts += l
  *                     te += l
  *                 elif opp == 1:             # <<<<<<<<<<<<<<
@@ -7401,7 +7046,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         default: break;
       }
 
-      /* "pywfa/align.pyx":393
+      /* "pywfa/align.pyx":395
  *         cdef bint started = False
  *         for index, (opp, l) in enumerate(cigartuples):
  *             if not started:             # <<<<<<<<<<<<<<
@@ -7411,7 +7056,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
       goto __pyx_L9;
     }
 
-    /* "pywfa/align.pyx":410
+    /* "pywfa/align.pyx":412
  *                     te += l
  *             else:
  *                 if opp == 0:             # <<<<<<<<<<<<<<
@@ -7420,7 +7065,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
     /*else*/ {
 
-      /* "pywfa/align.pyx":420
+      /* "pywfa/align.pyx":422
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
  *                         te += l
  *                 elif opp == 2:             # <<<<<<<<<<<<<<
@@ -7430,7 +7075,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
       switch (__pyx_v_opp) {
         case 0:
 
-        /* "pywfa/align.pyx":411
+        /* "pywfa/align.pyx":413
  *             else:
  *                 if opp == 0:
  *                     te += l             # <<<<<<<<<<<<<<
@@ -7439,7 +7084,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_te = (__pyx_v_te + __pyx_v_l);
 
-        /* "pywfa/align.pyx":412
+        /* "pywfa/align.pyx":414
  *                 if opp == 0:
  *                     te += l
  *                     pe += l             # <<<<<<<<<<<<<<
@@ -7448,7 +7093,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         __pyx_v_pe = (__pyx_v_pe + __pyx_v_l);
 
-        /* "pywfa/align.pyx":410
+        /* "pywfa/align.pyx":412
  *                     te += l
  *             else:
  *                 if opp == 0:             # <<<<<<<<<<<<<<
@@ -7458,14 +7103,14 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         break;
         case 8:
 
-        /* "pywfa/align.pyx":414
+        /* "pywfa/align.pyx":416
  *                     pe += l
  *                 elif opp == 8: # add to alignment if flanked by matches
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:             # <<<<<<<<<<<<<<
  *                         te += l
  *                         pe += l
  */
-        __pyx_t_14 = PyObject_Length(__pyx_v_cigartuples); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 414, __pyx_L1_error)
+        __pyx_t_14 = PyObject_Length(__pyx_v_cigartuples); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 416, __pyx_L1_error)
         __pyx_t_1 = ((__pyx_v_index < (__pyx_t_14 - 1)) != 0);
         if (__pyx_t_1) {
         } else {
@@ -7473,21 +7118,21 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
           goto __pyx_L11_bool_binop_done;
         }
         __pyx_t_15 = (__pyx_v_index + 1);
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_cigartuples, __pyx_t_15, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 414, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_cigartuples, __pyx_t_15, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 416, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 414, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 416, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_9, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 414, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_9, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 416, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 414, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 416, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __pyx_t_3 = __pyx_t_1;
         __pyx_L11_bool_binop_done:;
         if (__pyx_t_3) {
 
-          /* "pywfa/align.pyx":415
+          /* "pywfa/align.pyx":417
  *                 elif opp == 8: # add to alignment if flanked by matches
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
  *                         te += l             # <<<<<<<<<<<<<<
@@ -7496,7 +7141,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
           __pyx_v_te = (__pyx_v_te + __pyx_v_l);
 
-          /* "pywfa/align.pyx":416
+          /* "pywfa/align.pyx":418
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
  *                         te += l
  *                         pe += l             # <<<<<<<<<<<<<<
@@ -7505,7 +7150,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
           __pyx_v_pe = (__pyx_v_pe + __pyx_v_l);
 
-          /* "pywfa/align.pyx":414
+          /* "pywfa/align.pyx":416
  *                     pe += l
  *                 elif opp == 8: # add to alignment if flanked by matches
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:             # <<<<<<<<<<<<<<
@@ -7514,7 +7159,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         }
 
-        /* "pywfa/align.pyx":413
+        /* "pywfa/align.pyx":415
  *                     te += l
  *                     pe += l
  *                 elif opp == 8: # add to alignment if flanked by matches             # <<<<<<<<<<<<<<
@@ -7524,14 +7169,14 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         break;
         case 1:
 
-        /* "pywfa/align.pyx":418
+        /* "pywfa/align.pyx":420
  *                         pe += l
  *                 elif opp == 1:
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:             # <<<<<<<<<<<<<<
  *                         te += l
  *                 elif opp == 2:
  */
-        __pyx_t_14 = PyObject_Length(__pyx_v_cigartuples); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 418, __pyx_L1_error)
+        __pyx_t_14 = PyObject_Length(__pyx_v_cigartuples); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 420, __pyx_L1_error)
         __pyx_t_1 = ((__pyx_v_index < (__pyx_t_14 - 1)) != 0);
         if (__pyx_t_1) {
         } else {
@@ -7539,21 +7184,21 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
           goto __pyx_L14_bool_binop_done;
         }
         __pyx_t_15 = (__pyx_v_index + 1);
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_cigartuples, __pyx_t_15, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 418, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_cigartuples, __pyx_t_15, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 420, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 418, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 420, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_9, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 418, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_9, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 420, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 418, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 420, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __pyx_t_3 = __pyx_t_1;
         __pyx_L14_bool_binop_done:;
         if (__pyx_t_3) {
 
-          /* "pywfa/align.pyx":419
+          /* "pywfa/align.pyx":421
  *                 elif opp == 1:
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
  *                         te += l             # <<<<<<<<<<<<<<
@@ -7562,7 +7207,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
           __pyx_v_te = (__pyx_v_te + __pyx_v_l);
 
-          /* "pywfa/align.pyx":418
+          /* "pywfa/align.pyx":420
  *                         pe += l
  *                 elif opp == 1:
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:             # <<<<<<<<<<<<<<
@@ -7571,7 +7216,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         }
 
-        /* "pywfa/align.pyx":417
+        /* "pywfa/align.pyx":419
  *                         te += l
  *                         pe += l
  *                 elif opp == 1:             # <<<<<<<<<<<<<<
@@ -7581,14 +7226,14 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
         break;
         case 2:
 
-        /* "pywfa/align.pyx":421
+        /* "pywfa/align.pyx":423
  *                         te += l
  *                 elif opp == 2:
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:             # <<<<<<<<<<<<<<
  *                         pe += l
  *         return ps, pe, ts, te
  */
-        __pyx_t_14 = PyObject_Length(__pyx_v_cigartuples); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 421, __pyx_L1_error)
+        __pyx_t_14 = PyObject_Length(__pyx_v_cigartuples); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 423, __pyx_L1_error)
         __pyx_t_1 = ((__pyx_v_index < (__pyx_t_14 - 1)) != 0);
         if (__pyx_t_1) {
         } else {
@@ -7596,21 +7241,21 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
           goto __pyx_L17_bool_binop_done;
         }
         __pyx_t_15 = (__pyx_v_index + 1);
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_cigartuples, __pyx_t_15, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 421, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_cigartuples, __pyx_t_15, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 423, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 421, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 423, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_9, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 421, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyInt_EqObjC(__pyx_t_9, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 423, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 421, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 423, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __pyx_t_3 = __pyx_t_1;
         __pyx_L17_bool_binop_done:;
         if (__pyx_t_3) {
 
-          /* "pywfa/align.pyx":422
+          /* "pywfa/align.pyx":424
  *                 elif opp == 2:
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
  *                         pe += l             # <<<<<<<<<<<<<<
@@ -7619,7 +7264,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
           __pyx_v_pe = (__pyx_v_pe + __pyx_v_l);
 
-          /* "pywfa/align.pyx":421
+          /* "pywfa/align.pyx":423
  *                         te += l
  *                 elif opp == 2:
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:             # <<<<<<<<<<<<<<
@@ -7628,7 +7273,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
         }
 
-        /* "pywfa/align.pyx":420
+        /* "pywfa/align.pyx":422
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
  *                         te += l
  *                 elif opp == 2:             # <<<<<<<<<<<<<<
@@ -7641,7 +7286,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
     }
     __pyx_L9:;
 
-    /* "pywfa/align.pyx":392
+    /* "pywfa/align.pyx":394
  *         te = 0
  *         cdef bint started = False
  *         for index, (opp, l) in enumerate(cigartuples):             # <<<<<<<<<<<<<<
@@ -7651,7 +7296,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pywfa/align.pyx":423
+  /* "pywfa/align.pyx":425
  *                     if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
  *                         pe += l
  *         return ps, pe, ts, te             # <<<<<<<<<<<<<<
@@ -7659,15 +7304,15 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  *     def __call__(self, text, pattern=None, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True,
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ps); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ps); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_pe); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_pe); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_ts); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_ts); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_te); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_te); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_10 = PyTuple_New(4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_10 = PyTuple_New(4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_2);
@@ -7685,7 +7330,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
   __pyx_t_10 = 0;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":380
+  /* "pywfa/align.pyx":382
  * 
  *     @property
  *     def locations(self):             # <<<<<<<<<<<<<<
@@ -7709,7 +7354,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":425
+/* "pywfa/align.pyx":427
  *         return ps, pe, ts, te
  * 
  *     def __call__(self, text, pattern=None, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True,             # <<<<<<<<<<<<<<
@@ -7718,8 +7363,8 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_text = 0;
   PyObject *__pyx_v_pattern = 0;
   PyObject *__pyx_v_clip_cigar = 0;
@@ -7742,7 +7387,7 @@ static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *_
     values[4] = ((PyObject *)__pyx_int_5);
     values[5] = ((PyObject *)Py_True);
 
-    /* "pywfa/align.pyx":426
+    /* "pywfa/align.pyx":428
  * 
  *     def __call__(self, text, pattern=None, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True,
  *                  supress_sequences=False):             # <<<<<<<<<<<<<<
@@ -7814,7 +7459,7 @@ static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *_
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") < 0)) __PYX_ERR(0, 425, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") < 0)) __PYX_ERR(0, 427, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -7845,15 +7490,15 @@ static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__call__", 0, 1, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 425, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__call__", 0, 1, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 427, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pywfa.align.WavefrontAligner.__call__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self), __pyx_v_text, __pyx_v_pattern, __pyx_v_clip_cigar, __pyx_v_min_aligned_bases_left, __pyx_v_min_aligned_bases_right, __pyx_v_elide_mismatches, __pyx_v_supress_sequences);
+  __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner_2__call__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self), __pyx_v_text, __pyx_v_pattern, __pyx_v_clip_cigar, __pyx_v_min_aligned_bases_left, __pyx_v_min_aligned_bases_right, __pyx_v_elide_mismatches, __pyx_v_supress_sequences);
 
-  /* "pywfa/align.pyx":425
+  /* "pywfa/align.pyx":427
  *         return ps, pe, ts, te
  * 
  *     def __call__(self, text, pattern=None, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True,             # <<<<<<<<<<<<<<
@@ -7866,7 +7511,7 @@ static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, PyObject *__pyx_v_pattern, PyObject *__pyx_v_clip_cigar, PyObject *__pyx_v_min_aligned_bases_left, PyObject *__pyx_v_min_aligned_bases_right, PyObject *__pyx_v_elide_mismatches, PyObject *__pyx_v_supress_sequences) {
+static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_2__call__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, PyObject *__pyx_v_text, PyObject *__pyx_v_pattern, PyObject *__pyx_v_clip_cigar, PyObject *__pyx_v_min_aligned_bases_left, PyObject *__pyx_v_min_aligned_bases_right, PyObject *__pyx_v_elide_mismatches, PyObject *__pyx_v_supress_sequences) {
   PyObject *__pyx_v_p = NULL;
   Py_ssize_t __pyx_v_lp;
   int __pyx_v_score;
@@ -7892,13 +7537,14 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
   PyObject *__pyx_t_14 = NULL;
   PyObject *__pyx_t_15 = NULL;
   PyObject *__pyx_t_16 = NULL;
-  struct __pyx_opt_args_5pywfa_5align_clip_cigartuples __pyx_t_17;
+  int __pyx_t_17;
+  struct __pyx_opt_args_5pywfa_5align_clip_cigartuples __pyx_t_18;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__call__", 0);
 
-  /* "pywfa/align.pyx":428
+  /* "pywfa/align.pyx":430
  *                  supress_sequences=False):
  * 
  *         if pattern is None:             # <<<<<<<<<<<<<<
@@ -7909,7 +7555,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "pywfa/align.pyx":429
+    /* "pywfa/align.pyx":431
  * 
  *         if pattern is None:
  *             p = self._pattern             # <<<<<<<<<<<<<<
@@ -7921,31 +7567,31 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     __pyx_v_p = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "pywfa/align.pyx":430
+    /* "pywfa/align.pyx":432
  *         if pattern is None:
  *             p = self._pattern
  *             if not p:             # <<<<<<<<<<<<<<
  *                 raise ValueError("pattern is None")
  *             lp = len(self._pattern)
  */
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_p); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 430, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_p); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 432, __pyx_L1_error)
     __pyx_t_1 = ((!__pyx_t_2) != 0);
     if (unlikely(__pyx_t_1)) {
 
-      /* "pywfa/align.pyx":431
+      /* "pywfa/align.pyx":433
  *             p = self._pattern
  *             if not p:
  *                 raise ValueError("pattern is None")             # <<<<<<<<<<<<<<
  *             lp = len(self._pattern)
  *             score = self.wavefront_align(text)
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 431, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 433, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __PYX_ERR(0, 431, __pyx_L1_error)
+      __PYX_ERR(0, 433, __pyx_L1_error)
 
-      /* "pywfa/align.pyx":430
+      /* "pywfa/align.pyx":432
  *         if pattern is None:
  *             p = self._pattern
  *             if not p:             # <<<<<<<<<<<<<<
@@ -7954,7 +7600,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  */
     }
 
-    /* "pywfa/align.pyx":432
+    /* "pywfa/align.pyx":434
  *             if not p:
  *                 raise ValueError("pattern is None")
  *             lp = len(self._pattern)             # <<<<<<<<<<<<<<
@@ -7963,20 +7609,20 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  */
     __pyx_t_3 = __pyx_v_self->_pattern;
     __Pyx_INCREF(__pyx_t_3);
-    __pyx_t_4 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 432, __pyx_L1_error)
+    __pyx_t_4 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 434, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_lp = __pyx_t_4;
 
-    /* "pywfa/align.pyx":433
+    /* "pywfa/align.pyx":435
  *                 raise ValueError("pattern is None")
  *             lp = len(self._pattern)
  *             score = self.wavefront_align(text)             # <<<<<<<<<<<<<<
  *         else:
  *             lp = len(pattern)
  */
-    __pyx_v_score = ((struct __pyx_vtabstruct_5pywfa_5align_WavefrontAligner *)__pyx_v_self->__pyx_vtab)->wavefront_align(__pyx_v_self, __pyx_v_text, 0, NULL);
+    __pyx_v_score = ((struct __pyx_vtabstruct_5pywfa_5align_WavefrontAligner *)__pyx_v_self->__pyx_vtab)->wavefront_align(__pyx_v_self, __pyx_v_text, NULL);
 
-    /* "pywfa/align.pyx":428
+    /* "pywfa/align.pyx":430
  *                  supress_sequences=False):
  * 
  *         if pattern is None:             # <<<<<<<<<<<<<<
@@ -7986,7 +7632,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     goto __pyx_L3;
   }
 
-  /* "pywfa/align.pyx":435
+  /* "pywfa/align.pyx":437
  *             score = self.wavefront_align(text)
  *         else:
  *             lp = len(pattern)             # <<<<<<<<<<<<<<
@@ -7994,10 +7640,10 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  *             score = self.wavefront_align(text, pattern)
  */
   /*else*/ {
-    __pyx_t_4 = PyObject_Length(__pyx_v_pattern); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 435, __pyx_L1_error)
+    __pyx_t_4 = PyObject_Length(__pyx_v_pattern); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 437, __pyx_L1_error)
     __pyx_v_lp = __pyx_t_4;
 
-    /* "pywfa/align.pyx":436
+    /* "pywfa/align.pyx":438
  *         else:
  *             lp = len(pattern)
  *             p = pattern             # <<<<<<<<<<<<<<
@@ -8007,7 +7653,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     __Pyx_INCREF(__pyx_v_pattern);
     __pyx_v_p = __pyx_v_pattern;
 
-    /* "pywfa/align.pyx":437
+    /* "pywfa/align.pyx":439
  *             lp = len(pattern)
  *             p = pattern
  *             score = self.wavefront_align(text, pattern)             # <<<<<<<<<<<<<<
@@ -8016,80 +7662,80 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  */
     __pyx_t_6.__pyx_n = 1;
     __pyx_t_6.pattern = __pyx_v_pattern;
-    __pyx_t_5 = ((struct __pyx_vtabstruct_5pywfa_5align_WavefrontAligner *)__pyx_v_self->__pyx_vtab)->wavefront_align(__pyx_v_self, __pyx_v_text, 0, &__pyx_t_6); 
+    __pyx_t_5 = ((struct __pyx_vtabstruct_5pywfa_5align_WavefrontAligner *)__pyx_v_self->__pyx_vtab)->wavefront_align(__pyx_v_self, __pyx_v_text, &__pyx_t_6); 
     __pyx_v_score = __pyx_t_5;
   }
   __pyx_L3:;
 
-  /* "pywfa/align.pyx":439
+  /* "pywfa/align.pyx":441
  *             score = self.wavefront_align(text, pattern)
  * 
  *         ct = self.cigartuples             # <<<<<<<<<<<<<<
  *         locs = self.locations
  *         status = self.status
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 439, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 441, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_ct = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":440
+  /* "pywfa/align.pyx":442
  * 
  *         ct = self.cigartuples
  *         locs = self.locations             # <<<<<<<<<<<<<<
  *         status = self.status
  *         if supress_sequences:
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_locations); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 440, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_locations); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_locs = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":441
+  /* "pywfa/align.pyx":443
  *         ct = self.cigartuples
  *         locs = self.locations
  *         status = self.status             # <<<<<<<<<<<<<<
  *         if supress_sequences:
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, "", "", status)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_status); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 441, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_status); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 443, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_status = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "pywfa/align.pyx":442
+  /* "pywfa/align.pyx":444
  *         locs = self.locations
  *         status = self.status
  *         if supress_sequences:             # <<<<<<<<<<<<<<
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, "", "", status)
  *         else:
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_supress_sequences); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 442, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_supress_sequences); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 444, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":443
+    /* "pywfa/align.pyx":445
  *         status = self.status
  *         if supress_sequences:
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, "", "", status)             # <<<<<<<<<<<<<<
  *         else:
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_AlignmentResult); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_AlignmentResult); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_8 = PyInt_FromSsize_t(__pyx_v_lp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __pyx_t_8 = PyInt_FromSsize_t(__pyx_v_lp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_4 = PyObject_Length(__pyx_v_text); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 443, __pyx_L1_error)
-    __pyx_t_9 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __pyx_t_4 = PyObject_Length(__pyx_v_text); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_9 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_locs, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_locs, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_locs, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_locs, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_12 = __Pyx_GetItemInt(__pyx_v_locs, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_GetItemInt(__pyx_v_locs, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_13 = __Pyx_GetItemInt(__pyx_v_locs, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_GetItemInt(__pyx_v_locs, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_13);
-    __pyx_t_14 = __Pyx_PyInt_From_int(__pyx_v_score); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __pyx_t_14 = __Pyx_PyInt_From_int(__pyx_v_score); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 445, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
     __pyx_t_15 = NULL;
     __pyx_t_5 = 0;
@@ -8106,7 +7752,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[12] = {__pyx_t_15, __pyx_t_8, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_v_ct, __pyx_t_14, __pyx_kp_u__2, __pyx_kp_u__2, __pyx_v_status};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 443, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -8121,7 +7767,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[12] = {__pyx_t_15, __pyx_t_8, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_v_ct, __pyx_t_14, __pyx_kp_u__2, __pyx_kp_u__2, __pyx_v_status};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 443, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -8134,7 +7780,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     } else
     #endif
     {
-      __pyx_t_16 = PyTuple_New(11+__pyx_t_5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 443, __pyx_L1_error)
+      __pyx_t_16 = PyTuple_New(11+__pyx_t_5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 445, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       if (__pyx_t_15) {
         __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -8172,7 +7818,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
       __pyx_t_12 = 0;
       __pyx_t_13 = 0;
       __pyx_t_14 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_16, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 443, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_16, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
     }
@@ -8180,7 +7826,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     __pyx_v_res = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "pywfa/align.pyx":442
+    /* "pywfa/align.pyx":444
  *         locs = self.locations
  *         status = self.status
  *         if supress_sequences:             # <<<<<<<<<<<<<<
@@ -8190,7 +7836,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     goto __pyx_L5;
   }
 
-  /* "pywfa/align.pyx":445
+  /* "pywfa/align.pyx":447
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, "", "", status)
  *         else:
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)             # <<<<<<<<<<<<<<
@@ -8198,22 +7844,22 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  *             if clip_cigar:
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_AlignmentResult); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_AlignmentResult); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_16 = PyInt_FromSsize_t(__pyx_v_lp); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_16 = PyInt_FromSsize_t(__pyx_v_lp); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
-    __pyx_t_4 = PyObject_Length(__pyx_v_text); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 445, __pyx_L1_error)
-    __pyx_t_14 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_4 = PyObject_Length(__pyx_v_text); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 447, __pyx_L1_error)
+    __pyx_t_14 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
-    __pyx_t_13 = __Pyx_GetItemInt(__pyx_v_locs, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_GetItemInt(__pyx_v_locs, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_13);
-    __pyx_t_12 = __Pyx_GetItemInt(__pyx_v_locs, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_GetItemInt(__pyx_v_locs, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_locs, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_locs, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_locs, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_locs, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_score); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_score); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 447, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __pyx_t_8 = NULL;
     __pyx_t_5 = 0;
@@ -8230,7 +7876,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[12] = {__pyx_t_8, __pyx_t_16, __pyx_t_14, __pyx_t_13, __pyx_t_12, __pyx_t_11, __pyx_t_10, __pyx_v_ct, __pyx_t_9, __pyx_v_p, __pyx_v_text, __pyx_v_status};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -8245,7 +7891,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[12] = {__pyx_t_8, __pyx_t_16, __pyx_t_14, __pyx_t_13, __pyx_t_12, __pyx_t_11, __pyx_t_10, __pyx_v_ct, __pyx_t_9, __pyx_v_p, __pyx_v_text, __pyx_v_status};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_5, 11+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -8258,7 +7904,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
     } else
     #endif
     {
-      __pyx_t_15 = PyTuple_New(11+__pyx_t_5); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __pyx_t_15 = PyTuple_New(11+__pyx_t_5); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       if (__pyx_t_8) {
         __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -8296,7 +7942,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
       __pyx_t_11 = 0;
       __pyx_t_10 = 0;
       __pyx_t_9 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     }
@@ -8306,7 +7952,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
   }
   __pyx_L5:;
 
-  /* "pywfa/align.pyx":446
+  /* "pywfa/align.pyx":448
  *         else:
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)
  *         if not self.score_only:             # <<<<<<<<<<<<<<
@@ -8316,32 +7962,34 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
   __pyx_t_1 = ((!(__pyx_v_self->score_only != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "pywfa/align.pyx":447
+    /* "pywfa/align.pyx":449
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)
  *         if not self.score_only:
  *             if clip_cigar:             # <<<<<<<<<<<<<<
  *                 res = clip_cigartuples(res, min_aligned_bases_left, min_aligned_bases_right)
  *             if elide_mismatches:
  */
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_clip_cigar); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 447, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_clip_cigar); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 449, __pyx_L1_error)
     if (__pyx_t_1) {
 
-      /* "pywfa/align.pyx":448
+      /* "pywfa/align.pyx":450
  *         if not self.score_only:
  *             if clip_cigar:
  *                 res = clip_cigartuples(res, min_aligned_bases_left, min_aligned_bases_right)             # <<<<<<<<<<<<<<
  *             if elide_mismatches:
  *                 res.cigartuples = elide_mismatches_from_cigar(res.cigartuples)
  */
-      __pyx_t_17.__pyx_n = 2;
-      __pyx_t_17.min_aligned_bases_left = __pyx_v_min_aligned_bases_left;
-      __pyx_t_17.min_aligned_bases_right = __pyx_v_min_aligned_bases_right;
-      __pyx_t_3 = __pyx_f_5pywfa_5align_clip_cigartuples(__pyx_v_res, 0, &__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_min_aligned_bases_left); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 450, __pyx_L1_error)
+      __pyx_t_17 = __Pyx_PyInt_As_int(__pyx_v_min_aligned_bases_right); if (unlikely((__pyx_t_17 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 450, __pyx_L1_error)
+      __pyx_t_18.__pyx_n = 2;
+      __pyx_t_18.min_aligned_bases_left = __pyx_t_5;
+      __pyx_t_18.min_aligned_bases_right = __pyx_t_17;
+      __pyx_t_3 = __pyx_f_5pywfa_5align_clip_cigartuples(__pyx_v_res, &__pyx_t_18); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 450, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF_SET(__pyx_v_res, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "pywfa/align.pyx":447
+      /* "pywfa/align.pyx":449
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)
  *         if not self.score_only:
  *             if clip_cigar:             # <<<<<<<<<<<<<<
@@ -8350,32 +7998,32 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  */
     }
 
-    /* "pywfa/align.pyx":449
+    /* "pywfa/align.pyx":451
  *             if clip_cigar:
  *                 res = clip_cigartuples(res, min_aligned_bases_left, min_aligned_bases_right)
  *             if elide_mismatches:             # <<<<<<<<<<<<<<
  *                 res.cigartuples = elide_mismatches_from_cigar(res.cigartuples)
  *         return res
  */
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_elide_mismatches); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 449, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_elide_mismatches); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 451, __pyx_L1_error)
     if (__pyx_t_1) {
 
-      /* "pywfa/align.pyx":450
+      /* "pywfa/align.pyx":452
  *                 res = clip_cigartuples(res, min_aligned_bases_left, min_aligned_bases_right)
  *             if elide_mismatches:
  *                 res.cigartuples = elide_mismatches_from_cigar(res.cigartuples)             # <<<<<<<<<<<<<<
  *         return res
  * 
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_res, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_res, __pyx_n_s_cigartuples); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 452, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_7 = __pyx_f_5pywfa_5align_elide_mismatches_from_cigar(__pyx_t_3, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __pyx_t_7 = __pyx_f_5pywfa_5align_elide_mismatches_from_cigar(__pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 452, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (__Pyx_PyObject_SetAttrStr(__pyx_v_res, __pyx_n_s_cigartuples, __pyx_t_7) < 0) __PYX_ERR(0, 450, __pyx_L1_error)
+      if (__Pyx_PyObject_SetAttrStr(__pyx_v_res, __pyx_n_s_cigartuples, __pyx_t_7) < 0) __PYX_ERR(0, 452, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "pywfa/align.pyx":449
+      /* "pywfa/align.pyx":451
  *             if clip_cigar:
  *                 res = clip_cigartuples(res, min_aligned_bases_left, min_aligned_bases_right)
  *             if elide_mismatches:             # <<<<<<<<<<<<<<
@@ -8384,7 +8032,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  */
     }
 
-    /* "pywfa/align.pyx":446
+    /* "pywfa/align.pyx":448
  *         else:
  *             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)
  *         if not self.score_only:             # <<<<<<<<<<<<<<
@@ -8393,7 +8041,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  */
   }
 
-  /* "pywfa/align.pyx":451
+  /* "pywfa/align.pyx":453
  *             if elide_mismatches:
  *                 res.cigartuples = elide_mismatches_from_cigar(res.cigartuples)
  *         return res             # <<<<<<<<<<<<<<
@@ -8405,7 +8053,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "pywfa/align.pyx":425
+  /* "pywfa/align.pyx":427
  *         return ps, pe, ts, te
  * 
  *     def __call__(self, text, pattern=None, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True,             # <<<<<<<<<<<<<<
@@ -8439,7 +8087,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
   return __pyx_r;
 }
 
-/* "pywfa/align.pyx":453
+/* "pywfa/align.pyx":455
  *         return res
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -8447,28 +8095,28 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
  */
 
 /* Python wrapper */
-static void __pyx_pw_5pywfa_5align_16WavefrontAligner_7__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pw_5pywfa_5align_16WavefrontAligner_7__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pw_5pywfa_5align_16WavefrontAligner_5__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pw_5pywfa_5align_16WavefrontAligner_5__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__ (wrapper)", 0);
-  __pyx_pf_5pywfa_5align_16WavefrontAligner_6__dealloc__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self));
+  __pyx_pf_5pywfa_5align_16WavefrontAligner_4__dealloc__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_5pywfa_5align_16WavefrontAligner_6__dealloc__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self) {
+static void __pyx_pf_5pywfa_5align_16WavefrontAligner_4__dealloc__(struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "pywfa/align.pyx":454
+  /* "pywfa/align.pyx":456
  * 
  *     def __dealloc__(self):
  *         wfa.wavefront_aligner_delete(self.wf_aligner)             # <<<<<<<<<<<<<<
  */
   wavefront_aligner_delete(__pyx_v_self->wf_aligner);
 
-  /* "pywfa/align.pyx":453
+  /* "pywfa/align.pyx":455
  *         return res
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -8479,12 +8127,12 @@ static void __pyx_pf_5pywfa_5align_16WavefrontAligner_6__dealloc__(struct __pyx_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pywfa/align.pxd":11
- *     cpdef str _pattern
+/* "pywfa/align.pxd":16
+ *     cdef str _pattern
  *     cdef bint score_only
- *     cpdef public int match_score, alignment_score             # <<<<<<<<<<<<<<
+ *     cdef public int match_score, alignment_score             # <<<<<<<<<<<<<<
  * 
- *     cpdef int wavefront_align(self, text, pattern=*)
+ *     cdef int wavefront_align(self, text, pattern=*)
  */
 
 /* Python wrapper */
@@ -8509,7 +8157,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_11match_score___get__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->match_score); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 11, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->match_score); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8547,7 +8195,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner_11match_score_2__set__(stru
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 11, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 16, __pyx_L1_error)
   __pyx_v_self->match_score = __pyx_t_1;
 
   /* function exit code */
@@ -8583,7 +8231,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_15alignment_score___g
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->alignment_score); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 11, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->alignment_score); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8621,7 +8269,7 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner_15alignment_score_2__set__(
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 11, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 16, __pyx_L1_error)
   __pyx_v_self->alignment_score = __pyx_t_1;
 
   /* function exit code */
@@ -8642,19 +8290,19 @@ static int __pyx_pf_5pywfa_5align_16WavefrontAligner_15alignment_score_2__set__(
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner_8__reduce_cython__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner_6__reduce_cython__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self) {
+static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8699,19 +8347,19 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_8__reduce_cython__(CY
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner_10__setstate_cython__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_5pywfa_5align_16WavefrontAligner_8__setstate_cython__(((struct __pyx_obj_5pywfa_5align_WavefrontAligner *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5pywfa_5align_WavefrontAligner *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8775,7 +8423,7 @@ static void __pyx_tp_dealloc_5pywfa_5align_WavefrontAligner(PyObject *o) {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) + 1);
-    __pyx_pw_5pywfa_5align_16WavefrontAligner_7__dealloc__(o);
+    __pyx_pw_5pywfa_5align_16WavefrontAligner_5__dealloc__(o);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) - 1);
     PyErr_Restore(etype, eval, etb);
   }
@@ -8832,9 +8480,8 @@ static int __pyx_setprop_5pywfa_5align_16WavefrontAligner_alignment_score(PyObje
 }
 
 static PyMethodDef __pyx_methods_5pywfa_5align_WavefrontAligner[] = {
-  {"wavefront_align", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5pywfa_5align_16WavefrontAligner_3wavefront_align, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5pywfa_5align_16WavefrontAligner_2wavefront_align},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_5pywfa_5align_16WavefrontAligner_9__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_5pywfa_5align_16WavefrontAligner_11__setstate_cython__, METH_O, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_5pywfa_5align_16WavefrontAligner_7__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_5pywfa_5align_16WavefrontAligner_9__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -8874,7 +8521,7 @@ static PyTypeObject __pyx_type_5pywfa_5align_WavefrontAligner = {
   0, /*tp_as_sequence*/
   0, /*tp_as_mapping*/
   0, /*tp_hash*/
-  __pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__, /*tp_call*/
+  __pyx_pw_5pywfa_5align_16WavefrontAligner_3__call__, /*tp_call*/
   0, /*tp_str*/
   0, /*tp_getattro*/
   0, /*tp_setattro*/
@@ -8922,9 +8569,6 @@ static PyTypeObject __pyx_type_5pywfa_5align_WavefrontAligner = {
 };
 
 static PyMethodDef __pyx_methods[] = {
-  {"clip_cigartuples", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5pywfa_5align_1clip_cigartuples, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5pywfa_5align_clip_cigartuples},
-  {"elide_mismatches_from_cigar", (PyCFunction)__pyx_pw_5pywfa_5align_3elide_mismatches_from_cigar, METH_O, __pyx_doc_5pywfa_5align_2elide_mismatches_from_cigar},
-  {"cigartuples_to_str", (PyCFunction)__pyx_pw_5pywfa_5align_5cigartuples_to_str, METH_O, __pyx_doc_5pywfa_5align_4cigartuples_to_str},
   {0, 0, 0, 0}
 };
 
@@ -8998,7 +8642,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_adaptive, __pyx_k_adaptive, sizeof(__pyx_k_adaptive), 0, 1, 0, 1},
   {&__pyx_n_u_affine, __pyx_k_affine, sizeof(__pyx_k_affine), 0, 1, 0, 1},
   {&__pyx_n_u_affine2p, __pyx_k_affine2p, sizeof(__pyx_k_affine2p), 0, 1, 0, 1},
-  {&__pyx_n_s_align_result, __pyx_k_align_result, sizeof(__pyx_k_align_result), 0, 0, 1, 1},
   {&__pyx_n_s_aligned_pattern, __pyx_k_aligned_pattern, sizeof(__pyx_k_aligned_pattern), 0, 0, 1, 1},
   {&__pyx_n_s_aligned_sequence, __pyx_k_aligned_sequence, sizeof(__pyx_k_aligned_sequence), 0, 0, 1, 1},
   {&__pyx_n_s_aligned_text, __pyx_k_aligned_text, sizeof(__pyx_k_aligned_text), 0, 0, 1, 1},
@@ -9103,18 +8746,17 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_tl, __pyx_k_tl, sizeof(__pyx_k_tl), 0, 0, 1, 1},
   {&__pyx_n_s_ts, __pyx_k_ts, sizeof(__pyx_k_ts), 0, 0, 1, 1},
   {&__pyx_n_s_tuple_cigar, __pyx_k_tuple_cigar, sizeof(__pyx_k_tuple_cigar), 0, 0, 1, 1},
-  {&__pyx_n_s_wavefront_align, __pyx_k_wavefront_align, sizeof(__pyx_k_wavefront_align), 0, 0, 1, 1},
   {&__pyx_n_s_xdrop, __pyx_k_xdrop, sizeof(__pyx_k_xdrop), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_property = __Pyx_GetBuiltinName(__pyx_n_s_property); if (!__pyx_builtin_property) __PYX_ERR(0, 47, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 114, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 256, __pyx_L1_error)
-  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 256, __pyx_L1_error)
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 264, __pyx_L1_error)
-  __pyx_builtin_chr = __Pyx_GetBuiltinName(__pyx_n_s_chr); if (!__pyx_builtin_chr) __PYX_ERR(0, 343, __pyx_L1_error)
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 392, __pyx_L1_error)
+  __pyx_builtin_property = __Pyx_GetBuiltinName(__pyx_n_s_property); if (!__pyx_builtin_property) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 266, __pyx_L1_error)
+  __pyx_builtin_chr = __Pyx_GetBuiltinName(__pyx_n_s_chr); if (!__pyx_builtin_chr) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 394, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -9125,14 +8767,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "pywfa/align.pyx":431
+  /* "pywfa/align.pyx":433
  *             p = self._pattern
  *             if not p:
  *                 raise ValueError("pattern is None")             # <<<<<<<<<<<<<<
  *             lp = len(self._pattern)
  *             score = self.wavefront_align(text)
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_u_pattern_is_None); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 431, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_u_pattern_is_None); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 433, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
@@ -9155,65 +8797,65 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "pywfa/align.pyx":31
+  /* "pywfa/align.pyx":32
  *     text: str
  *     status: int
  *     def __init__(self, pl, tl, ps, pe, ts, te, ct, s, p, t, status):             # <<<<<<<<<<<<<<
  *         self.pattern_length = pl
  *         self.text_length = tl
  */
-  __pyx_tuple__7 = PyTuple_Pack(12, __pyx_n_s_self, __pyx_n_s_pl, __pyx_n_s_tl, __pyx_n_s_ps, __pyx_n_s_pe, __pyx_n_s_ts, __pyx_n_s_te, __pyx_n_s_ct, __pyx_n_s_s, __pyx_n_s_p, __pyx_n_s_t, __pyx_n_s_status); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(12, __pyx_n_s_self, __pyx_n_s_pl, __pyx_n_s_tl, __pyx_n_s_ps, __pyx_n_s_pe, __pyx_n_s_ts, __pyx_n_s_te, __pyx_n_s_ct, __pyx_n_s_s, __pyx_n_s_p, __pyx_n_s_t, __pyx_n_s_status); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(12, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_init, 31, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(12, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_init, 32, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 32, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":44
+  /* "pywfa/align.pyx":45
  *         self.status = status
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         return str(self.__dict__)
  * 
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_repr, 44, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_repr, 45, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 45, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":48
+  /* "pywfa/align.pyx":49
  * 
  *     @property
  *     def aligned_pattern(self):             # <<<<<<<<<<<<<<
  *         """Returns the pattern sequence aligned by the cigar
  *         Returns
  */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_aligned_pattern, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_aligned_pattern, 49, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 49, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":66
+  /* "pywfa/align.pyx":67
  * 
  *     @property
  *     def aligned_text(self):             # <<<<<<<<<<<<<<
  *         """Returns the text sequence aligned by the cigar
  *         Returns
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_aligned_text, 66, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_aligned_text, 67, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 67, __pyx_L1_error)
 
-  /* "pywfa/align.pyx":84
+  /* "pywfa/align.pyx":85
  *                                               "I")
  * 
  *     def _get_aligned_sequence(self, sequence, tuple_cigar, begin, end,             # <<<<<<<<<<<<<<
  *                               gap_type):
  *         aligned_sequence = []
  */
-  __pyx_tuple__15 = PyTuple_Pack(11, __pyx_n_s_self, __pyx_n_s_sequence, __pyx_n_s_tuple_cigar, __pyx_n_s_begin, __pyx_n_s_end, __pyx_n_s_gap_type, __pyx_n_s_aligned_sequence, __pyx_n_s_seq, __pyx_n_s_index, __pyx_n_s_length, __pyx_n_s_mid); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_tuple__15 = PyTuple_Pack(11, __pyx_n_s_self, __pyx_n_s_sequence, __pyx_n_s_tuple_cigar, __pyx_n_s_begin, __pyx_n_s_end, __pyx_n_s_gap_type, __pyx_n_s_aligned_sequence, __pyx_n_s_seq, __pyx_n_s_index, __pyx_n_s_length, __pyx_n_s_mid); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(6, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_get_aligned_sequence, 84, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(6, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pywfa_align_pyx, __pyx_n_s_get_aligned_sequence, 85, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -9260,10 +8902,19 @@ static int __Pyx_modinit_variable_export_code(void) {
 
 static int __Pyx_modinit_function_export_code(void) {
   __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
+  if (__Pyx_ExportFunction("clip_cigartuples", (void (*)(void))__pyx_f_5pywfa_5align_clip_cigartuples, "PyObject *(PyObject *, struct __pyx_opt_args_5pywfa_5align_clip_cigartuples *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("elide_mismatches_from_cigar", (void (*)(void))__pyx_f_5pywfa_5align_elide_mismatches_from_cigar, "PyObject *(PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("cigartuples_to_str", (void (*)(void))__pyx_f_5pywfa_5align_cigartuples_to_str, "PyObject *(PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 static int __Pyx_modinit_type_init_code(void) {
@@ -9274,17 +8925,17 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   __pyx_vtabptr_5pywfa_5align_WavefrontAligner = &__pyx_vtable_5pywfa_5align_WavefrontAligner;
-  __pyx_vtable_5pywfa_5align_WavefrontAligner.wavefront_align = (int (*)(struct __pyx_obj_5pywfa_5align_WavefrontAligner *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args))__pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align;
-  if (PyType_Ready(&__pyx_type_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_vtable_5pywfa_5align_WavefrontAligner.wavefront_align = (int (*)(struct __pyx_obj_5pywfa_5align_WavefrontAligner *, PyObject *, struct __pyx_opt_args_5pywfa_5align_16WavefrontAligner_wavefront_align *__pyx_optional_args))__pyx_f_5pywfa_5align_16WavefrontAligner_wavefront_align;
+  if (PyType_Ready(&__pyx_type_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_5pywfa_5align_WavefrontAligner.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_5pywfa_5align_WavefrontAligner.tp_dictoffset && __pyx_type_5pywfa_5align_WavefrontAligner.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_5pywfa_5align_WavefrontAligner.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_5pywfa_5align_WavefrontAligner.tp_dict, __pyx_vtabptr_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_WavefrontAligner, (PyObject *)&__pyx_type_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_5pywfa_5align_WavefrontAligner.tp_dict, __pyx_vtabptr_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_WavefrontAligner, (PyObject *)&__pyx_type_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_5pywfa_5align_WavefrontAligner) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
   __pyx_ptype_5pywfa_5align_WavefrontAligner = &__pyx_type_5pywfa_5align_WavefrontAligner;
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -9512,7 +9163,7 @@ if (!__Pyx_RefNanny) {
   /*--- Global type/function init code ---*/
   (void)__Pyx_modinit_global_init_code();
   (void)__Pyx_modinit_variable_export_code();
-  (void)__Pyx_modinit_function_export_code();
+  if (unlikely(__Pyx_modinit_function_export_code() < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
   if (unlikely(__Pyx_modinit_type_init_code() < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
   (void)__Pyx_modinit_type_import_code();
   (void)__Pyx_modinit_variable_import_code();
@@ -9665,116 +9316,116 @@ if (!__Pyx_RefNanny) {
   __pyx_t_3[88] = 8;
   memcpy(&(__pyx_v_5pywfa_5align_codes[0]), __pyx_t_3, sizeof(__pyx_v_5pywfa_5align_codes[0]) * (89));
 
-  /* "pywfa/align.pyx":17
+  /* "pywfa/align.pyx":18
  * 
  * @dataclass
  * class AlignmentResult:             # <<<<<<<<<<<<<<
  *     """Holds the result of an alignment
  *     """
  */
-  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_AlignmentResult, __pyx_n_s_AlignmentResult, (PyObject *) NULL, __pyx_n_s_pywfa_align, __pyx_kp_s_Holds_the_result_of_an_alignment); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_AlignmentResult, __pyx_n_s_AlignmentResult, (PyObject *) NULL, __pyx_n_s_pywfa_align, __pyx_kp_s_Holds_the_result_of_an_alignment); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "pywfa/align.pyx":31
+  /* "pywfa/align.pyx":32
  *     text: str
  *     status: int
  *     def __init__(self, pl, tl, ps, pe, ts, te, ct, s, p, t, status):             # <<<<<<<<<<<<<<
  *         self.pattern_length = pl
  *         self.text_length = tl
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_1__init__, 0, __pyx_n_s_AlignmentResult___init, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_1__init__, 0, __pyx_n_s_AlignmentResult___init, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_1) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_1) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":44
+  /* "pywfa/align.pyx":45
  *         self.status = status
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         return str(self.__dict__)
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_3__repr__, 0, __pyx_n_s_AlignmentResult___repr, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_3__repr__, 0, __pyx_n_s_AlignmentResult___repr, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_repr, __pyx_t_1) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_repr, __pyx_t_1) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":48
+  /* "pywfa/align.pyx":49
  * 
  *     @property
  *     def aligned_pattern(self):             # <<<<<<<<<<<<<<
  *         """Returns the pattern sequence aligned by the cigar
  *         Returns
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_5aligned_pattern, 0, __pyx_n_s_AlignmentResult_aligned_pattern, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__12)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_5aligned_pattern, 0, __pyx_n_s_AlignmentResult_aligned_pattern, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__12)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "pywfa/align.pyx":47
+  /* "pywfa/align.pyx":48
  *         return str(self.__dict__)
  * 
  *     @property             # <<<<<<<<<<<<<<
  *     def aligned_pattern(self):
  *         """Returns the pattern sequence aligned by the cigar
  */
-  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_property, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_property, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_aligned_pattern, __pyx_t_4) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_aligned_pattern, __pyx_t_4) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pywfa/align.pyx":66
+  /* "pywfa/align.pyx":67
  * 
  *     @property
  *     def aligned_text(self):             # <<<<<<<<<<<<<<
  *         """Returns the text sequence aligned by the cigar
  *         Returns
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_7aligned_text, 0, __pyx_n_s_AlignmentResult_aligned_text, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__14)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_7aligned_text, 0, __pyx_n_s_AlignmentResult_aligned_text, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__14)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "pywfa/align.pyx":65
+  /* "pywfa/align.pyx":66
  *                                               "D")
  * 
  *     @property             # <<<<<<<<<<<<<<
  *     def aligned_text(self):
  *         """Returns the text sequence aligned by the cigar
  */
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_property, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_property, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_aligned_text, __pyx_t_1) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_aligned_text, __pyx_t_1) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":84
+  /* "pywfa/align.pyx":85
  *                                               "I")
  * 
  *     def _get_aligned_sequence(self, sequence, tuple_cigar, begin, end,             # <<<<<<<<<<<<<<
  *                               gap_type):
  *         aligned_sequence = []
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_9_get_aligned_sequence, 0, __pyx_n_s_AlignmentResult__get_aligned_seq, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__16)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_5pywfa_5align_15AlignmentResult_9_get_aligned_sequence, 0, __pyx_n_s_AlignmentResult__get_aligned_seq, NULL, __pyx_n_s_pywfa_align, __pyx_d, ((PyObject *)__pyx_codeobj__16)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_get_aligned_sequence, __pyx_t_1) < 0) __PYX_ERR(0, 84, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_get_aligned_sequence, __pyx_t_1) < 0) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pywfa/align.pyx":16
- *  0,0,0,0,3,0,6,0,0,4,0,0,0,0,8]
+  /* "pywfa/align.pyx":17
+ * 
  * 
  * @dataclass             # <<<<<<<<<<<<<<
  * class AlignmentResult:
  *     """Holds the result of an alignment
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_dataclass); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_dataclass); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "pywfa/align.pyx":17
+  /* "pywfa/align.pyx":18
  * 
  * @dataclass
  * class AlignmentResult:             # <<<<<<<<<<<<<<
  *     """Holds the result of an alignment
  *     """
  */
-  __pyx_t_5 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_AlignmentResult, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_AlignmentResult, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_6 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -9789,10 +9440,10 @@ if (!__Pyx_RefNanny) {
   __pyx_t_1 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_6, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_AlignmentResult, __pyx_t_1) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_AlignmentResult, __pyx_t_1) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
@@ -11147,32 +10798,6 @@ return_ne:
 #endif
 }
 
-/* PyDictVersioning */
-#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj) {
-    PyObject *dict = Py_TYPE(obj)->tp_dict;
-    return likely(dict) ? __PYX_GET_DICT_VERSION(dict) : 0;
-}
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj) {
-    PyObject **dictptr = NULL;
-    Py_ssize_t offset = Py_TYPE(obj)->tp_dictoffset;
-    if (offset) {
-#if CYTHON_COMPILING_IN_CPYTHON
-        dictptr = (likely(offset > 0)) ? (PyObject **) ((char *)obj + offset) : _PyObject_GetDictPtr(obj);
-#else
-        dictptr = _PyObject_GetDictPtr(obj);
-#endif
-    }
-    return (dictptr && *dictptr) ? __PYX_GET_DICT_VERSION(*dictptr) : 0;
-}
-static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version) {
-    PyObject *dict = Py_TYPE(obj)->tp_dict;
-    if (unlikely(!dict) || unlikely(tp_dict_version != __PYX_GET_DICT_VERSION(dict)))
-        return 0;
-    return obj_dict_version == __Pyx_get_object_dict_version(obj);
-}
-#endif
-
 /* PyErrFetchRestore */
 #if CYTHON_FAST_THREAD_STATE
 static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
@@ -11395,6 +11020,32 @@ static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject 
 bad:
     Py_XDECREF(owned_instance);
     return;
+}
+#endif
+
+/* PyDictVersioning */
+#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj) {
+    PyObject *dict = Py_TYPE(obj)->tp_dict;
+    return likely(dict) ? __PYX_GET_DICT_VERSION(dict) : 0;
+}
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj) {
+    PyObject **dictptr = NULL;
+    Py_ssize_t offset = Py_TYPE(obj)->tp_dictoffset;
+    if (offset) {
+#if CYTHON_COMPILING_IN_CPYTHON
+        dictptr = (likely(offset > 0)) ? (PyObject **) ((char *)obj + offset) : _PyObject_GetDictPtr(obj);
+#else
+        dictptr = _PyObject_GetDictPtr(obj);
+#endif
+    }
+    return (dictptr && *dictptr) ? __PYX_GET_DICT_VERSION(*dictptr) : 0;
+}
+static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version) {
+    PyObject *dict = Py_TYPE(obj)->tp_dict;
+    if (unlikely(!dict) || unlikely(tp_dict_version != __PYX_GET_DICT_VERSION(dict)))
+        return 0;
+    return obj_dict_version == __Pyx_get_object_dict_version(obj);
 }
 #endif
 
@@ -13332,6 +12983,43 @@ static int __Pyx_check_binary_version(void) {
         return PyErr_WarnEx(NULL, message, 1);
     }
     return 0;
+}
+
+/* FunctionExport */
+static int __Pyx_ExportFunction(const char *name, void (*f)(void), const char *sig) {
+    PyObject *d = 0;
+    PyObject *cobj = 0;
+    union {
+        void (*fp)(void);
+        void *p;
+    } tmp;
+    d = PyObject_GetAttrString(__pyx_m, (char *)"__pyx_capi__");
+    if (!d) {
+        PyErr_Clear();
+        d = PyDict_New();
+        if (!d)
+            goto bad;
+        Py_INCREF(d);
+        if (PyModule_AddObject(__pyx_m, (char *)"__pyx_capi__", d) < 0)
+            goto bad;
+    }
+    tmp.fp = f;
+#if PY_VERSION_HEX >= 0x02070000
+    cobj = PyCapsule_New(tmp.p, sig, 0);
+#else
+    cobj = PyCObject_FromVoidPtrAndDesc(tmp.p, (void *)sig, 0);
+#endif
+    if (!cobj)
+        goto bad;
+    if (PyDict_SetItemString(d, name, cobj) < 0)
+        goto bad;
+    Py_DECREF(cobj);
+    Py_DECREF(d);
+    return 0;
+bad:
+    Py_XDECREF(cobj);
+    Py_XDECREF(d);
+    return -1;
 }
 
 /* InitStrings */

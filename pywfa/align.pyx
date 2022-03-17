@@ -13,6 +13,7 @@ codes[:] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,9,0,2,0,0,0,5,1,
  0,0,0,0,3,0,6,0,0,4,0,0,0,0,8]
 
+
 @dataclass
 class AlignmentResult:
     """Holds the result of an alignment
@@ -96,7 +97,7 @@ class AlignmentResult:
         return "".join(aligned_sequence)
 
 
-cpdef clip_cigartuples(align_result, min_aligned_bases_left=5, min_aligned_bases_right=5):
+cdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min_aligned_bases_right=5):
     """Returns cigartuples with blocks of aligned bases < threshold removed from each end
     Returns
     -------
@@ -161,7 +162,7 @@ cpdef clip_cigartuples(align_result, min_aligned_bases_left=5, min_aligned_bases
     return align_result
 
 
-cpdef elide_mismatches_from_cigar(cigartuples):
+cdef elide_mismatches_from_cigar(cigartuples):
     """Returns cigartuples with mismatched 'X' merged into aligned blocks 'M'
     Returns
     -------
@@ -186,7 +187,7 @@ cpdef elide_mismatches_from_cigar(cigartuples):
     return modified
 
 
-cpdef cigartuples_to_str(cigartuples):
+cdef cigartuples_to_str(cigartuples):
     """Returns string format of cigartuples
     Returns
     -------
@@ -295,7 +296,7 @@ cdef class WavefrontAligner:
 
         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
 
-    cpdef int wavefront_align(self, text, pattern=None):
+    cdef int wavefront_align(self, text, pattern=None):
         """The main alignment function. Returns alignment score
         Returns
         -------

@@ -4,6 +4,7 @@ from setuptools import setup
 from setuptools.extension import Extension
 from subprocess import run
 import os
+from distutils.command.install import install as DistutilsInstall
 
 # run("cd pywfa/WFA2-lib; make BUILD_TOOLS=0 BUILD_EXAMPLES=0 clean all; cd ../../", shell=True)
 
@@ -34,6 +35,13 @@ ext_modules.append(Extension("pywfa.align",
                              extra_objects=[f"{wfa}/lib/libwfa.a"]
                              ))
 
+class MyInstall(DistutilsInstall):
+    # https://stackoverflow.com/questions/1754966/how-can-i-run-a-makefile-in-setup-py
+    def run(self):
+        run("cd pywfa/WFA2-lib; make BUILD_CPP=0 clean all; cd ../../", shell=True)
+        DistutilsInstall.run(self)
+
+
 setup(
     name="pywfa",
     author="Kez Cleal",
@@ -54,7 +62,7 @@ setup(
         ],
     packages=["pywfa", "tests"],
     ext_modules=cythonize(ext_modules),
-    cmdclass={'build_ext': build_ext},
+    cmdclass={'build_ext': build_ext, 'install': MyInstall},
     include_package_data=True,
     zip_safe=False,
     test_suite='nose.collector',
