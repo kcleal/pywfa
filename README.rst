@@ -95,7 +95,7 @@ alignment cigar resemble those produced by bwa, for example:
     >>> 8S7M5D6M
 
 
-Additionally, short matches at the end of alignments can be trimmed off:
+An experimental feature is to trimm short matches at the end of alignments. This results in alignments that approximate local alignments:
 
 .. code-block:: python
 
@@ -110,18 +110,11 @@ Additionally, short matches at the end of alignments can be trimmed off:
     >>> ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA
 
     # By default the minimum allowed block of matches at each end is 5 bp
-    res = a(text, clip_cigar=True)
+    res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5)
     res.cigartuples
     >>> [(4, 12), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
     res.aligned_text
     >>> AAAAACCAAAAAAAAAAAAA
-
-    # The minimum length of aligned bases at the end can be controlled using:
-    res = a(text, clip_cigar=True, min_aligned_bases_left=1, min_aligned_bases_right=1)
-    res.cigartuples
-    >>> [(0, 1), (1, 5), (8, 6), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
-    res.aligned_text
-    >>> ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA
 
     # Mismatch operations X can also be elided, note this occurs after the clip_cigar stage
     res = a(text, clip_cigar=True, elide_mismatches=True)
@@ -161,7 +154,6 @@ When using heuristic functions it is recommended to check the status attribute:
     text = "GGCCAAAAACCAAAAAA"
     a = WavefrontAligner(heuristic="adaptive")
     a(pattern, text)
-
     a.status
     >>> 0   # successful alignment, -1 indicates the alignment was stopped due to the heuristic
 

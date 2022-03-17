@@ -95,7 +95,7 @@ class TestConstruct(unittest.TestCase):
         pattern = "AATTAATTTAAGTCTAGGCTACTTTCGGTACTTTGTTCTT"
         text = "AATTTAAGTCTAGGCTACTTTCGGTACTTTCTT"
         a = WavefrontAligner(pattern, span="ends-free", mismatch=4, gap_opening=6, gap_extension=2)
-        res = a(text, clip_cigar=True, elide_mismatches=True)
+        res = a(text, clip_cigar=True, elide_mismatches=True, min_aligned_bases_left=5, min_aligned_bases_right=5)
         assert res.aligned_pattern == res.aligned_text
         assert a.cigarstring == "4M4D26M3D3M"
         assert res.score == -26

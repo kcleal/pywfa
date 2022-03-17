@@ -429,7 +429,7 @@ cdef class WavefrontAligner:
 
         return pattern_start, pattern_end, text_start, text_end
 
-    def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=False,
+    def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=1, min_aligned_bases_right=1, elide_mismatches=False,
                  supress_sequences=False):
 
         if pattern is None:
