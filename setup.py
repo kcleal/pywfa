@@ -6,7 +6,6 @@ from subprocess import run
 import os
 from distutils.command.install import install as DistutilsInstall
 
-# run("cd pywfa/WFA2-lib; make BUILD_TOOLS=0 BUILD_EXAMPLES=0 clean all; cd ../../", shell=True)
 
 extras = ["-Wno-sign-compare", "-Wno-unused-function", "-Wno-unused-result", '-Wno-ignored-qualifiers',
           "-Wno-deprecated-declarations"]
