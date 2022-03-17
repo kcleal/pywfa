@@ -1,12 +1,3 @@
 include pywfa/*
-include pywfa/WFA2-lib
+include pywfa/WFA2_lib
 include pywfa/tests
-exclude old
-#exclude pywfa/WFA2-lib/examples
-#exclude pywfa/WFA2-lib/img
-#exclude pywfa/WFA2-lib/lib
-#exclude pywfa/WFA2-lib/build
-#exclude pywfa/WFA2-lib/bin
-#exclude pywfa/WFA2-lib/scripts
-#exclude pywfa/WFA2-lib/tools
-#exclude pywfa/WFA2-lib/bindings

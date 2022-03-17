@@ -15,7 +15,7 @@ extras = ["-Wno-sign-compare", "-Wno-unused-function", "-Wno-unused-result", '-W
 ext_modules = list()
 
 root = os.path.abspath(os.path.dirname(__file__))
-wfa = os.path.join(root, "pywfa/WFA2-lib")
+wfa = os.path.join(root, "pywfa/WFA2_lib")
 
 libraries = [f"{wfa}/lib"]
 library_dirs = [f"{wfa}/lib"]
@@ -53,7 +53,8 @@ class MyBuild(_build_ext):
 class Build_ext_first(_install):
     def run(self):
         # Build WFA2-lib first
-        run("cd pywfa/WFA2-lib; make BUILD_CPP=0 clean all; cd ../../", shell=True)
+        # run("cd pywfa/WFA2_lib; make BUILD_CPP=0 clean all; cd ../../", shell=True)
+        run("cd pywfa/WFA2_lib; make clean all; cd ../../", shell=True)
         return setuptools.command.install.install.run(self)
 
 setup(
@@ -63,7 +64,7 @@ setup(
     url="https://github.com/kcleal/pywfa",
     description="Align sequences using WFA2-lib",
     license="MIT",
-    version='0.2.2',
+    version='0.2.3',
     python_requires='>=3.7',
     install_requires=[  # runtime requires
             'cython',

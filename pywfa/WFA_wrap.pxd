@@ -3,14 +3,14 @@ from libc.stdint cimport uint64_t
 from libc.stdio cimport FILE
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_penalties.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_penalties.h" nogil:
     ctypedef struct linear_penalties_t:
         int match          # (Penalty representation usually M <= 0)
         int mismatch       # (Penalty representation usually X > 0)
         int indel          # (Penalty representation usually I > 0)
 
 
-cdef extern from "WFA2-lib/alignment/affine_penalties.h" nogil:
+cdef extern from "WFA2_lib/alignment/affine_penalties.h" nogil:
     # Affine penalties
     ctypedef struct affine_penalties_t:
         int match              # (Penalty representation usually M <= 0)
@@ -25,7 +25,7 @@ cdef extern from "WFA2-lib/alignment/affine_penalties.h" nogil:
         affine_matrix_D
 
 
-cdef extern from "WFA2-lib/alignment/affine2p_penalties.h" nogil:
+cdef extern from "WFA2_lib/alignment/affine2p_penalties.h" nogil:
     ctypedef struct affine2p_penalties_t:
         int match             # (Penalty representation usually M <= 0)
         int mismatch          # (Penalty representation usually X > 0)
@@ -44,7 +44,7 @@ cdef extern from "WFA2-lib/alignment/affine2p_penalties.h" nogil:
         affine2p_matrix_D2
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_heuristic.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_heuristic.h" nogil:
     # Wavefront ahead definition
     # ctypedef struct _wavefront_aligner_t wavefront_aligner_t
 
@@ -77,7 +77,7 @@ cdef extern from "WFA2-lib/wavefront/wavefront_heuristic.h" nogil:
         int max_sw_score_k                 # Diagonal of the maximum score observed
 
 
-cdef extern from "WFA2-lib/utils/vector.h" nogil:
+cdef extern from "WFA2_lib/utils/vector.h" nogil:
     # Data Structures
     ctypedef struct vector_t:
         void* memory
@@ -86,7 +86,7 @@ cdef extern from "WFA2-lib/utils/vector.h" nogil:
         uint64_t elements_allocated
 
 
-cdef extern from "WFA2-lib/system/mm_allocator.h" nogil:
+cdef extern from "WFA2_lib/system/mm_allocator.h" nogil:
     # MM-Allocator
     ctypedef struct mm_allocator_t:
         # Metadata
@@ -105,7 +105,7 @@ cdef extern from "WFA2-lib/system/mm_allocator.h" nogil:
         void* const memory)
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_attributes.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_attributes.h" nogil:
 
     # Alignment scope
     ctypedef enum alignment_scope_t:
@@ -185,7 +185,7 @@ cdef extern from "WFA2-lib/wavefront/wavefront_attributes.h" nogil:
         alignment_system_t system               # System related parameters
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_penalties.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_penalties.h" nogil:
 
     # Distance metrics
     ctypedef enum distance_metric_t:
@@ -211,7 +211,7 @@ cdef extern from "WFA2-lib/wavefront/wavefront_penalties.h" nogil:
       int gap_extension2    # (E2 > 0)
 
 
-cdef extern from "WFA2-lib/alignment/cigar.h" nogil:
+cdef extern from "WFA2_lib/alignment/cigar.h" nogil:
     #CIGAR
     ctypedef struct cigar_t:
         # Operations buffer
@@ -296,7 +296,7 @@ cdef extern from "WFA2-lib/alignment/cigar.h" nogil:
 
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_aligner.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_aligner.h" nogil:
     # Error codes & messages
     DEF WF_STATUS_SUCCESSFUL = 0
     DEF WF_STATUS_IN_PROGRESS = 1
@@ -431,7 +431,7 @@ cdef extern from "WFA2-lib/wavefront/wavefront_aligner.h" nogil:
     #     const int current_score)
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_heuristic.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_heuristic.h" nogil:
     # Wavefront ahead definition
     # ctypedef struct _wavefront_aligner_t wavefront_aligner_t
 
@@ -499,12 +499,12 @@ cdef extern from "WFA2-lib/wavefront/wavefront_heuristic.h" nogil:
 
 
     # Default parameters
-cdef extern from "WFA2-lib/wavefront/wavefront_attributes.c" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_attributes.c" nogil:
     cdef extern wavefront_aligner_attr_t wavefront_aligner_attr_default
 
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_penalties.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_penalties.h" nogil:
 
     # Distance metrics
     # ctypedef enum distance_metric_t:
@@ -558,7 +558,7 @@ cdef extern from "WFA2-lib/wavefront/wavefront_penalties.h" nogil:
     #     wavefront_heuristic_t* const wf_heuristic)
 
 
-cdef extern from "WFA2-lib/wavefront/wavefront_align.h" nogil:
+cdef extern from "WFA2_lib/wavefront/wavefront_align.h" nogil:
     # Wavefront Alignment
     int wavefront_align(
         wavefront_aligner_t* const wf_aligner,

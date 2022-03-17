@@ -2,14 +2,15 @@
 pyWFA
 =====
 
-A python wrapper for wavefront alignment using WFA2-lib
+A python wrapper for wavefront alignment using `WFA2-lib
+<https://github.com/smarco/WFA2-lib/>`_
 
 Installation
 ------------
 
 Build from source::
 
-    git clone --recursive https://github.com/kcleal/pywfa
+    git clone https://github.com/kcleal/pywfa
     cd pywfa
     pip install .
 
