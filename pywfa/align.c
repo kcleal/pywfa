@@ -1836,7 +1836,6 @@ static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
 static PyObject *__pyx_int_4;
-static PyObject *__pyx_int_5;
 static PyObject *__pyx_int_8;
 static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
@@ -7699,7 +7698,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
  * 
  *         return pattern_start, pattern_end, text_start, text_end             # <<<<<<<<<<<<<<
  * 
- *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=False,
+ *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=1, min_aligned_bases_right=1, elide_mismatches=False,
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_pattern_start); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 430, __pyx_L1_error)
@@ -7756,7 +7755,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_9locations___get__(st
 /* "pywfa/align.pyx":432
  *         return pattern_start, pattern_end, text_start, text_end
  * 
- *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=False,             # <<<<<<<<<<<<<<
+ *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=1, min_aligned_bases_right=1, elide_mismatches=False,             # <<<<<<<<<<<<<<
  *                  supress_sequences=False):
  * 
  */
@@ -7782,13 +7781,13 @@ static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *_
     PyObject* values[7] = {0,0,0,0,0,0,0};
     values[1] = ((PyObject *)Py_None);
     values[2] = ((PyObject *)Py_False);
-    values[3] = ((PyObject *)__pyx_int_5);
-    values[4] = ((PyObject *)__pyx_int_5);
+    values[3] = ((PyObject *)__pyx_int_1);
+    values[4] = ((PyObject *)__pyx_int_1);
     values[5] = ((PyObject *)Py_False);
 
     /* "pywfa/align.pyx":433
  * 
- *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=False,
+ *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=1, min_aligned_bases_right=1, elide_mismatches=False,
  *                  supress_sequences=False):             # <<<<<<<<<<<<<<
  * 
  *         if pattern is None:
@@ -7900,7 +7899,7 @@ static PyObject *__pyx_pw_5pywfa_5align_16WavefrontAligner_5__call__(PyObject *_
   /* "pywfa/align.pyx":432
  *         return pattern_start, pattern_end, text_start, text_end
  * 
- *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=False,             # <<<<<<<<<<<<<<
+ *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=1, min_aligned_bases_right=1, elide_mismatches=False,             # <<<<<<<<<<<<<<
  *                  supress_sequences=False):
  * 
  */
@@ -8508,7 +8507,7 @@ static PyObject *__pyx_pf_5pywfa_5align_16WavefrontAligner_4__call__(struct __py
   /* "pywfa/align.pyx":432
  *         return pattern_start, pattern_end, text_start, text_end
  * 
- *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=False,             # <<<<<<<<<<<<<<
+ *     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=1, min_aligned_bases_right=1, elide_mismatches=False,             # <<<<<<<<<<<<<<
  *                  supress_sequences=False):
  * 
  */
@@ -9499,7 +9498,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_4 = PyInt_FromLong(4); if (unlikely(!__pyx_int_4)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_5 = PyInt_FromLong(5); if (unlikely(!__pyx_int_5)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_8 = PyInt_FromLong(8); if (unlikely(!__pyx_int_8)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;

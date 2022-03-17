@@ -95,7 +95,7 @@ alignment cigar resemble those produced by bwa, for example:
     >>> 8S7M5D6M
 
 
-An experimental feature is to trimm short matches at the end of alignments. This results in alignments that approximate local alignments:
+An experimental feature is to trim short matches at the end of alignments. This results in alignments that approximate local alignments:
 
 .. code-block:: python
 
@@ -108,6 +108,8 @@ An experimental feature is to trimm short matches at the end of alignments. This
     >>> [(0, 1), (1, 5), (8, 6), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
     res.aligned_text
     >>> ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA
+    res.text_start, res.text_end
+    >>> 0, 32
 
     # By default the minimum allowed block of matches at each end is 5 bp
     res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5)
@@ -115,6 +117,8 @@ An experimental feature is to trimm short matches at the end of alignments. This
     >>> [(4, 12), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
     res.aligned_text
     >>> AAAAACCAAAAAAAAAAAAA
+    res.text_start, res.text_end
+    >>> 12, 32
 
     # Mismatch operations X can also be elided, note this occurs after the clip_cigar stage
     res = a(text, clip_cigar=True, elide_mismatches=True)
