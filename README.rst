@@ -110,6 +110,7 @@ An experimental feature is to trim short matches at the end of alignments. This 
     text = "ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA"
     a = WavefrontAligner(pattern)
 
+    # The unmodified cigar may have short matches at the end:
     res = a(text, clip_cigar=False)
     res.cigartuples
     >>> [(0, 1), (1, 5), (8, 6), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
@@ -118,7 +119,7 @@ An experimental feature is to trim short matches at the end of alignments. This 
     res.text_start, res.text_end
     >>> 0, 32
 
-    # By default the minimum allowed block of matches at each end is 5 bp
+    # The minimum allowed block of matches can be set at e.g. 5 bp, which will trim off short matches
     res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5)
     res.cigartuples
     >>> [(4, 12), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
