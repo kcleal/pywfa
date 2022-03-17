@@ -18,8 +18,7 @@ wfa = os.path.join(root, "pywfa/WFA2-lib")
 
 libraries = [f"{wfa}/lib"]
 library_dirs = [f"{wfa}/lib"]
-include_dirs = [root, wfa, f"{wfa}/lib", f"{wfa}/utils", f"{wfa}/wavefront", f"{wfa}/bindings/cpp", f"{wfa}/system",
-                ]
+include_dirs = [root, wfa, f"{wfa}/lib", f"{wfa}/utils", f"{wfa}/wavefront", f"{wfa}/bindings/cpp", f"{wfa}/system"]
 
 print("Libs", libraries)
 print("Library dirs", library_dirs)
