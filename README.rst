@@ -37,11 +37,14 @@ Alignment of pattern and text strings can be performed directly by accessing WFA
     a.cigartuples
     >>> [(0, 3), (8, 1), (0, 4), (2, 1), (0, 7), (1, 1), (0, 9), (8, 1), (0, 6)]
     a.cigar_print_pretty
+
+.. code-block:: text
+
     >>> 3M1X4M1D7M1I9M1X6M      ALIGNMENT
         1X1D1I1X      ALIGNMENT.COMPACT
-         PATTERN    TCTTTACTCGCGCGTT-GGAGAAATACAATAGT
-                    ||| |||| ||||||| ||||||||| ||||||
-         TEXT       TCTATACT-GCGCGTTTGGAGAAATAAAATAGT
+        PATTERN    TCTTTACTCGCGCGTT-GGAGAAATACAATAGT
+                   ||| |||| ||||||| ||||||||| ||||||
+        TEXT       TCTATACT-GCGCGTTTGGAGAAATAAAATAGT
 
 Cigartuples follow the pysam convention:
 
