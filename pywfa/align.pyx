@@ -97,7 +97,7 @@ class AlignmentResult:
         return "".join(aligned_sequence)
 
 
-cdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min_aligned_bases_right=5):
+cpdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min_aligned_bases_right=5):
     """Returns cigartuples with blocks of aligned bases < threshold removed from each end
     Returns
     -------
@@ -162,7 +162,7 @@ cdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min
     return align_result
 
 
-cdef elide_mismatches_from_cigar(cigartuples):
+cpdef elide_mismatches_from_cigar(cigartuples):
     """Returns cigartuples with mismatched 'X' merged into aligned blocks 'M'
     Returns
     -------
@@ -187,7 +187,7 @@ cdef elide_mismatches_from_cigar(cigartuples):
     return modified
 
 
-cdef cigartuples_to_str(cigartuples):
+cpdef cigartuples_to_str(cigartuples):
     """Returns string format of cigartuples
     Returns
     -------
