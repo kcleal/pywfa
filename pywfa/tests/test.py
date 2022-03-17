@@ -1,5 +1,5 @@
 
-import unittest
+# import unittest
 import os
 import pysam
 import time
@@ -222,9 +222,9 @@ class TestConstruct(unittest.TestCase):
                     assert res.cigartuples[3] == (2, 175)
 
 
-def main():
-    unittest.main()
-
-
-if __name__ == "__main__":
-    unittest.main()
+# def main():
+#     unittest.main()
+#
+#
+# if __name__ == "__main__":
+#     unittest.main()

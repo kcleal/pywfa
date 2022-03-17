@@ -2,6 +2,7 @@ build
 dist
 old
 pywfa/WFA2-lib
+pywfa/*.so
 pywfa.egg-info
 .gitignore
 .*

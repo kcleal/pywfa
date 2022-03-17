@@ -1,6 +1,6 @@
 include pywfa/*
 include pywfa/WFA2-lib
-include tests/*
+include pywfa/tests
 exclude old
 #exclude pywfa/WFA2-lib/examples
 #exclude pywfa/WFA2-lib/img

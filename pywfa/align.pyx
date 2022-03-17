@@ -231,6 +231,8 @@ cdef class WavefrontAligner:
                  int xdrop=20,
                  ):
 
+        self.pattern_len = 0
+        self.text_len = 0
         if pattern:
             self._pattern = pattern
 
@@ -296,7 +298,7 @@ cdef class WavefrontAligner:
 
         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
 
-    cdef int wavefront_align(self, text, pattern=None):
+    cpdef int wavefront_align(self, text, pattern=None):
         """The main alignment function. Returns alignment score
         Returns
         -------
@@ -310,6 +312,8 @@ cdef class WavefrontAligner:
         else:
             p = self._pattern.encode('ascii')
         cdef bytes t = text.encode('ascii')
+        self.text_len = len(t)
+        self.pattern_len = len(p)
         wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
         return self.wf_aligner.cigar.score
 
@@ -383,48 +387,49 @@ cdef class WavefrontAligner:
         if self.score_only:
             return [0, 0, 0, 0]
         cigartuples = self.cigartuples
-        if not cigartuples:
+        if not cigartuples or self.text_len == 0 or self.pattern_len == 0:
             return [0, 0, 0, 0]
-        cdef int ps, pe, ts, te, index, opp, l
-        ps = 0
-        pe = 0
-        ts = 0
-        te = 0
-        cdef bint started = False
-        for index, (opp, l) in enumerate(cigartuples):
-            if not started:
-                if opp == 0:
-                    started = True
-                    te += l
-                    pe += l
-                elif opp == 2:  # delete pattern
-                    ps += l
-                    pe += l
-                elif opp == 8:  # mismatch, alignment not started
-                    ps += l
-                    pe += l
-                    ts += l
-                    te += l
-                elif opp == 1:
-                    ts += l
-                    te += l
-            else:
-                if opp == 0:
-                    te += l
-                    pe += l
-                elif opp == 8: # add to alignment if flanked by matches
-                    if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
-                        te += l
-                        pe += l
-                elif opp == 1:
-                    if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
-                        te += l
-                elif opp == 2:
-                    if index < len(cigartuples) - 1 and cigartuples[index + 1][0] == 0:
-                        pe += l
-        return ps, pe, ts, te
+        cdef int pattern_start, pattern_end, text_start, text_end, i, j
 
-    def __call__(self, text, pattern=None, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True,
+        ct = cigartuples
+        text_start = 0
+        pattern_start = 0
+        for i in range(len(cigartuples)):
+            if ct[i][0] == 0:
+                if ct[i][1] >= 1:
+                    break
+                else:
+                    text_start += ct[i][1]
+                    pattern_start += ct[i][1]
+            elif ct[i][0] == 2:  # deletion
+                pattern_start += ct[i][1]
+            elif ct[i][0] == 8 :  # mismatch
+                text_start += ct[i][1]
+                pattern_start += ct[i][1]
+            elif ct[i][0] == 1: # insertion
+                text_start += ct[i][1]
+
+        text_end = self.text_len
+        pattern_end = self.pattern_len
+        j = len(ct) - 1
+        for j in range(len(ct) -1, -1, -1):
+            if ct[j][0] == 0 :
+                if ct[j][1] >= 1:
+                    break
+                else:
+                    text_end -= ct[j][1]
+                    pattern_end -= ct[j][1]
+            elif ct[j][0] == 2:
+                pattern_end -= ct[j][1]
+            elif ct[j][0] == 8:
+                pattern_end -= ct[j][1]
+                text_end -= ct[j][1]
+            elif ct[j][0] == 1:
+                text_end -= ct[j][1]
+
+        return pattern_start, pattern_end, text_start, text_end
+
+    def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=False,
                  supress_sequences=False):
 
         if pattern is None:
