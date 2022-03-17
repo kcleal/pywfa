@@ -3,6 +3,7 @@
 from __future__ import division, print_function, absolute_import
 from pywfa cimport WFA_wrap as wfa
 from dataclasses import dataclass
+from libc.stdio cimport stdout
 
 
 __all__ = ["WavefrontAligner", "clip_cigartuples", "cigartuples_to_str", "elide_mismatches_from_cigar"]
@@ -43,19 +44,47 @@ class AlignmentResult:
         self.status = status
 
     def __repr__(self):
-        return str(self.__dict__)
+        data = ['score',
+                'pattern_start',
+                'pattern_end',
+                'text_start',
+                'text_end',
+                'cigartuples',
+                'pattern',
+                'text']
+        d = self.__dict__
+        s = f""
+        for k in data:
+            s += f"    {k}: {d[k]}\n"
+        return s
+
+    def __str__(self):
+        score = "Score: %d" % self.score
+        if self.pattern and self.cigartuples:
+            t = self.aligned_text
+            p = self.aligned_pattern
+            align_len = len(t)
+            if len(t) > 30:
+                t = t[:30] + "..."
+                p = p[:30] + "..."
+            c = self.cigarstring
+            if len(c) > 30:
+                c = c[:30]
+            length = "Length: %d" % len(t)
+            return "\n".join([p, t, c, score, length])
+        return score
 
     @property
     def aligned_pattern(self):
         """Returns the pattern sequence aligned by the cigar
-        Returns
-        -------
-        str
-            Aligned pattern sequence
+
         Notes
         -----
         This will return `None` if `suppress_sequences` was True when this
         object was created
+
+        :return: Aligned pattern sequence
+        :rtype: str
         """
         if self.pattern:
             return self._get_aligned_sequence(self.pattern,
@@ -66,14 +95,14 @@ class AlignmentResult:
     @property
     def aligned_text(self):
         """Returns the text sequence aligned by the cigar
-        Returns
-        -------
-        str
-            Aligned text sequence
+
         Notes
         -----
         This will return `None` if `suppress_sequences` was True when this
         object was created
+
+        :return: Aligned text sequence
+        :rtype: str
         """
         if self.text:
             return self._get_aligned_sequence(self.text,
@@ -81,6 +110,16 @@ class AlignmentResult:
                                               self.text_start,
                                               self.text_end,
                                               "I")
+
+    @property
+    def cigarstring(self):
+        """Returns the cigar in str format
+
+        :return: cigar sequence
+        :rtype: str
+        """
+        return cigartuples_to_str(self.cigartuples)
+
 
     def _get_aligned_sequence(self, sequence, tuple_cigar, begin, end,
                               gap_type):
@@ -99,10 +138,15 @@ class AlignmentResult:
 
 cpdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min_aligned_bases_right=5):
     """Returns cigartuples with blocks of aligned bases < threshold removed from each end
-    Returns
-    -------
-    list
-        cigartuples
+
+    :param align_result: AlignmentResult dataclass
+    :type align_result: dataclass
+    :param min_aligned_bases_left: Minimum allowed length of matched bases at left flank
+    :type min_aligned_bases_left: int
+    :param min_aligned_bases_right: Minimum allowed length of matched bases at right flank
+    :type min_aligned_bases_right: int
+    :return: AlignmentResult dataclass with trimmed cigartuples
+    :rtype: dataclass
     """
     ct = align_result.cigartuples
     if not ct:
@@ -164,10 +208,11 @@ cpdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int mi
 
 cpdef elide_mismatches_from_cigar(cigartuples):
     """Returns cigartuples with mismatched 'X' merged into aligned blocks 'M'
-    Returns
-    -------
-    list
-        cigartuples
+    
+    :param cigartuples: list of cigartuples
+    :type cigartuples: list
+    :return: cigartuples
+    :rtype: list
     """
     if not cigartuples:
         return []
@@ -189,10 +234,11 @@ cpdef elide_mismatches_from_cigar(cigartuples):
 
 cpdef cigartuples_to_str(cigartuples):
     """Returns string format of cigartuples
-    Returns
-    -------
-    str
-        cigar in string format
+
+    :param cigartuples: cigartuples
+    :type cigartuples: list 
+    :return: cigar in string format
+    :rtype: str
     """
     if not cigartuples:
         return ""
@@ -299,11 +345,14 @@ cdef class WavefrontAligner:
         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
 
     def wavefront_align(self, text, pattern=None):
-        """The main alignment function. Returns alignment score
-        Returns
-        -------
-        int
-            alignment score
+        """Perform wavefront alignment.
+
+        :param text: The text sequence to align in uppercase
+        :type text: str
+        :param pattern: The pattern sequence to align in uppercase
+        :type pattern: str
+        :return: Alignment score
+        :rtype: int
         """
         cdef bytes p
         if pattern is not None:
@@ -312,10 +361,18 @@ cdef class WavefrontAligner:
         else:
             p = self._pattern.encode('ascii')
         cdef bytes t = text.encode('ascii')
+        self._text = text
         self.text_len = len(t)
         self.pattern_len = len(p)
         wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
         return self.wf_aligner.cigar.score
+
+    @property
+    def cigar_print_pretty(self):
+        cdef bytes t = self._text.encode('ascii')
+        cdef bytes p = self._pattern.encode('ascii')
+        wfa.cigar_print_pretty(stdout, p, <size_t>len(p), t, <size_t>len(t), &self.wf_aligner.cigar,
+                               self.wf_aligner.mm_allocator)
 
     @property
     def status(self):
@@ -431,7 +488,25 @@ cdef class WavefrontAligner:
 
     def __call__(self, text, pattern=None, clip_cigar=False, min_aligned_bases_left=1, min_aligned_bases_right=1, elide_mismatches=False,
                  supress_sequences=False):
-
+        """
+        Align `text` sequence to `pattern` sequence.
+        :param text: The text sequence
+        :type text: str
+        :param pattern: The pattern sequence
+        :type pattern: str
+        :param clip_cigar: Converts unaligned bases at the flank to soft-clips. Also applies min_aligned_bases threshold
+        :type clip_cigar: bool
+        :param min_aligned_bases_left: The minimum number of aligned bases at the left flank during clipping
+        :type min_aligned_bases_left: int
+        :param min_aligned_bases_right: The minimum number of aligned bases at the right flank during clipping
+        :type min_aligned_bases_right: int
+        :param elide_mismatches: Convert mismatch cigar opperation (X) to matches (M)
+        :type elide_mismatches: bool
+        :param supress_sequences: Dont output the text and pattern sequences
+        :type supress_sequences: bool
+        :return: AlignmentResult dataclass
+        :rtype: dataclass
+        """
         if pattern is None:
             p = self._pattern
             if not p:

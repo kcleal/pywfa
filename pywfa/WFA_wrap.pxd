@@ -1,3 +1,4 @@
+#cython: language_level=3, boundscheck=False, wraparound=False, nonecheck=False
 
 from libc.stdint cimport uint64_t
 from libc.stdio cimport FILE
@@ -342,7 +343,7 @@ cdef extern from "WFA2_lib/wavefront/wavefront_aligner.h" nogil:
         cigar_t cigar                           # Alignment CIGAR
         # MM
         # bint mm_allocator_own                   # Ownership of MM-Allocator
-        # mm_allocator_t* mm_allocator            # MM-Allocator
+        mm_allocator_t* mm_allocator            # MM-Allocator
         # wavefront_slab_t* wavefront_slab        # MM-Wavefront-Slab (Allocates/Reuses the individual wavefronts)
         # Display
         # wavefront_plot_params_t plot_params     # Wavefront plot parameters
@@ -568,5 +569,3 @@ cdef extern from "WFA2_lib/wavefront/wavefront_align.h" nogil:
         const int text_length)
     int wavefront_align_resume(
         wavefront_aligner_t* const wf_aligner)
-
-

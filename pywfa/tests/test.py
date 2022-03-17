@@ -23,6 +23,18 @@ class TestConstruct(unittest.TestCase):
         assert a.cigarstring == "3M1X4M1D7M1I9M1X6M"
         assert a.score == -24
         assert a.score == score
+        a.cigar_print_pretty
+
+        pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
+        text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
+        a = WavefrontAligner(pattern)
+        res = a(text)
+        print(res)
+
+        assert a.status == 0
+        assert a.cigarstring == "3M1X4M1D7M1I9M1X6M"
+        assert a.score == -24
+        assert a.score == score
 
         print("Affine2")
         pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
