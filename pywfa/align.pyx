@@ -210,7 +210,7 @@ cdef class WavefrontAligner:
     def __init__(self,
                  pattern=None,
                  distance="affine",
-                 int match=-1,  # note: setting to zero causes problems
+                 int match=0,
                  int mismatch=4,
                  int gap_opening=6,
                  int gap_extension=2,
@@ -298,7 +298,7 @@ cdef class WavefrontAligner:
 
         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
 
-    cpdef int wavefront_align(self, text, pattern=None):
+    def wavefront_align(self, text, pattern=None):
         """The main alignment function. Returns alignment score
         Returns
         -------

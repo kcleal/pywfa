@@ -7,7 +7,7 @@ A python wrapper for wavefront alignment using WFA2-lib
 Installation
 ------------
 
-To build from source::
+Build from source::
 
     git clone --recursive https://github.com/kcleal/pywfa
     cd pywfa
@@ -60,7 +60,7 @@ Cigartuples follow the pysam convention:
    * - B
      - 9
 
-For convenience, a results object can be obtained by calling with a pattern and text:
+For convenience, a results object can be obtained by calling the `WavefrontAligner` with a pattern and text:
 
 .. code-block:: python
 
@@ -165,3 +165,51 @@ When using heuristic functions it is recommended to check the status attribute:
     a.status
     >>> 0   # successful alignment, -1 indicates the alignment was stopped due to the heuristic
 
+
+Default options
+---------------
+
+The `WavefrontAligner` will be initialized with the following default options:
+
+.. list-table::
+   :widths: 15 10
+   :header-rows: 1
+
+   * - Parameter
+     - Default value
+   * - pattern
+     - None
+   * - distance
+     - "affine"
+   * - match
+     - 0
+   * - gap_opening
+     - 6
+   * - gep_extension
+     - 2
+   * - gap_opening2
+     - 24
+   * - gap_extension2
+     - 1
+   * - scope
+     - "full"
+   * - span
+     - "ends-free"
+   * - pattern_begin_free
+     - 0
+   * - pattern_end_free
+     - 0
+   * - text_begin_free
+     - 0
+   * - text_end_free
+     - 0
+   * - heuristic
+     - None
+   * - min_wavefront_length
+     - 10
+   * - max_distance_threshold
+     - 50
+   * - steps_between_cutoffs
+     - 1
+   * - xdrop
+     - 20

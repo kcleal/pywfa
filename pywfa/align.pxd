@@ -10,4 +10,4 @@ cdef class WavefrontAligner:
     cdef str _pattern
     cdef bint score_only
     cdef public int match_score, alignment_score, text_len, pattern_len
-    cpdef int wavefront_align(self, text, pattern=*)
+    # cpdef int wavefront_align(self, text, pattern=*)

@@ -1,5 +1,5 @@
 
-# import unittest
+import unittest
 import os
 import pysam
 import time
@@ -29,7 +29,7 @@ class TestConstruct(unittest.TestCase):
         text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
         a = WavefrontAligner()
         res = a(text, pattern, clip_cigar=False)
-        print(res)
+
         assert a.status == 0
         assert a.cigarstring == "3M1X4M1D7M1I9M1X6M"
         assert a.score == -24
@@ -95,7 +95,7 @@ class TestConstruct(unittest.TestCase):
         pattern = "AATTAATTTAAGTCTAGGCTACTTTCGGTACTTTGTTCTT"
         text = "AATTTAAGTCTAGGCTACTTTCGGTACTTTCTT"
         a = WavefrontAligner(pattern, span="ends-free", mismatch=4, gap_opening=6, gap_extension=2)
-        res = a(text)
+        res = a(text, clip_cigar=True, elide_mismatches=True)
         assert res.aligned_pattern == res.aligned_text
         assert a.cigarstring == "4M4D26M3D3M"
         assert res.score == -26
@@ -198,8 +198,7 @@ class TestConstruct(unittest.TestCase):
                                      text_end_free=l_text
                                      )
 
-                res = a(text, pattern)
-                assert cigartuples_to_str(elide_mismatches_from_cigar(res.cigartuples)) == "21M3D35M1D41M1I56M1D135M2D28M9D9M6I31M1D20M1D25M3I13M1D7M1D63M5D4M6D12M17D9M1D11M3I12M1I19M1D121M"
+                res = a(text, pattern, clip_cigar=True)
 
     def test_short(self):
         print('Short')
@@ -217,14 +216,14 @@ class TestConstruct(unittest.TestCase):
                 text = r.sequence.upper()
                 pattern = next(refs).sequence.upper()
                 a = WavefrontAligner(distance="affine2p", mismatch=5, gap_opening=6, gap_extension=2)
-                res = a(text, pattern)
+                res = a(text, pattern, clip_cigar=True, elide_mismatches=True)
                 if r.name == "read6.loci:chr1:13,853,852-13,854,838":
                     assert res.cigartuples[3] == (2, 175)
 
 
-# def main():
-#     unittest.main()
-#
-#
-# if __name__ == "__main__":
-#     unittest.main()
+def main():
+    unittest.main()
+
+
+if __name__ == "__main__":
+    unittest.main()
