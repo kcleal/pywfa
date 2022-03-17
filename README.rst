@@ -13,6 +13,13 @@ Build from source::
     cd pywfa
     python setup.py install
 
+Or::
+
+    git clone --recursive https://github.com/kcleal/pywfa
+    cd pywfa
+    python setup.py build_ext --inplace
+    python setup.py install
+
 Overview
 --------
 
