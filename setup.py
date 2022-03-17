@@ -6,7 +6,8 @@ import setuptools
 from setuptools.extension import Extension
 from subprocess import run
 import os
-
+import glob
+import shutil
 
 extras = ["-Wno-sign-compare", "-Wno-unused-function", "-Wno-unused-result", '-Wno-ignored-qualifiers',
           "-Wno-deprecated-declarations"]
@@ -39,22 +40,20 @@ ext_modules.append(Extension("pywfa.align",
 class MyBuild(_build_ext):
     # https://stackoverflow.com/questions/1754966/how-can-i-run-a-makefile-in-setup-py
     def build_extension(self, ext):
-        run("cd pywfa/WFA2-lib; make BUILD_CPP=0 clean all; cd ../../", shell=True)
+        # This is a hack to automate python setup.py build_ext --inplace during install
+        # Note sure how robust this is
         if self.debug:
             ext.extra_compile_args.append("-O0")
-        _build_ext.build_extension(self, ext)
 
-
-class MyBuildPyOnly(_build_ext):
-    # https://stackoverflow.com/questions/1754966/how-can-i-run-a-makefile-in-setup-py
-    def build_extension(self, ext):
-        if self.debug:
-            ext.extra_compile_args.append("-O0")
+        shared = glob.glob(f"{root}/build/lib*/pywfa/*.so") + glob.glob(f"{root}/build/lib*/pywfa/*.dll")
         _build_ext.build_extension(self, ext)
+        [shutil.copy(i, f"{root}/pywfa") for i in shared]
 
 
 class Build_ext_first(_install):
     def run(self):
+        # Build WFA2-lib first
+        run("cd pywfa/WFA2-lib; make BUILD_CPP=0 clean all; cd ../../", shell=True)
         return setuptools.command.install.install.run(self)
 
 setup(
@@ -64,7 +63,7 @@ setup(
     url="https://github.com/kcleal/pywfa",
     description="Align sequences using WFA2-lib",
     license="MIT",
-    version='0.2.1',
+    version='0.2.2',
     python_requires='>=3.7',
     install_requires=[  # runtime requires
             'cython',
@@ -77,7 +76,7 @@ setup(
         ],
     packages=["pywfa", "pywfa/tests"],
     ext_modules=cythonize(ext_modules),
-    cmdclass={'install': Build_ext_first, 'build_ext': MyBuild, "build_py_only": MyBuildPyOnly},
+    cmdclass={'install': Build_ext_first, 'build_ext': MyBuild},
     include_package_data=True,
     zip_safe=False,
     test_suite='nose.collector',
