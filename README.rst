@@ -49,7 +49,7 @@ Alignment of pattern and text strings can be performed directly by accessing WFA
 Cigartuples follow the pysam convention:
 
 .. list-table::
-   :widths: 10 10
+   :widths: 15 15
    :header-rows: 1
 
    * - Opperation
@@ -85,64 +85,6 @@ For convenience, a results object can be obtained by calling the `WavefrontAlign
 
     # Alignment can also be called with a pattern like this:
     a(text, pattern)
-
-
-Modifying the cigar
--------------------
-
-If desired the cigar can be modified so the end operation is either a soft-clip or a match, this makes the
-alignment cigar resemble those produced by bwa, for example:
-
-.. code-block:: python
-
-    pattern = "AAAAACCTTTTTAAAAAA"
-    text = "GGCCAAAAACCAAAAAA"
-    a = WavefrontAligner(pattern)
-
-    res = a(text, clip_cigar=False)
-    print(cigartuples_to_str(res.cigartuples))
-    >>> 4I7M5D6M
-
-    res(text, clip_cigar=True)
-    print(cigartuples_to_str(res.cigartuples))
-    >>> 8S7M5D6M
-
-
-An experimental feature is to trim short matches at the end of alignments. This results in alignments that approximate local alignments:
-
-.. code-block:: python
-
-    pattern = "AAAAAAAAAAAACCTTTTAAAAAAGAAAAAAA"
-    text = "ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA"
-    a = WavefrontAligner(pattern)
-
-    # The unmodified cigar may have short matches at the end:
-    res = a(text, clip_cigar=False)
-    res.cigartuples
-    >>> [(0, 1), (1, 5), (8, 6), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
-    res.aligned_text
-    >>> ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA
-    res.text_start, res.text_end
-    >>> 0, 32
-
-    # The minimum allowed block of matches can be set at e.g. 5 bp, which will trim off short matches
-    res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5)
-    res.cigartuples
-    >>> [(4, 12), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
-    res.aligned_text
-    >>> AAAAACCAAAAAAAAAAAAA
-    res.text_start, res.text_end
-    >>> 12, 32
-
-    # Mismatch operations X can also be elided, note this occurs after the clip_cigar stage
-    res = a(text, clip_cigar=True, elide_mismatches=True)
-    res.cigartuples
-    >>> [(4, 12), (0, 7), (2, 5), (0, 13)]
-    res.aligned_text
-    >>> AAAAACCAAAAAAAAAAAAA
-
-Notes: The alignment score is not modified currently by trimming the cigar, however the pattern_start, pattern_end,
-test_start and text_end are modfied when the cigar is modified.
 
 
 Configure
@@ -223,3 +165,61 @@ The `WavefrontAligner` will be initialized with the following default options:
      - 1
    * - xdrop
      - 20
+
+
+Modifying the cigar
+-------------------
+
+If desired the cigar can be modified so the end operation is either a soft-clip or a match, this makes the
+alignment cigar resemble those produced by bwa, for example:
+
+.. code-block:: python
+
+    pattern = "AAAAACCTTTTTAAAAAA"
+    text = "GGCCAAAAACCAAAAAA"
+    a = WavefrontAligner(pattern)
+
+    res = a(text, clip_cigar=False)
+    print(cigartuples_to_str(res.cigartuples))
+    >>> 4I7M5D6M
+
+    res(text, clip_cigar=True)
+    print(cigartuples_to_str(res.cigartuples))
+    >>> 8S7M5D6M
+
+
+An experimental feature is to trim short matches at the end of alignments. This results in alignments that approximate local alignments:
+
+.. code-block:: python
+
+    pattern = "AAAAAAAAAAAACCTTTTAAAAAAGAAAAAAA"
+    text = "ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA"
+    a = WavefrontAligner(pattern)
+
+    # The unmodified cigar may have short matches at the end:
+    res = a(text, clip_cigar=False)
+    res.cigartuples
+    >>> [(0, 1), (1, 5), (8, 6), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
+    res.aligned_text
+    >>> ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA
+    res.text_start, res.text_end
+    >>> 0, 32
+
+    # The minimum allowed block of matches can be set at e.g. 5 bp, which will trim off short matches
+    res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5)
+    res.cigartuples
+    >>> [(4, 12), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
+    res.aligned_text
+    >>> AAAAACCAAAAAAAAAAAAA
+    res.text_start, res.text_end
+    >>> 12, 32
+
+    # Mismatch operations X can also be elided, note this occurs after the clip_cigar stage
+    res = a(text, clip_cigar=True, elide_mismatches=True)
+    res.cigartuples
+    >>> [(4, 12), (0, 7), (2, 5), (0, 13)]
+    res.aligned_text
+    >>> AAAAACCAAAAAAAAAAAAA
+
+Notes: The alignment score is not modified currently by trimming the cigar, however the pattern_start, pattern_end,
+test_start and text_end are modfied when the cigar is modified.
