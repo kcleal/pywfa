@@ -3,10 +3,15 @@
 from __future__ import division, print_function, absolute_import
 from pywfa cimport WFA_wrap as wfa
 from dataclasses import dataclass
-from libc.stdio cimport stdout
-
+from libc.stdio cimport stdout, FILE
 
 __all__ = ["WavefrontAligner", "clip_cigartuples", "cigartuples_to_str", "elide_mismatches_from_cigar"]
+
+
+cdef extern from "stdio.h":
+    FILE *fopen(const char *, const char *)
+    int fclose(FILE *)
+    int fputs(const char *, FILE *)
 
 
 cdef int[89] codes
@@ -367,12 +372,23 @@ cdef class WavefrontAligner:
         wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
         return self.wf_aligner.cigar.score
 
-    @property
-    def cigar_print_pretty(self):
+    def cigar_print_pretty(self, file_name=None):
         cdef bytes t = self._text.encode('ascii')
         cdef bytes p = self._pattern.encode('ascii')
-        wfa.cigar_print_pretty(stdout, p, <size_t>len(p), t, <size_t>len(t), &self.wf_aligner.cigar,
+        cdef bytes fname_bytes
+        cdef char* fname
+        cdef FILE * outfile
+        if file_name:
+            fname_bytes = file_name.encode("UTF-8")
+            fname = fname_bytes
+            outfile = fopen(fname, "w")
+        else:
+            outfile = stdout
+        wfa.cigar_print_pretty(outfile, p, <size_t>len(p), t, <size_t>len(t), &self.wf_aligner.cigar,
                                self.wf_aligner.mm_allocator)
+
+        if file_name:
+            fclose(outfile)
 
     @property
     def status(self):

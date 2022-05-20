@@ -36,7 +36,7 @@ Alignment of pattern and text strings can be performed directly by accessing WFA
     assert a.score == -24
     a.cigartuples
     >>> [(0, 3), (8, 1), (0, 4), (2, 1), (0, 7), (1, 1), (0, 9), (8, 1), (0, 6)]
-    a.cigar_print_pretty
+    a.cigar_print_pretty()
 
 .. code-block:: text
 
@@ -45,6 +45,13 @@ Alignment of pattern and text strings can be performed directly by accessing WFA
         PATTERN    TCTTTACTCGCGCGTT-GGAGAAATACAATAGT
                    ||| |||| ||||||| ||||||||| ||||||
         TEXT       TCTATACT-GCGCGTTTGGAGAAATAAAATAGT
+
+The output of cigar_pretty_print can be directed to a file, rather than stdout using:
+
+.. code-block:: python
+
+    a.cigar_print_pretty("file.txt")
+
 
 Cigartuples follow the pysam convention:
 
