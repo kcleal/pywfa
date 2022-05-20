@@ -59,7 +59,7 @@ Cigartuples follow the pysam convention:
    :widths: 15 15
    :header-rows: 1
 
-   * - Opperation
+   * - Operation
      - Code
    * - M
      - 0
