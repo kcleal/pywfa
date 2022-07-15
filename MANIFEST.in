@@ -1,4 +1,4 @@
 include pywfa/*
-recursive-include pywfa/WFA2_lib
-include pywfa/tests
+recursive-include pywfa WFA2_lib
+include pywfa/tests/*
 include pywfa/WFA2_lib/*/*
