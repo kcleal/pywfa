@@ -192,7 +192,7 @@ alignment cigar resemble those produced by bwa, for example:
 
     res(text, clip_cigar=True)
     print(cigartuples_to_str(res.cigartuples))
-    >>> 8S7M5D6M
+    >>> 4S7M5D6M
 
 
 An experimental feature is to trim short matches at the end of alignments. This results in alignments that approximate local alignments:
@@ -222,11 +222,11 @@ An experimental feature is to trim short matches at the end of alignments. This 
     >>> 12, 32
 
     # Mismatch operations X can also be elided, note this occurs after the clip_cigar stage
-    res = a(text, clip_cigar=True, elide_mismatches=True)
+    res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True)
     res.cigartuples
     >>> [(4, 12), (0, 7), (2, 5), (0, 13)]
     res.aligned_text
     >>> AAAAACCAAAAAAAAAAAAA
 
 Notes: The alignment score is not modified currently by trimming the cigar, however the pattern_start, pattern_end,
-test_start and text_end are modfied when the cigar is modified.
+test_start and text_end are modified when the cigar is modified.

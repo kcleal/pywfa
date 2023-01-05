@@ -16,20 +16,19 @@ class TestConstruct(unittest.TestCase):
     def test_affine(self):
         print("Affine")
         pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
-        text =    "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
+        text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
         a = WavefrontAligner(pattern)
         score = a.wavefront_align(text)
         assert a.status == 0
         assert a.cigarstring == "3M1X4M1D7M1I9M1X6M"
         assert a.score == -24
         assert a.score == score
-        a.cigar_print_pretty
+        a.cigar_print_pretty()
 
         pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
         text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
         a = WavefrontAligner(pattern)
-        res = a(text)
-        print(res)
+        a(text)
 
         assert a.status == 0
         assert a.cigarstring == "3M1X4M1D7M1I9M1X6M"
@@ -40,7 +39,7 @@ class TestConstruct(unittest.TestCase):
         pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
         text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
         a = WavefrontAligner()
-        res = a(text, pattern, clip_cigar=False)
+        a(text, pattern, clip_cigar=False)
 
         assert a.status == 0
         assert a.cigarstring == "3M1X4M1D7M1I9M1X6M"
@@ -49,7 +48,7 @@ class TestConstruct(unittest.TestCase):
         pattern = "TCTATACTGCGCGTTTGGAGAAATAAAA"
         text = "TCTCCCCATACTGCGCGTTTGGAGAAATAAAA"
         a = WavefrontAligner()
-        res = a(text, pattern, clip_cigar=False)
+        a(text, pattern, clip_cigar=False)
 
 
     def test_scope(self):
@@ -57,7 +56,7 @@ class TestConstruct(unittest.TestCase):
         pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
         text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
         a = WavefrontAligner(pattern, scope="score")
-        res = a(text)
+        a(text)
         assert a.status == 0
         assert a.cigarstring == ""
         assert a.score == -24
@@ -210,7 +209,7 @@ class TestConstruct(unittest.TestCase):
                                      text_end_free=l_text
                                      )
 
-                res = a(text, pattern, clip_cigar=True)
+                a(text, pattern, clip_cigar=True)
 
     def test_short(self):
         print('Short')

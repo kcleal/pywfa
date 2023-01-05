@@ -196,7 +196,7 @@ cpdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int mi
 
     modified = []
     if align_result.text_start + text_start > 0:
-        modified.append((4, align_result.text_start + text_start))
+        modified.append((4, text_start))
     modified += ct[i:j+1]
     if align_result.text_length - text_end > 0:
         modified.append((4, align_result.text_length - text_end))
