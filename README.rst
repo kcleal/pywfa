@@ -53,7 +53,7 @@ The output of cigar_pretty_print can be directed to a file, rather than stdout u
     a.cigar_print_pretty("file.txt")
 
 
-Cigartuples follow the pysam convention:
+Cigartuples follow the convention:
 
 .. list-table::
    :widths: 15 15
