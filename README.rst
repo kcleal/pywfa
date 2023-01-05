@@ -21,7 +21,7 @@ Build from source::
 Overview
 --------
 
-Alignment of pattern and text strings can be performed directly by accessing WFA2-lib functions:
+Alignment of pattern and text strings can be performed by accessing WFA2-lib functions directly:
 
 .. code-block:: python
 
