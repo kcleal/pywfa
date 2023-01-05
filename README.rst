@@ -52,6 +52,7 @@ The output of cigar_pretty_print can be directed to a file, rather than stdout u
 
     a.cigar_print_pretty("file.txt")
 
+To obtain a python str of this print out, access the results object (see below).
 
 Cigartuples follow the convention:
 
@@ -92,6 +93,14 @@ For convenience, a results object can be obtained by calling the `WavefrontAlign
 
     # Alignment can also be called with a pattern like this:
     a(text, pattern)
+
+    # obtain a string in the same format as cigar_print_pretty
+    a.pretty
+    >>> 3M1X4M1D7M1I9M1X6M      ALIGNMENT
+        1X1D1I1X      ALIGNMENT.COMPACT
+              PATTERN    TCTTTACTCGCGCGTT-GGAGAAATACAATAGT
+                         |||*|||| ||||||| |||||||||*||||||
+              TEXT       TCTATACT-GCGCGTTTGGAGAAATAAAATAGT
 
 
 Configure

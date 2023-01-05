@@ -117,7 +117,7 @@ setup(
     url="https://github.com/kcleal/pywfa",
     description="Align sequences using WFA2-lib",
     license="MIT",
-    version='0.3.1',
+    version='0.4.0',
     python_requires='>=3.7',
     install_requires=[  # runtime requires
             'cython',

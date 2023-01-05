@@ -124,6 +124,52 @@ class AlignmentResult:
         :rtype: str
         """
         return cigartuples_to_str(self.cigartuples)
+    
+    @property
+    def pretty(self):
+        """Returns a str of the alignment result in 'pretty' format
+
+        :return: pretty string
+        :rtype: str
+        """
+        s = f"{self.cigarstring}      ALIGNMENT\n"
+        s += f"{cigartuples_to_str([i for i in self.cigartuples if i[0] !=0 and i[0] !=[8]])}      ALIGNMENT.COMPACT\n"
+        p = "      PATTERN    "
+        g = "                 "
+        t = "      TEXT       "
+        pat = self.pattern
+        pi = 0
+        txt = self.text
+        ti = 0
+        print(self.cigartuples)
+        for opp, l in self.cigartuples:
+            if opp in (1, 4, 5):
+                t += txt[ti: ti+l]
+                ti += l
+                p += "-"*l
+                g += " "*l
+            elif opp in (0, 7):
+                t += txt[ti: ti+l]
+                ti += l
+                p += pat[pi: pi+l]
+                pi += l
+                g += "|"*l
+            elif opp == 2:
+                t += "-"*l
+                p += pat[pi: pi+l]
+                pi += l
+                g += " "*l
+            elif opp == 8:
+                t += txt[ti: ti+l]
+                ti += l
+                p += pat[pi: pi+l]
+                pi += l
+                g += "*"*l
+            else:
+                raise ValueError(f"Cigar operation not available for pretty print - {opp}")
+                
+        s += p + "\n" + g + "\n" + t + "\n"
+        return s
 
 
     def _get_aligned_sequence(self, sequence, tuple_cigar, begin, end,
@@ -139,8 +185,8 @@ class AlignmentResult:
                 index += length
         aligned_sequence += [seq[index:end - begin]]
         return "".join(aligned_sequence)
-
-
+    
+    
 cpdef clip_cigartuples(object align_result, int min_aligned_bases_left=5, int min_aligned_bases_right=5):
     """Returns cigartuples with blocks of aligned bases < threshold removed from each end
 
