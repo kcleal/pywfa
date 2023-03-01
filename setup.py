@@ -117,7 +117,7 @@ setup(
     url="https://github.com/kcleal/pywfa",
     description="Align sequences using WFA2-lib",
     license="MIT",
-    version='0.4.0',
+    version='0.4.1',
     python_requires='>=3.7',
     install_requires=[  # runtime requires
             'cython',
@@ -128,10 +128,10 @@ setup(
     tests_require=[
             'pysam', 'nose'
         ],
-    packages=["pywfa", "pywfa/tests"],
+    packages=["pywfa", "pywfa/tests", "pywfa/WFA2_lib"],
     ext_modules=cythonize(ext_modules, **cy_options),
     cmdclass={'install': Build_ext_first, 'build_ext': MyBuild},
-    include_package_data=True,
+    #include_package_data=True,
     zip_safe=False,
     test_suite='nose.collector',
 )
