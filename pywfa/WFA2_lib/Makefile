@@ -83,8 +83,7 @@ lib_wfa: $(SUBDIRS)
 
 clean:
 	rm -rf $(FOLDER_BIN) $(FOLDER_BUILD) $(FOLDER_LIB)
-	$(MAKE) --directory=tools/align_benchmark clean
-	$(MAKE) --directory=examples clean
+	$(MAKE)
 
 ###############################################################################
 # Subdir rule
