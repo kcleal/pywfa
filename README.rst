@@ -88,7 +88,7 @@ For convenience, a results object can be obtained by calling the `WavefrontAlign
     pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
     text =    "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
     a = WavefrontAligner(pattern)
-    result = a(text)
+    result = a(text)  # alignment result
     result.__dict__
     >>> {'pattern_length': 32, 'text_length': 32, 'pattern_start': 0, 'pattern_end': 32, 'text_start': 0, 'text_end': 32, 'cigartuples': [(0, 3), (8, 1), (0, 4), (2, 1), (0, 7), (1, 1), (0, 9), (8, 1), (0, 6)], 'score': -24, 'pattern': 'TCTTTACTCGCGCGTTGGAGAAATACAATAGT', 'text': 'TCTATACTGCGCGTTTGGAGAAATAAAATAGT', 'status': 0}
 
