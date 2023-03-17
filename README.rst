@@ -12,6 +12,10 @@ To download from pypi::
 
     pip install pywfa
 
+From conda::
+
+    conda install -c bioconda pywfa
+
 Build from source::
 
     git clone https://github.com/kcleal/pywfa
