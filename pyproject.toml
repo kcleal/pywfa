@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "cython"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name="pywfa"
+version='0.4.1'
+description="Align sequences using WFA2-lib"
+requires-python='>=3.7'
+readme = "README.rst"
+authors = [
+    { name = "Kez Cleal", email = "clealk@cardiff.ac.uk" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools]
+py-modules = ["_custom_build"]
+packages=["pywfa", "pywfa.tests", "pywfa.WFA2_lib"]
+
+[tool.setuptools.cmdclass]
+build_py = "_custom_build.build_py"
+
+[project.urls]
+Repository="https://github.com/kcleal/pywfa"
