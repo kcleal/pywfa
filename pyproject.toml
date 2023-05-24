@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name="pywfa"
-version='0.4.1'
+version='0.4.2'
 description="Align sequences using WFA2-lib"
 requires-python='>=3.7'
 readme = "README.rst"
