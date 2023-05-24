@@ -4,25 +4,29 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name="pywfa"
-version='0.4.2'
+version='0.5.0-dev1'
 description="Align sequences using WFA2-lib"
 requires-python='>=3.7'
-readme = "README.rst"
-authors = [
+readme="README.rst"
+authors=[
     { name = "Kez Cleal", email = "clealk@cardiff.ac.uk" }
 ]
-classifiers = [
+classifiers=[
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 
 [tool.setuptools]
-py-modules = ["_custom_build"]
+py-modules=["_custom_build"]
 packages=["pywfa", "pywfa.tests", "pywfa.WFA2_lib"]
 
+#[tool.setuptools.package-data]
+#pywfa=["_custom_build.py"]
+#"pywfa.WFA2_lib"=["pywfa/WFA2_lib/LICENSE", "pywfa/WFA2_lib/Makefile", "pywfa/WFA2_lib/README.md", "pywfa/WFA2_lib/VERSION"]
+
 [tool.setuptools.cmdclass]
-build_py = "_custom_build.build_py"
+build_py="_custom_build.build_py"
 
 [project.urls]
 Repository="https://github.com/kcleal/pywfa"

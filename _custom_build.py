@@ -74,7 +74,7 @@ print("Include dirs", include_dirs)
 # this has happened on multiple OS with/without `libomp-dev`
 # compiler = ccompiler.new_compiler()
 omp = 0 #1 if has_flag(compiler, "-fopenmp") else 0
-ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_MINIMAL=1; cd ../../", shell=True)
+ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_MINIMAL=1", shell=True)
 if ret.returncode != 0:
     print("Unable to build WFA2_lib")
     print(ret)
