@@ -29,7 +29,7 @@ Alignment of pattern and text strings can be performed by accessing WFA2-lib fun
 
 .. code-block:: python
 
-    from pywfa.align import WavefrontAligner
+    from pywfa import WavefrontAligner
 
     pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
     text =    "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
@@ -115,7 +115,7 @@ To configure the `WaveFrontAligner`, options can be provided during initializati
 
 .. code-block:: python
 
-    from pywfa.align import WavefrontAligner
+    from pywfa import WavefrontAligner
 
     a = WavefrontAligner(scope="score",
                          distance="affine2p",
