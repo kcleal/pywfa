@@ -1,3 +1,3 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
-setup(name="pywfa", version="0.5.0-dev1")
+setup(name="pywfa", version="0.5.0")
