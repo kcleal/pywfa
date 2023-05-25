@@ -56,15 +56,16 @@ def get_extra_args(flags):
 ##################
 # WFA2_lib build #
 ##################
-extras = ["-Wno-unused-function", "-Wno-unused-result", '-Wno-ignored-qualifiers', "-Wno-deprecated-declarations"]
+extras = ["-Wno-unused-function", "-Wno-unused-result",
+          "-Wno-ignored-qualifiers", "-Wno-deprecated-declarations"]
 extras_pywfa = get_extra_args(extras)
 
 root = os.path.abspath(os.path.dirname(__file__))
 wfa = os.path.join(root, "pywfa/WFA2_lib")
 libraries = [f"{wfa}/lib"]
 library_dirs = [f"{wfa}/lib"]
-include_dirs = [".", root, wfa, f"{wfa}/lib", f"{wfa}/utils", f"{wfa}/wavefront", f"{wfa}/bindings/cpp", f"{wfa}/system",
-                f"{wfa}/alignment", f"{root}/pywfa"]
+include_dirs = [".", root, wfa, f"{wfa}/lib", f"{wfa}/utils", f"{wfa}/wavefront",
+                f"{wfa}/bindings/cpp", f"{wfa}/system", f"{wfa}/alignment", f"{root}/pywfa"]
 
 print("Libs", libraries)
 print("Library dirs", library_dirs)
@@ -74,7 +75,8 @@ print("Include dirs", include_dirs)
 # this has happened on multiple OS with/without `libomp-dev`
 # compiler = ccompiler.new_compiler()
 omp = 0 #1 if has_flag(compiler, "-fopenmp") else 0
-ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_MINIMAL=1; cd ../../", shell=True)
+ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_MINIMAL=1",
+          shell=True)
 if ret.returncode != 0:
     print("Unable to build WFA2_lib")
     print(ret)
