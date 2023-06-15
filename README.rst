@@ -44,11 +44,11 @@ Alignment of pattern and text strings can be performed by accessing WFA2-lib fun
 
 .. code-block:: text
 
-    >>> 3M1X4M1D7M1I9M1X6M      ALIGNMENT
-        1X1D1I1X      ALIGNMENT.COMPACT
-        PATTERN    TCTTTACTCGCGCGTT-GGAGAAATACAATAGT
-                   ||| |||| ||||||| ||||||||| ||||||
-        TEXT       TCTATACT-GCGCGTTTGGAGAAATAAAATAGT
+    >>> ALIGNMENT	3M1X4M1D7M1I9M1X6M
+      ALIGNMENT.COMPACT	1X1D1I1X
+      PATTERN    TCTTTACTCGCGCGTT-GGAGAAATACAATAGT
+                 ||| |||| ||||||| ||||||||| ||||||
+      TEXT       TCTATACT-GCGCGTTTGGAGAAATAAAATAGT
 
 The output of cigar_pretty_print can be directed to a file, rather than stdout using:
 
