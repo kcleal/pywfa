@@ -317,6 +317,7 @@ cdef class WavefrontAligner:
                  distance="affine",
                  int match=0,
                  int mismatch=4,
+                 int indel=2,
                  int gap_opening=6,
                  int gap_extension=2,
                  int gap_opening2=24,
@@ -354,7 +355,13 @@ cdef class WavefrontAligner:
                 raise ValueError(f"wildcard must have length 1, but has length {len(wildcard)}")
             self._wildcard = wildcard.upper().encode("ascii")[0]
 
-        if distance == "affine":
+        if distance == "linear":
+            self.attributes.distance_metric = wfa.gap_linear
+            self.attributes.linear_penalties.match = match
+            self.match_score = match
+            self.attributes.linear_penalties.mismatch = mismatch
+            self.attributes.linear_penalties.indel = indel
+        elif distance == "affine":
             self.attributes.distance_metric = wfa.gap_affine
             self.attributes.affine_penalties.match = match
             self.match_score = match
