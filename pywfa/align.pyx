@@ -300,6 +300,14 @@ cpdef cigartuples_to_str(cigartuples):
         cigarstring += f"{l}{str_codes[opp]}"
     return cigarstring
 
+ctypedef struct wildcard_fun_args:
+    char* pattern
+    char* query
+    char wildcard
+
+cdef int wildcard_match_fun(int pattern_pos, int query_pos, void* argsptr) noexcept nogil:
+    cdef const wildcard_fun_args* args = <wildcard_fun_args*> argsptr
+    return args[0].pattern[pattern_pos] == args[0].wildcard or args[0].query[query_pos] == args[0].wildcard or args[0].pattern[pattern_pos] == args[0].query[query_pos]
 
 cdef class WavefrontAligner:
     """Wrapper class for WFA2-lib. If a pattern is supplied, it will be cached for re-use
@@ -326,16 +334,23 @@ cdef class WavefrontAligner:
                  int max_distance_threshold=50,
                  int steps_between_cutoffs=1,
                  int xdrop=20,
+                 wildcard=None
                  ):
 
         self.pattern_len = 0
         self.text_len = 0
         if pattern:
-            self._pattern = pattern
+            self._pattern = pattern.upper()
 
         # could get a malloc version working
         # self.attributes = <wfa.wavefront_aligner_attr_t* > malloc(sizeof(wfa.wavefront_aligner_attr_default))
         self.attributes = &wfa.wavefront_aligner_attr_default
+        if wildcard is not None:
+            if not isinstance(wildcard, str):
+                raise TypeError(f"expected wildcard to be a string, but it is {type(wildcard)}")
+            if len(wildcard) > 1:
+                raise ValueError(f"wildcard must have length 1, but has length {len(wildcard)}")
+            self._wildcard = wildcard.upper().encode("ascii")[0]
 
         if distance == "affine":
             self.attributes.distance_metric = wfa.gap_affine
@@ -354,16 +369,14 @@ cdef class WavefrontAligner:
             self.attributes.affine2p_penalties.gap_opening2 = gap_opening2
             self.attributes.affine2p_penalties.gap_extension2 = gap_extension2
         else:
-            print(NotImplementedError(f'{distance} distance not implemented'))
-            # raise NotImplementedError(f'{distance} distance not implemented')
+            raise NotImplementedError(f'{distance} distance not implemented')
         if scope == "full":
             self.attributes.alignment_scope = wfa.compute_alignment
         elif scope == "score":
             self.attributes.alignment_scope = wfa.compute_score
             self.score_only = True
         else:
-            print(ValueError(f'{scope} scope not understood'))
-            # raise ValueError(f'{scope} scope not understood')
+            raise ValueError(f'{scope} scope not understood')
 
         self.attributes.alignment_form.pattern_begin_free = pattern_begin_free
         self.attributes.alignment_form.pattern_end_free = pattern_end_free
@@ -375,8 +388,7 @@ cdef class WavefrontAligner:
         elif span == "end-to-end":
             self.attributes.alignment_form.span = wfa.alignment_end2end
         else:
-            print(NotImplementedError(f'{span} span not implemented'))
-            # raise NotImplementedError(f'{span} span not implemented')
+            raise NotImplementedError(f'{span} span not implemented')
 
         if heuristic is None:
             self.attributes.heuristic.strategy = wfa.wf_heuristic_none
@@ -390,8 +402,7 @@ cdef class WavefrontAligner:
             self.attributes.heuristic.xdrop = xdrop
             self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
         else:
-            print(NotImplementedError(f'{heuristic} heuristic not implemented'))
-            # raise NotImplementedError(f'{heuristic} heuristic not implemented')
+            raise NotImplementedError(f'{heuristic} heuristic not implemented')
 
         self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
 
@@ -405,17 +416,18 @@ cdef class WavefrontAligner:
         :return: Alignment score
         :rtype: int
         """
-        cdef bytes p
         if pattern is not None:
-            p = pattern.encode('ascii')
-            self._pattern = pattern
-        else:
-            p = self._pattern.encode('ascii')
-        cdef bytes t = text.encode('ascii')
+            self._pattern = pattern.upper()
+        cdef bytes p = self._pattern.encode('ascii')
+        cdef bytes t = text.upper().encode('ascii')
         self._text = text
         self.text_len = len(t)
         self.pattern_len = len(p)
-        wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
+        if not self._wildcard:
+            wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
+        else:
+            args = wildcard_fun_args(p, t, self._wildcard)
+            wfa.wavefront_align_lambda(self.wf_aligner, wildcard_match_fun, &args, <size_t>len(p), <size_t>len(text))
         return self.wf_aligner.cigar.score
 
     def cigar_print_pretty(self, file_name=None):
@@ -594,4 +606,5 @@ cdef class WavefrontAligner:
         return res
 
     def __dealloc__(self):
-        wfa.wavefront_aligner_delete(self.wf_aligner)
+        if self.wf_aligner: # if an exception is raised in the constructor, self.wf_aligner does not exist yet
+            wfa.wavefront_aligner_delete(self.wf_aligner)
