@@ -14,6 +14,7 @@ MODULES=wavefront_align \
         wavefront_backtrace_offload \
         wavefront_backtrace \
         wavefront_bialign \
+        wavefront_bialigner \
         wavefront_components \
         wavefront_compute_affine \
         wavefront_compute_affine2p \
@@ -23,11 +24,16 @@ MODULES=wavefront_align \
         wavefront_debug \
         wavefront_display \
         wavefront_extend \
+        wavefront_extend_kernels_avx \
+        wavefront_extend_kernels \
         wavefront_heuristic \
         wavefront_pcigar \
         wavefront_penalties \
+        wavefront_sequences \
         wavefront_plot \
         wavefront_slab \
+        wavefront_termination \
+        wavefront_unialign \
         wavefront
 
 SRCS=$(addsuffix .c, $(MODULES))

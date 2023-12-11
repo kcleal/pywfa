@@ -37,9 +37,15 @@
 /*
  * Debug
  */
-void wavefront_debug_prologue(
+void wavefront_debug_begin(
     wavefront_aligner_t* const wf_aligner);
-void wavefront_debug_epilogue(
+void wavefront_debug_end(
+    wavefront_aligner_t* const wf_aligner);
+
+/*
+ * Check
+ */
+void wavefront_debug_check_correct(
     wavefront_aligner_t* const wf_aligner);
 
 #endif /* WAVEFRONT_DEBUG_H_ */

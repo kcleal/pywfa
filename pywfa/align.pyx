@@ -430,8 +430,7 @@ cdef class WavefrontAligner:
             outfile = fopen(fname, "w")
         else:
             outfile = stdout
-        wfa.cigar_print_pretty(outfile, p, <size_t>len(p), t, <size_t>len(t), &self.wf_aligner.cigar,
-                               self.wf_aligner.mm_allocator)
+        wfa.cigar_print_pretty(outfile, self.wf_aligner.cigar, p, <size_t>len(p), t, <size_t>len(t))
 
         if file_name:
             fclose(outfile)
@@ -450,7 +449,7 @@ cdef class WavefrontAligner:
         cdef char last_op
         cdef int last_op_length, i, length
 
-        cigar = &self.wf_aligner.cigar
+        cigar = self.wf_aligner.cigar
 
         # Check null CIGAR
         if cigar.begin_offset >= cigar.end_offset:
@@ -478,7 +477,7 @@ cdef class WavefrontAligner:
         cdef char last_op
         cdef int last_op_length, i, length
 
-        cigar = &self.wf_aligner.cigar
+        cigar = self.wf_aligner.cigar
 
         # Check null CIGAR
         if cigar.begin_offset >= cigar.end_offset:
