@@ -341,6 +341,8 @@ cdef class WavefrontAligner:
         self.text_len = 0
         if pattern:
             self._pattern = pattern.upper()
+            self._bpattern = self._pattern.encode("ascii")
+            self.pattern_len = len(self._bpattern)
 
         # could get a malloc version working
         # self.attributes = <wfa.wavefront_aligner_attr_t* > malloc(sizeof(wfa.wavefront_aligner_attr_default))
@@ -418,21 +420,20 @@ cdef class WavefrontAligner:
         """
         if pattern is not None:
             self._pattern = pattern.upper()
-        cdef bytes p = self._pattern.encode('ascii')
+            self._bpattern = self._pattern.encode("ascii")
+            self.pattern_len = len(self._bpattern)
         cdef bytes t = text.upper().encode('ascii')
         self._text = text
         self.text_len = len(t)
-        self.pattern_len = len(p)
         if not self._wildcard:
-            wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
+            wfa.wavefront_align(self.wf_aligner, self._bpattern, <size_t>len(self._bpattern), t, <size_t>len(text))
         else:
-            args = wildcard_fun_args(p, t, self._wildcard)
-            wfa.wavefront_align_lambda(self.wf_aligner, wildcard_match_fun, &args, <size_t>len(p), <size_t>len(text))
+            args = wildcard_fun_args(self._bpattern, t, self._wildcard)
+            wfa.wavefront_align_lambda(self.wf_aligner, wildcard_match_fun, &args, <size_t>len(self._bpattern), <size_t>len(text))
         return self.wf_aligner.cigar.score
 
     def cigar_print_pretty(self, file_name=None):
         cdef bytes t = self._text.encode('ascii')
-        cdef bytes p = self._pattern.encode('ascii')
         cdef bytes fname_bytes
         cdef char* fname
         cdef FILE * outfile
@@ -442,7 +443,7 @@ cdef class WavefrontAligner:
             outfile = fopen(fname, "w")
         else:
             outfile = stdout
-        wfa.cigar_print_pretty(outfile, self.wf_aligner.cigar, p, <size_t>len(p), t, <size_t>len(t))
+        wfa.cigar_print_pretty(outfile, self.wf_aligner.cigar, self._bpattern, <size_t>len(self._bpattern), t, <size_t>len(t))
 
         if file_name:
             fclose(outfile)
