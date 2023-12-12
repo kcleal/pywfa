@@ -269,7 +269,8 @@ cpdef elide_mismatches_from_cigar(cigartuples):
         return []
     modified = []
     cdef int l
-    block = 0
+    cdef int opp
+    cdef int block = 0
     for opp, l in cigartuples:
         if opp != 8 and opp != 0:
             if block:
