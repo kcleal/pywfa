@@ -568,6 +568,14 @@ cdef class WavefrontAligner:
     def xdrop(self, int xdrop):
         self.wf_aligner.heuristic.xdrop = xdrop
 
+    def _edit_penalties(self):
+        if self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
+            wfa.wavefront_penalties_set_linear(&self.wf_aligner.penalties, &self.wf_aligner.penalties.linear_penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine:
+            wfa.wavefront_penalties_set_affine(&self.wf_aligner.penalties, &self.wf_aligner.penalties.affine_penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine_2p:
+            wfa.wavefront_penalties_set_affine2p(&self.wf_aligner.penalties, &self.wf_aligner.penalties.affine2p_penalties)
+
     @property
     def distance(self):
         if self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
@@ -587,14 +595,7 @@ cdef class WavefrontAligner:
             self.wf_aligner.penalties.distance_metric = wfa.gap_affine_2p
         else:
             raise NotImplementedError(f'{distance} distance not implemented')
-
-    def _edit_penalties(self):
-        if self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
-            wfa.wavefront_penalties_set_linear(&self.wf_aligner.penalties, &self.wf_aligner.penalties.linear_penalties)
-        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine:
-            wfa.wavefront_penalties_set_affine(&self.wf_aligner.penalties, &self.wf_aligner.penalties.affine_penalties)
-        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine_2p:
-            wfa.wavefront_penalties_set_affine2p(&self.wf_aligner.penalties, &self.wf_aligner.penalties.affine2p_penalties)
+        self._edit_penalties()
 
     @property
     def match_score(self):
