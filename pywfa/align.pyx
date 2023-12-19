@@ -3,16 +3,10 @@
 from __future__ import division, print_function, absolute_import
 from pywfa cimport WFA_wrap as wfa
 from dataclasses import dataclass
-from libc.stdio cimport stdout, FILE
+from libc.stdio cimport stdout, FILE, fopen, fclose, fputs
 from libc.limits cimport INT_MAX
 
 __all__ = ["WavefrontAligner", "clip_cigartuples", "cigartuples_to_str", "elide_mismatches_from_cigar"]
-
-
-cdef extern from "stdio.h":
-    FILE *fopen(const char *, const char *)
-    int fclose(FILE *)
-    int fputs(const char *, FILE *)
 
 
 cdef int[89] codes
