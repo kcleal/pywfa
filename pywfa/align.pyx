@@ -4,6 +4,7 @@ from __future__ import division, print_function, absolute_import
 from pywfa cimport WFA_wrap as wfa
 from dataclasses import dataclass
 from libc.stdio cimport stdout, FILE
+from libc.limits cimport INT_MAX
 
 __all__ = ["WavefrontAligner", "clip_cigartuples", "cigartuples_to_str", "elide_mismatches_from_cigar"]
 
@@ -335,7 +336,8 @@ cdef class WavefrontAligner:
                  int max_distance_threshold=50,
                  int steps_between_cutoffs=1,
                  int xdrop=20,
-                 wildcard=None
+                 wildcard=None,
+                 int max_steps=0
                  ):
         self.pattern_len = 0
         self.text_len = 0
@@ -401,6 +403,10 @@ cdef class WavefrontAligner:
             attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
         else:
             raise NotImplementedError(f'{heuristic} heuristic not implemented')
+
+        if max_steps <= 0:
+            max_steps = INT_MAX
+        attributes.system.max_alignment_steps = max_steps
 
         self.wf_aligner = wfa.wavefront_aligner_new(&attributes)
 
@@ -666,6 +672,16 @@ cdef class WavefrontAligner:
             self._bwildcard = wildcard.upper().encode("ascii")[0]
         else:
             self._wildcard = None
+
+    @property
+    def max_steps(self):
+        return self.wf_aligner.system.max_alignment_steps
+
+    @max_steps.setter
+    def max_steps(self, int steps):
+        if steps <= 0:
+            steps = INT_MAX
+        wfa.wavefront_aligner_set_max_alignment_steps(self.wf_aligner, steps)
 
     @property
     def cigarstring(self):
