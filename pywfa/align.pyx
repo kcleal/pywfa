@@ -1,6 +1,5 @@
 #cython: language_level=3, boundscheck=False, wraparound=False, nonecheck=False
 
-from __future__ import division, print_function, absolute_import
 from pywfa cimport WFA_wrap as wfa
 from dataclasses import dataclass
 from libc.stdio cimport stdout, FILE, fopen, fclose, fputs
