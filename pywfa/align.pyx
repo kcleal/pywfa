@@ -344,7 +344,11 @@ cdef class WavefrontAligner:
         cdef wfa.wavefront_aligner_attr_t attributes = wfa.wavefront_aligner_attr_default
         self.wildcard = wildcard
 
-        if distance == "linear":
+        if distance == "indel":
+            attributes.distance_metric = wfa.indel
+        elif distance == "levenshtein":
+            attributes.distance_metric = wfa.edit
+        elif distance == "linear":
             attributes.distance_metric = wfa.gap_linear
             attributes.linear_penalties.match = match
             attributes.linear_penalties.mismatch = mismatch
@@ -569,7 +573,11 @@ cdef class WavefrontAligner:
         self.wf_aligner.heuristic.xdrop = xdrop
 
     def _edit_penalties(self):
-        if self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
+        if self.wf_aligner.penalties.distance_metric == wfa.indel:
+            wfa.wavefront_penalties_set_indel(&self.wf_aligner.penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.edit:
+            wfa.wavefront_penalties_set_edit(&self.wf_aligner.penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
             wfa.wavefront_penalties_set_linear(&self.wf_aligner.penalties, &self.wf_aligner.penalties.linear_penalties)
         elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine:
             wfa.wavefront_penalties_set_affine(&self.wf_aligner.penalties, &self.wf_aligner.penalties.affine_penalties)
@@ -578,7 +586,11 @@ cdef class WavefrontAligner:
 
     @property
     def distance(self):
-        if self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
+        if self.wf_aligner.penalties.distance_metric == wfa.indel:
+            return "indel"
+        elif self.wf_aligner.penalties.distance_metric == wfa.edit:
+            return "levenshtein"
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
             return "linear"
         elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine:
             return "affine"
@@ -587,7 +599,11 @@ cdef class WavefrontAligner:
 
     @distance.setter
     def distance(self, distance):
-        if distance == "linear":
+        if distance == "indel":
+            self.wf_aligner.penalties.distance_metric = wfa.indel
+        elif distance == "levenshtein":
+            self.wf_aligner.penalties.distance_metric = wfa.edit
+        elif distance == "linear":
             self.wf_aligner.penalties.distance_metric = wfa.gap_linear
         elif distance == "affine":
             self.wf_aligner.penalties.distance_metric = wfa.gap_affine
