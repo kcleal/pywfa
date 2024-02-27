@@ -29,15 +29,14 @@
  * DESCRIPTION: Common functions/utilities and headers for C development
  */
 
-#ifndef COMMONS_H_
-#define COMMONS_H_
+#pragma once
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 #include <stdbool.h>
-#include <stdint.h>
 #include <float.h>
 #include <inttypes.h>
 #include <ctype.h>
@@ -278,5 +277,3 @@ uint64_t nominal_prop_u64(const uint64_t base,const double factor);
   int i; \
   for (i=0;i<times;++i) fprintf(stream,"%c",character); \
 }
-
-#endif /* COMMONS_H_ */

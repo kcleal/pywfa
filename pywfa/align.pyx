@@ -1,17 +1,11 @@
 #cython: language_level=3, boundscheck=False, wraparound=False, nonecheck=False
 
-from __future__ import division, print_function, absolute_import
 from pywfa cimport WFA_wrap as wfa
 from dataclasses import dataclass
-from libc.stdio cimport stdout, FILE
+from libc.stdio cimport stdout, FILE, fopen, fclose, fputs
+from libc.limits cimport INT_MAX
 
 __all__ = ["WavefrontAligner", "clip_cigartuples", "cigartuples_to_str", "elide_mismatches_from_cigar"]
-
-
-cdef extern from "stdio.h":
-    FILE *fopen(const char *, const char *)
-    int fclose(FILE *)
-    int fputs(const char *, FILE *)
 
 
 cdef int[89] codes
@@ -269,7 +263,8 @@ cpdef elide_mismatches_from_cigar(cigartuples):
         return []
     modified = []
     cdef int l
-    block = 0
+    cdef int opp
+    cdef int block = 0
     for opp, l in cigartuples:
         if opp != 8 and opp != 0:
             if block:
@@ -300,6 +295,14 @@ cpdef cigartuples_to_str(cigartuples):
         cigarstring += f"{l}{str_codes[opp]}"
     return cigarstring
 
+ctypedef struct wildcard_fun_args:
+    char* pattern
+    char* query
+    char wildcard
+
+cdef int wildcard_match_fun(int pattern_pos, int query_pos, void* argsptr) noexcept nogil:
+    cdef const wildcard_fun_args* args = <wildcard_fun_args*> argsptr
+    return args[0].pattern[pattern_pos] == args[0].wildcard or args[0].query[query_pos] == args[0].wildcard or args[0].pattern[pattern_pos] == args[0].query[query_pos]
 
 cdef class WavefrontAligner:
     """Wrapper class for WFA2-lib. If a pattern is supplied, it will be cached for re-use
@@ -326,74 +329,83 @@ cdef class WavefrontAligner:
                  int max_distance_threshold=50,
                  int steps_between_cutoffs=1,
                  int xdrop=20,
+                 wildcard=None,
+                 int max_steps=0
                  ):
-
         self.pattern_len = 0
         self.text_len = 0
         if pattern:
-            self._pattern = pattern
+            self._pattern = pattern.upper()
+            self._bpattern = self._pattern.encode("ascii")
+            self.pattern_len = len(self._bpattern)
 
         # could get a malloc version working
         # self.attributes = <wfa.wavefront_aligner_attr_t* > malloc(sizeof(wfa.wavefront_aligner_attr_default))
-        self.attributes = &wfa.wavefront_aligner_attr_default
+        cdef wfa.wavefront_aligner_attr_t attributes = wfa.wavefront_aligner_attr_default
+        self.wildcard = wildcard
 
-        if distance == "affine":
-            self.attributes.distance_metric = wfa.gap_affine
-            self.attributes.affine_penalties.match = match
-            self.match_score = match
-            self.attributes.affine_penalties.mismatch = mismatch
-            self.attributes.affine_penalties.gap_opening = gap_opening
-            self.attributes.affine_penalties.gap_extension = gap_extension
+        if distance == "indel":
+            attributes.distance_metric = wfa.indel
+        elif distance == "levenshtein":
+            attributes.distance_metric = wfa.edit
+        elif distance == "linear":
+            attributes.distance_metric = wfa.gap_linear
+            attributes.linear_penalties.match = match
+            attributes.linear_penalties.mismatch = mismatch
+            attributes.linear_penalties.indel = gap_extension
+        elif distance == "affine":
+            attributes.distance_metric = wfa.gap_affine
+            attributes.affine_penalties.match = match
+            attributes.affine_penalties.mismatch = mismatch
+            attributes.affine_penalties.gap_opening = gap_opening
+            attributes.affine_penalties.gap_extension = gap_extension
         elif distance == "affine2p":
-            self.attributes.distance_metric = wfa.gap_affine_2p
-            self.attributes.affine2p_penalties.match = match
-            self.match_score = match
-            self.attributes.affine2p_penalties.mismatch = mismatch
-            self.attributes.affine2p_penalties.gap_opening1 = gap_opening
-            self.attributes.affine2p_penalties.gap_extension1 = gap_extension
-            self.attributes.affine2p_penalties.gap_opening2 = gap_opening2
-            self.attributes.affine2p_penalties.gap_extension2 = gap_extension2
+            attributes.distance_metric = wfa.gap_affine_2p
+            attributes.affine2p_penalties.match = match
+            attributes.affine2p_penalties.mismatch = mismatch
+            attributes.affine2p_penalties.gap_opening1 = gap_opening
+            attributes.affine2p_penalties.gap_extension1 = gap_extension
+            attributes.affine2p_penalties.gap_opening2 = gap_opening2
+            attributes.affine2p_penalties.gap_extension2 = gap_extension2
         else:
-            print(NotImplementedError(f'{distance} distance not implemented'))
-            # raise NotImplementedError(f'{distance} distance not implemented')
+            raise NotImplementedError(f'{distance} distance not implemented')
         if scope == "full":
-            self.attributes.alignment_scope = wfa.compute_alignment
+            attributes.alignment_scope = wfa.compute_alignment
         elif scope == "score":
-            self.attributes.alignment_scope = wfa.compute_score
-            self.score_only = True
+            attributes.alignment_scope = wfa.compute_score
         else:
-            print(ValueError(f'{scope} scope not understood'))
-            # raise ValueError(f'{scope} scope not understood')
+            raise ValueError(f'{scope} scope not understood')
 
-        self.attributes.alignment_form.pattern_begin_free = pattern_begin_free
-        self.attributes.alignment_form.pattern_end_free = pattern_end_free
-        self.attributes.alignment_form.text_begin_free = text_begin_free
-        self.attributes.alignment_form.text_end_free = text_end_free
+        attributes.alignment_form.pattern_begin_free = pattern_begin_free
+        attributes.alignment_form.pattern_end_free = pattern_end_free
+        attributes.alignment_form.text_begin_free = text_begin_free
+        attributes.alignment_form.text_end_free = text_end_free
         if span == "ends-free":
-            self.attributes.alignment_form.span = wfa.alignment_endsfree
-
+            attributes.alignment_form.span = wfa.alignment_endsfree
         elif span == "end-to-end":
-            self.attributes.alignment_form.span = wfa.alignment_end2end
+            attributes.alignment_form.span = wfa.alignment_end2end
         else:
-            print(NotImplementedError(f'{span} span not implemented'))
-            # raise NotImplementedError(f'{span} span not implemented')
+            raise NotImplementedError(f'{span} span not implemented')
 
         if heuristic is None:
-            self.attributes.heuristic.strategy = wfa.wf_heuristic_none
+            attributes.heuristic.strategy = wfa.wf_heuristic_none
         elif heuristic == "adaptive":
-            self.attributes.heuristic.strategy = wfa.wf_heuristic_wfadaptive
-            self.attributes.heuristic.min_wavefront_length = min_wavefront_length
-            self.attributes.heuristic.max_distance_threshold = max_distance_threshold
-            self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
+            attributes.heuristic.strategy = wfa.wf_heuristic_wfadaptive
+            attributes.heuristic.min_wavefront_length = min_wavefront_length
+            attributes.heuristic.max_distance_threshold = max_distance_threshold
+            attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
         elif heuristic == "X-drop":
-            self.attributes.heuristic.strategy = wfa.wf_heuristic_xdrop
-            self.attributes.heuristic.xdrop = xdrop
-            self.attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
+            attributes.heuristic.strategy = wfa.wf_heuristic_xdrop
+            attributes.heuristic.xdrop = xdrop
+            attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
         else:
-            print(NotImplementedError(f'{heuristic} heuristic not implemented'))
-            # raise NotImplementedError(f'{heuristic} heuristic not implemented')
+            raise NotImplementedError(f'{heuristic} heuristic not implemented')
 
-        self.wf_aligner = wfa.wavefront_aligner_new(self.attributes)
+        if max_steps <= 0:
+            max_steps = INT_MAX
+        attributes.system.max_alignment_steps = max_steps
+
+        self.wf_aligner = wfa.wavefront_aligner_new(&attributes)
 
     def wavefront_align(self, text, pattern=None):
         """Perform wavefront alignment.
@@ -405,22 +417,22 @@ cdef class WavefrontAligner:
         :return: Alignment score
         :rtype: int
         """
-        cdef bytes p
         if pattern is not None:
-            p = pattern.encode('ascii')
-            self._pattern = pattern
-        else:
-            p = self._pattern.encode('ascii')
-        cdef bytes t = text.encode('ascii')
+            self._pattern = pattern.upper()
+            self._bpattern = self._pattern.encode("ascii")
+            self.pattern_len = len(self._bpattern)
+        cdef bytes t = text.upper().encode('ascii')
         self._text = text
         self.text_len = len(t)
-        self.pattern_len = len(p)
-        wfa.wavefront_align(self.wf_aligner, p, <size_t>len(p), t, <size_t>len(text))
+        if not self._wildcard:
+            wfa.wavefront_align(self.wf_aligner, self._bpattern, <size_t>len(self._bpattern), t, <size_t>len(text))
+        else:
+            args = wildcard_fun_args(self._bpattern, t, self._bwildcard)
+            wfa.wavefront_align_lambda(self.wf_aligner, wildcard_match_fun, &args, <size_t>len(self._bpattern), <size_t>len(text))
         return self.wf_aligner.cigar.score
 
     def cigar_print_pretty(self, file_name=None):
         cdef bytes t = self._text.encode('ascii')
-        cdef bytes p = self._pattern.encode('ascii')
         cdef bytes fname_bytes
         cdef char* fname
         cdef FILE * outfile
@@ -430,8 +442,7 @@ cdef class WavefrontAligner:
             outfile = fopen(fname, "w")
         else:
             outfile = stdout
-        wfa.cigar_print_pretty(outfile, p, <size_t>len(p), t, <size_t>len(t), &self.wf_aligner.cigar,
-                               self.wf_aligner.mm_allocator)
+        wfa.cigar_print_pretty(outfile, self.wf_aligner.cigar, self._bpattern, <size_t>len(self._bpattern), t, <size_t>len(t))
 
         if file_name:
             fclose(outfile)
@@ -445,12 +456,250 @@ cdef class WavefrontAligner:
         return self.wf_aligner.cigar.score
 
     @property
+    def pattern_begin_free(self):
+        return self.wf_aligner.alignment_form.pattern_begin_free
+
+    @pattern_begin_free.setter
+    def pattern_begin_free(self, int pattern_begin_free):
+        self.wf_aligner.alignment_form.pattern_begin_free = pattern_begin_free
+
+    @property
+    def pattern_end_free(self):
+        return self.wf_aligner.alignment_form.pattern_end_free
+
+    @pattern_end_free.setter
+    def pattern_end_free(self, int pattern_end_free):
+        self.wf_aligner.alignment_form.pattern_end_free = pattern_end_free
+
+    @property
+    def text_begin_free(self):
+        return self.wf_aligner.alignment_form.text_begin_free
+
+    @text_begin_free.setter
+    def text_begin_free(self, int text_begin_free):
+        self.wf_aligner.alignment_form.text_begin_free = text_begin_free
+
+    @property
+    def text_end_free(self):
+        return self.wf_aligner.alignment_form.text_end_free
+
+    @text_end_free.setter
+    def text_end_free(self, int text_end_free):
+        self.wf_aligner.alignment_form.text_end_free = text_end_free
+
+    @property
+    def scope(self):
+        if self.wf_aligner.alignment_scope == wfa.compute_alignment:
+            return "full"
+        else:
+            return "score"
+
+    @scope.setter
+    def scope(self, scope):
+        if scope == "full":
+            self.wf_aligner.alignment_scope = wfa.compute_alignment
+        elif scope == "score":
+            self.wf_aligner.alignment_scope = wfa.compute_score
+        else:
+            raise ValueError(f'{scope} scope not understood')
+
+    @property
+    def span(self):
+        if self.wf_aligner.alignment_form.span == wfa.alignment_endsfree:
+            return "ends-free"
+        elif self.wf_aligner.alignment_form.span == wfa.alignment_end2end:
+            return "end-to-end"
+
+    @span.setter
+    def span(self, span):
+        if span == "ends-free":
+            self.wf_aligner.alignment_form.span = wfa.alignment_endsfree
+
+        elif span == "end-to-end":
+            self.wf_aligner.alignment_form.span = wfa.alignment_end2end
+        else:
+            raise NotImplementedError(f'{span} span not implemented')
+
+    @property
+    def heuristic(self):
+        if self.wf_aligner.heuristic.strategy == wfa.wf_heuristic_none:
+            return None
+        elif self.wf_aligner.heuristic.strategy == wfa.wf_heuristic_wfadaptive:
+            return "adaptive"
+        elif self.wf_aligner.heuristic.strategy == wfa.wf_heuristic_xdrop:
+            return "X-drop"
+
+    @heuristic.setter
+    def heuristic(self, heuristic):
+        if heuristic is None:
+            self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_none
+        elif heuristic == "adaptive":
+            self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_wfadaptive
+        elif heuristic == "X-drop":
+            self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_xdrop
+        else:
+            raise NotImplementedError(f'{heuristic} heuristic not implemented')
+
+    @property
+    def min_wavefront_length(self):
+        return self.wf_aligner.heuristic.min_wavefront_length
+
+    @min_wavefront_length.setter
+    def min_wavefront_length(self, int length):
+        self.wf_aligner.heuristic.min_wavefront_length = length
+
+    @property
+    def max_distance_threshold(self):
+        return self.wf_aligner.heuristic.max_distance_threshold
+
+    @max_distance_threshold.setter
+    def max_distance_threshold(self, int thresh):
+        self.wf_aligner.heuristic.max_distance_threshold = thresh
+
+    @property
+    def steps_between_cutoffs(self):
+        return self.wf_aligner.heuristic.steps_between_cutoffs
+
+    @steps_between_cutoffs.setter
+    def steps_between_cutoffs(self, int steps):
+        self.wf_aligner.heuristic.steps_between_cutoffs = steps
+
+    @property
+    def xdrop(self):
+        return self.wf_aligner.heuristic.xdrop
+
+    @xdrop.setter
+    def xdrop(self, int xdrop):
+        self.wf_aligner.heuristic.xdrop = xdrop
+
+    def _edit_penalties(self):
+        if self.wf_aligner.penalties.distance_metric == wfa.indel:
+            wfa.wavefront_penalties_set_indel(&self.wf_aligner.penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.edit:
+            wfa.wavefront_penalties_set_edit(&self.wf_aligner.penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
+            wfa.wavefront_penalties_set_linear(&self.wf_aligner.penalties, &self.wf_aligner.penalties.linear_penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine:
+            wfa.wavefront_penalties_set_affine(&self.wf_aligner.penalties, &self.wf_aligner.penalties.affine_penalties)
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine_2p:
+            wfa.wavefront_penalties_set_affine2p(&self.wf_aligner.penalties, &self.wf_aligner.penalties.affine2p_penalties)
+
+    @property
+    def distance(self):
+        if self.wf_aligner.penalties.distance_metric == wfa.indel:
+            return "indel"
+        elif self.wf_aligner.penalties.distance_metric == wfa.edit:
+            return "levenshtein"
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_linear:
+            return "linear"
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine:
+            return "affine"
+        elif self.wf_aligner.penalties.distance_metric == wfa.gap_affine_2p:
+            return "affine2p"
+
+    @distance.setter
+    def distance(self, distance):
+        if distance == "indel":
+            self.wf_aligner.penalties.distance_metric = wfa.indel
+        elif distance == "levenshtein":
+            self.wf_aligner.penalties.distance_metric = wfa.edit
+        elif distance == "linear":
+            self.wf_aligner.penalties.distance_metric = wfa.gap_linear
+        elif distance == "affine":
+            self.wf_aligner.penalties.distance_metric = wfa.gap_affine
+        elif distance == "affine2p":
+            self.wf_aligner.penalties.distance_metric = wfa.gap_affine_2p
+        else:
+            raise NotImplementedError(f'{distance} distance not implemented')
+        self._edit_penalties()
+
+    @property
+    def match_score(self):
+        return self.wf_aligner.penalties.match
+
+    @match_score.setter
+    def match_score(self, int match):
+        self.wf_aligner.penalties.linear_penalties.match = self.wf_aligner.penalties.affine_penalties.match = self.wf_aligner.penalties.affine2p_penalties.match = match
+        self._edit_penalties()
+
+    @property
+    def mismatch_penalty(self):
+        return self.wf_aligner.penalties.mismatch
+
+    @mismatch_penalty.setter
+    def mismatch_penalty(self, int mismatch):
+        self.wf_aligner.penalties.linear_penalties.mismatch = self.wf_aligner.penalties.affine_penalties.mismatch = self.wf_aligner.penalties.affine2p_penalties.mismatch = mismatch
+        self._edit_penalties()
+
+    @property
+    def gap_opening_penalty(self):
+        return self.wf_aligner.penalties.gap_opening1
+
+    @gap_opening_penalty.setter
+    def gap_opening_penalty(self, int penalty):
+        self.wf_aligner.penalties.linear_penalties.indel = self.wf_aligner.penalties.affine_penalties.gap_opening = self.wf_aligner.penalties.affine2p_penalties.gap_opening1 = penalty
+        self._edit_penalties()
+
+    @property
+    def gap_extension_penalty(self):
+        return self.wf_aligner.penalties.gap_extension1
+
+    @gap_extension_penalty.setter
+    def gap_extension_penalty(self, int penalty):
+        self.wf_aligner.penalties.linear_penalties.indel = self.wf_aligner.penalties.affine_penalties.gap_extension = self.wf_aligner.penalties.affine2p_penalties.gap_extension1 = penalty
+        self._edit_penalties()
+
+    @property
+    def gap_opening2_penalty(self):
+        return self.wf_aligner.penalties.gap_opening2
+
+    @gap_opening2_penalty.setter
+    def gap_opening2_penalty(self, int penalty):
+        self.wf_aligner.penalties.affine2p_penalties.gap_opening2 = penalty
+        self._edit_penalties()
+
+    @property
+    def gap_extension2_penalty(self):
+        return self.wf_aligner.penalties.gap_extension2
+
+    @gap_extension2_penalty.setter
+    def gap_extension2_penalty(self, int penalty):
+        self.wf_aligner.penalties.affine2p_penalties.gap_extension2 = penalty
+        self._edit_penalties()
+
+    @property
+    def wildcard(self):
+        return self._wildcard
+
+    @wildcard.setter
+    def wildcard(self, wildcard):
+        if wildcard is not None:
+            if not isinstance(wildcard, str):
+                raise TypeError(f"expected wildcard to be a string, but it is {type(wildcard)}")
+            if len(wildcard) > 1:
+                raise ValueError(f"wildcard must have length 1, but has length {len(wildcard)}")
+            self._wildcard = wildcard
+            self._bwildcard = wildcard.upper().encode("ascii")[0]
+        else:
+            self._wildcard = None
+
+    @property
+    def max_steps(self):
+        return self.wf_aligner.system.max_alignment_steps
+
+    @max_steps.setter
+    def max_steps(self, int steps):
+        if steps <= 0:
+            steps = INT_MAX
+        wfa.wavefront_aligner_set_max_alignment_steps(self.wf_aligner, steps)
+
+    @property
     def cigarstring(self):
         cdef wfa.cigar_t* cigar
         cdef char last_op
         cdef int last_op_length, i, length
 
-        cigar = &self.wf_aligner.cigar
+        cigar = self.wf_aligner.cigar
 
         # Check null CIGAR
         if cigar.begin_offset >= cigar.end_offset:
@@ -478,7 +727,7 @@ cdef class WavefrontAligner:
         cdef char last_op
         cdef int last_op_length, i, length
 
-        cigar = &self.wf_aligner.cigar
+        cigar = self.wf_aligner.cigar
 
         # Check null CIGAR
         if cigar.begin_offset >= cigar.end_offset:
@@ -503,7 +752,7 @@ cdef class WavefrontAligner:
 
     @property
     def locations(self):
-        if self.score_only:
+        if self.scope == "score":
             return [0, 0, 0, 0]
         cigartuples = self.cigartuples
         if not cigartuples or self.text_len == 0 or self.pattern_len == 0:
@@ -587,7 +836,7 @@ cdef class WavefrontAligner:
             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, "", "", status)
         else:
             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)
-        if not self.score_only:
+        if not self.scope == "full":
             if clip_cigar:
                 res = clip_cigartuples(res, min_aligned_bases_left, min_aligned_bases_right)
             if elide_mismatches:
@@ -595,4 +844,5 @@ cdef class WavefrontAligner:
         return res
 
     def __dealloc__(self):
-        wfa.wavefront_aligner_delete(self.wf_aligner)
+        if self.wf_aligner: # if an exception is raised in the constructor, self.wf_aligner does not exist yet
+            wfa.wavefront_aligner_delete(self.wf_aligner)
