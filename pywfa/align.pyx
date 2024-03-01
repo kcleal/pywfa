@@ -135,7 +135,6 @@ class AlignmentResult:
         pi = 0
         txt = self.text
         ti = 0
-        print(self.cigartuples)
         for opp, l in self.cigartuples:
             if opp in (1, 4, 5):
                 t += txt[ti: ti+l]
