@@ -27,7 +27,7 @@ Overview
 
 Alignment of pattern and text strings can be performed by accessing WFA2-lib functions directly:
 
-.. code-block:: python
+.. code-block::
 
     from pywfa import WavefrontAligner
 
@@ -42,7 +42,7 @@ Alignment of pattern and text strings can be performed by accessing WFA2-lib fun
     >>> [(0, 3), (8, 1), (0, 4), (2, 1), (0, 7), (1, 1), (0, 9), (8, 1), (0, 6)]
     a.cigar_print_pretty()
 
-.. code-block:: text
+.. code-block::
 
     >>> ALIGNMENT	3M1X4M1D7M1I9M1X6M
       ALIGNMENT.COMPACT	1X1D1I1X
@@ -52,7 +52,7 @@ Alignment of pattern and text strings can be performed by accessing WFA2-lib fun
 
 The output of cigar_pretty_print can be directed to a file, rather than stdout using:
 
-.. code-block:: python
+.. code-block::
 
     a.cigar_print_pretty("file.txt")
 
@@ -87,7 +87,7 @@ Cigartuples follow the convention:
 
 For convenience, a results object can be obtained by calling the `WavefrontAligner` with a pattern and text:
 
-.. code-block:: python
+.. code-block::
 
     pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
     text =    "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
@@ -113,7 +113,7 @@ Configure
 To configure the `WaveFrontAligner`, options can be provided during initialization:
 
 
-.. code-block:: python
+.. code-block::
 
     from pywfa import WavefrontAligner
 
@@ -129,7 +129,7 @@ or "score". Span can be "ends-free" (default) or "end-to-end". Heuristic can be 
 When using heuristic functions it is recommended to check the status attribute:
 
 
-.. code-block:: python
+.. code-block::
 
     pattern = "AAAAACCTTTTTAAAAAA"
     text = "GGCCAAAAACCAAAAAA"
@@ -194,7 +194,7 @@ Modifying the cigar
 If desired the cigar can be modified so the end operation is either a soft-clip or a match, this makes the
 alignment cigar resemble those produced by bwa, for example:
 
-.. code-block:: python
+.. code-block::
 
     pattern = "AAAAACCTTTTTAAAAAA"
     text = "GGCCAAAAACCAAAAAA"
@@ -211,7 +211,7 @@ alignment cigar resemble those produced by bwa, for example:
 
 An experimental feature is to trim short matches at the end of alignments. This results in alignments that approximate local alignments:
 
-.. code-block:: python
+.. code-block::
 
     pattern = "AAAAAAAAAAAACCTTTTAAAAAAGAAAAAAA"
     text = "ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA"
