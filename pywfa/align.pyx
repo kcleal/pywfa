@@ -309,6 +309,7 @@ cdef class WavefrontAligner:
     def __init__(self,
                  pattern=None,
                  distance="affine",
+                 memory_mode="high",
                  int match=0,
                  int mismatch=4,
                  int gap_opening=6,
@@ -374,6 +375,17 @@ cdef class WavefrontAligner:
             attributes.alignment_scope = wfa.compute_score
         else:
             raise ValueError(f'{scope} scope not understood')
+
+        if memory_mode == 'high':
+            attributes.memory_mode = wfa.wavefront_memory_high
+        elif memory_mode == 'medium':
+            attributes.memory_mode = wfa.wavefront_memory_med
+        elif memory_mode == 'low':
+            attributes.memory_mode = wfa.wavefront_memory_low
+        elif memory_mode == 'biwfa':
+            attributes.memory_mode = wfa.wavefront_memory_ultralow
+        else:
+            raise ValueError('memory_mode must be one of \'high\', \'medium\', \'low\', \'biwfa\'')
 
         attributes.alignment_form.pattern_begin_free = pattern_begin_free
         attributes.alignment_form.pattern_end_free = pattern_end_free
@@ -518,6 +530,30 @@ cdef class WavefrontAligner:
             self.wf_aligner.alignment_form.span = wfa.alignment_end2end
         else:
             raise NotImplementedError(f'{span} span not implemented')
+
+    @property
+    def memory_mode(self):
+        if self.wf_aligner.memory_mode == wfa.wavefront_memory_high:
+            return "high"
+        elif self.wf_aligner.memory_mode == wfa.wavefront_memory_med:
+            return "medium"
+        elif self.wf_aligner.memory_mode == wfa.wavefront_memory_low:
+            return "low"
+        elif self.wf_aligner.memory_mode == wfa.wavefront_memory_ultralow:
+            return "biwfa"
+
+    @memory_mode.setter
+    def memory_mode(self, memory_mode):
+        if memory_mode is "high":
+            self.wf_aligner.memory_mode = wfa.wavefront_memory_high
+        elif memory_mode == "med":
+            self.wf_aligner.memory_mode = wfa.wavefront_memory_med
+        elif memory_mode == "low":
+            self.wf_aligner.memory_mode = wfa.wavefront_memory_low
+        elif memory_mode == "biwfa":
+            self.wf_aligner.memory_mode = wfa.wavefront_memory_ultralow
+        else:
+            raise NotImplementedError(f'{memory_mode} memory_mode not implemented')
 
     @property
     def heuristic(self):
