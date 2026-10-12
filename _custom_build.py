@@ -75,7 +75,11 @@ print("Include dirs", include_dirs)
 # this has happened on multiple OS with/without `libomp-dev`
 # compiler = ccompiler.new_compiler()
 omp = 0 #1 if has_flag(compiler, "-fopenmp") else 0
-ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_TOOLS=0 BUILD_EXAMPLES=0",
+# WFA2-lib's Makefile builds with -march=native, which ties the binary to the build CPU.
+# Set PYWFA_MARCH (e.g. x86-64-v3) to target a portable CPU level instead.
+march = os.environ.get("PYWFA_MARCH")
+cc_flags = f'"CC_FLAGS=-Wall -g -fPIC -O3 -march={march}"' if march else ""
+ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_TOOLS=0 BUILD_EXAMPLES=0 {cc_flags}",
           shell=True)
 if ret.returncode != 0:
     print("Unable to build WFA2_lib")
