@@ -193,6 +193,58 @@ class TestConstruct(unittest.TestCase):
         if res.status == 0:
             assert res.aligned_pattern == res.aligned_text
 
+    def test_heuristic_new(self):
+        print("Heuristic (Z-drop, banded, wfmash)")
+        pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
+        text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
+        for heuristic, kwargs in [
+            ("Z-drop", {"zdrop": 20}),
+            ("banded-static", {"min_k": -20, "max_k": 20}),
+            ("banded-adaptive", {"min_k": -20, "max_k": 20}),
+            ("wfmash", {}),
+        ]:
+            a = WavefrontAligner(pattern, distance="affine", mismatch=4, gap_opening=6, gap_extension=2,
+                                 heuristic=heuristic, **kwargs)
+            res = a(text)
+            assert a.status == 0
+            assert a.score == -24
+            assert a.heuristic == heuristic
+            assert a.status_message != ""
+            del a
+
+    def test_wfa_variants(self):
+        print("WFA variants")
+        pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
+        text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
+        a = WavefrontAligner(pattern, distance="affine", mismatch=4, gap_opening=6, gap_extension=2)
+        res = a(text)
+        assert a.align_mode == "regular"
+        assert res.status == 0
+        assert a.status_message != ""
+        del a
+
+        a = WavefrontAligner(pattern, distance="affine", mismatch=4, gap_opening=6, gap_extension=2,
+                             memory_mode="biwfa")
+        res = a(text)
+        assert a.status == 0
+        assert a.score == -24
+        assert a.memory_mode == "biwfa"
+        assert a.align_mode == "biwfa"
+        del a
+
+    def test_max_memory(self):
+        print("Max memory")
+        pattern = "TCTTTACTCGCGCGTTGGAGAAATACAATAGT"
+        text = "TCTATACTGCGCGTTTGGAGAAATAAAATAGT"
+        a = WavefrontAligner(pattern, distance="affine", mismatch=4, gap_opening=6, gap_extension=2,
+                             max_memory=1 << 30)
+        res = a(text)
+        assert a.status == 0
+        assert a.max_memory == 1 << 30
+        a.max_memory = 1 << 20
+        assert a.max_memory == 1 << 20
+        del a
+
     def test_long(self):
         print("Long")
         with pysam.FastxFile(root + '/long.fa') as reads, pysam.FastxFile(root + '/long.reference.fa') as refs:

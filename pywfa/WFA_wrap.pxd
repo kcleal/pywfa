@@ -552,6 +552,8 @@ cdef extern from "WFA2_lib/alignment/cigar.h" nogil:
         cigar_t* const cigar,
         affine2p_penalties_t* const penalties)
 
+
+cdef extern from "WFA2_lib/alignment/cigar_utils.h" nogil:
     # Utils
     int cigar_cmp(
         cigar_t* const cigar_a,
@@ -577,6 +579,10 @@ cdef extern from "WFA2_lib/alignment/cigar.h" nogil:
         affine_penalties_t* const penalties
     )
     bint cigar_maxtrim_gap_affine2p(
+        cigar_t* const cigar,
+        affine2p_penalties_t* const penalties
+    )
+    bint cigar_maxlocal_gap_affine2p(
         cigar_t* const cigar,
         affine2p_penalties_t* const penalties
     )

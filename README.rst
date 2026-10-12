@@ -123,8 +123,11 @@ To configure the `WaveFrontAligner`, options can be provided during initializati
                          heuristic="adaptive")
 
 Supported distance metrics are "affine" (default) and "affine2p". Scope can be "full" (default)
-or "score". Span can be "ends-free" (default) or "end-to-end". Heuristic can be None (default),
-"adaptive" or "X-drop".
+or "score". Span can be "ends-free" (default) or "end-to-end". Heuristics can be None (default),
+"adaptive", "X-drop", "Z-drop", "banded-static", "banded-adaptive" or "wfmash". The memory
+footprint can be selected with memory_mode: "high" (default), "medium", "low" or "biwfa"
+(bidirectional WFA, lowest memory). The maximum number of alignment steps and the memory
+budget (in bytes) can be capped with max_steps and max_memory, respectively.
 
 When using heuristic functions it is recommended to check the status attribute:
 
@@ -137,6 +140,18 @@ When using heuristic functions it is recommended to check the status attribute:
     a(pattern, text)
     a.status
     >>> 0   # successful alignment, -1 indicates the alignment was stopped due to the heuristic
+    a.status_message
+    >>> [WFA] Alignment completed successfully
+
+To inspect which WFA variant performed the alignment (e.g. when using BiWFA), check the
+align_mode attribute:
+
+.. code-block::
+
+    a = WavefrontAligner(pattern, memory_mode="biwfa")
+    a(text)
+    a.align_mode
+    >>> 'biwfa'
 
 
 Default options
@@ -158,7 +173,7 @@ The `WavefrontAligner` will be initialized with the following default options:
      - 0
    * - gap_opening
      - 6
-   * - gep_extension
+   * - gap_extension
      - 2
    * - gap_opening2
      - 24
@@ -168,6 +183,8 @@ The `WavefrontAligner` will be initialized with the following default options:
      - "full"
    * - span
      - "ends-free"
+   * - memory_mode
+     - "high"
    * - pattern_begin_free
      - 0
    * - pattern_end_free
@@ -186,6 +203,18 @@ The `WavefrontAligner` will be initialized with the following default options:
      - 1
    * - xdrop
      - 20
+   * - zdrop
+     - 20
+   * - min_k
+     - -10
+   * - max_k
+     - 10
+   * - wildcard
+     - None
+   * - max_steps
+     - 0
+   * - max_memory
+     - 0
 
 
 Modifying the cigar
@@ -204,43 +233,6 @@ alignment cigar resemble those produced by bwa, for example:
     print(cigartuples_to_str(res.cigartuples))
     >>> 4I7M5D6M
 
-    res(text, clip_cigar=True)
+    res = a(text, clip_cigar=True)
     print(cigartuples_to_str(res.cigartuples))
     >>> 4S7M5D6M
-
-
-An experimental feature is to trim short matches at the end of alignments. This results in alignments that approximate local alignments:
-
-.. code-block::
-
-    pattern = "AAAAAAAAAAAACCTTTTAAAAAAGAAAAAAA"
-    text = "ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA"
-    a = WavefrontAligner(pattern)
-
-    # The unmodified cigar may have short matches at the end:
-    res = a(text, clip_cigar=False)
-    res.cigartuples
-    >>> [(0, 1), (1, 5), (8, 6), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
-    res.aligned_text
-    >>> ACCCCCCCCCCCAAAAACCAAAAAAAAAAAAA
-    res.text_start, res.text_end
-    >>> 0, 32
-
-    # The minimum allowed block of matches can be set at e.g. 5 bp, which will trim off short matches
-    res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5)
-    res.cigartuples
-    >>> [(4, 12), (0, 7), (2, 5), (0, 5), (8, 1), (0, 7)]
-    res.aligned_text
-    >>> AAAAACCAAAAAAAAAAAAA
-    res.text_start, res.text_end
-    >>> 12, 32
-
-    # Mismatch operations X can also be elided, note this occurs after the clip_cigar stage
-    res = a(text, clip_cigar=True, min_aligned_bases_left=5, min_aligned_bases_right=5, elide_mismatches=True)
-    res.cigartuples
-    >>> [(4, 12), (0, 7), (2, 5), (0, 13)]
-    res.aligned_text
-    >>> AAAAACCAAAAAAAAAAAAA
-
-Notes: The alignment score is not modified currently by trimming the cigar, however the pattern_start, pattern_end,
-test_start and text_end are modified when the cigar is modified.

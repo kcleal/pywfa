@@ -1,9 +1,10 @@
+# WFA2-lib CMake build
 # For Debian currently with
 #
 #   cd build
-#   cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-#   make
-#   make test
+#   cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DOPENMP=1 ..
+#   cmake --build .
+#   ctest .
 #   make install
 # See below option statements and the README for build information
 
@@ -139,6 +140,7 @@ set(wfa2lib_SOURCE
   alignment/affine2p_penalties.c
   alignment/affine_penalties.c
   alignment/cigar.c
+  alignment/cigar_utils.c
   alignment/score_matrix.c
 )
 
@@ -192,16 +194,58 @@ set(wfa2lib_LIBS
 # add_dependencies(wfa2lib ${wfa2lib_DEPS})
 
 # ---- Build all
+# add_subdirectory(tools/align_benchmark)
+
+
+add_executable(align_benchmark
+  tools/align_benchmark/align_benchmark_params.c
+  tools/align_benchmark/align_benchmark.c
+  tools/align_benchmark/benchmark/benchmark_check.c
+  tools/align_benchmark/benchmark/benchmark_edit.c
+  tools/align_benchmark/benchmark/benchmark_gap_affine2p.c
+  tools/align_benchmark/benchmark/benchmark_gap_affine.c
+  tools/align_benchmark/benchmark/benchmark_gap_linear.c
+  tools/align_benchmark/benchmark/benchmark_indel.c
+  tools/align_benchmark/benchmark/benchmark_utils.c
+  system/mm_allocator.c
+  system/mm_stack.c
+  system/profiler_counter.c
+  system/profiler_timer.c
+  utils/bitmap.c
+  utils/commons.c
+  utils/dna_text.c
+  utils/heatmap.c
+  utils/sequence_buffer.c
+  utils/vector.c
+  alignment/affine2p_penalties.c
+  alignment/affine_penalties.c
+  alignment/cigar.c
+  alignment/score_matrix.c
+  tools/align_benchmark/gap_affine/affine_matrix.c
+  tools/align_benchmark/gap_affine/swg.c
+  tools/align_benchmark/gap_linear/nw.c
+  tools/align_benchmark/gap_affine2p/affine2p_dp.c
+  tools/align_benchmark/gap_affine2p/affine2p_matrix.c
+  tools/align_benchmark/edit/edit_bpm.c
+  tools/align_benchmark/edit/edit_dp.c
+  tools/align_benchmark/indel/indel_dp.c
+)
+target_include_directories(align_benchmark PUBLIC . wavefront system utils tools/align_benchmark)
+add_dependencies(align_benchmark wfa2)
+target_link_libraries(align_benchmark m)
+target_link_libraries(align_benchmark wfa2)
+if(OPENMP)
+  target_link_libraries(align_benchmark OpenMP::OpenMP_C)
+endif(OPENMP)
 
 # ---- Test
 
 enable_testing()
 
-
 function(add_wfa_test)
   add_test(
     NAME wfa2lib
-    COMMAND ./tests/wfa.utest.sh
+    COMMAND ./tests/wfa.utest.sh ${CMAKE_CURRENT_BINARY_DIR}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
 endfunction()
@@ -223,4 +267,7 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   install(TARGETS wfa2cpp ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
   install(TARGETS wfa2cpp_static ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
   install(FILES ${CPP_INCLUDES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/wfa2lib/bindings/cpp)
+
+  configure_file(${CMAKE_SOURCE_DIR}/libwfa2.pc.in ${CMAKE_BINARY_DIR}/libwfa2.pc @ONLY)
+  install(FILES ${CMAKE_BINARY_DIR}/libwfa2.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif()

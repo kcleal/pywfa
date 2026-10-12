@@ -323,14 +323,16 @@ cdef class WavefrontAligner:
                  int text_begin_free=0,
                  int text_end_free=0,
                  heuristic=None,
-                 # min_k=-10,
-                 # max_k=10,
+                 int min_k=-10,
+                 int max_k=10,
                  int min_wavefront_length=10,
                  int max_distance_threshold=50,
                  int steps_between_cutoffs=1,
                  int xdrop=20,
+                 int zdrop=20,
                  wildcard=None,
-                 int max_steps=0
+                 int max_steps=0,
+                 unsigned long long max_memory=0
                  ):
         self.pattern_len = 0
         self.text_len = 0
@@ -409,14 +411,34 @@ cdef class WavefrontAligner:
             attributes.heuristic.strategy = wfa.wf_heuristic_xdrop
             attributes.heuristic.xdrop = xdrop
             attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
+        elif heuristic == "Z-drop":
+            attributes.heuristic.strategy = wfa.wf_heuristic_zdrop
+            attributes.heuristic.zdrop = zdrop
+            attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
+        elif heuristic == "banded-static":
+            attributes.heuristic.strategy = wfa.wf_heuristic_banded_static
+            attributes.heuristic.min_k = min_k
+            attributes.heuristic.max_k = max_k
+        elif heuristic == "banded-adaptive":
+            attributes.heuristic.strategy = wfa.wf_heuristic_banded_adaptive
+            attributes.heuristic.min_k = min_k
+            attributes.heuristic.max_k = max_k
+            attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
+        elif heuristic == "wfmash":
+            attributes.heuristic.strategy = wfa.wf_heuristic_wfmash
+            attributes.heuristic.min_wavefront_length = min_wavefront_length
+            attributes.heuristic.max_distance_threshold = max_distance_threshold
+            attributes.heuristic.steps_between_cutoffs = steps_between_cutoffs
         else:
-            raise NotImplementedError(f'{heuristic} heuristic not implemented')
+            raise NotImplementedError(f'{heuristic} heuristic not implemented. Choose from None, "adaptive", "X-drop", "Z-drop", "banded-static", "banded-adaptive", "wfmash"')
 
         if max_steps <= 0:
             max_steps = INT_MAX
         attributes.system.max_alignment_steps = max_steps
 
         self.wf_aligner = wfa.wavefront_aligner_new(&attributes)
+        if max_memory > 0:
+            wfa.wavefront_aligner_set_max_memory(self.wf_aligner, max_memory, max_memory)
 
     def wavefront_align(self, text, pattern=None):
         """Perform wavefront alignment.
@@ -461,6 +483,36 @@ cdef class WavefrontAligner:
     @property
     def status(self):
         return self.wf_aligner.align_status.status
+
+    @property
+    def status_message(self):
+        """Returns a human-readable message describing the current alignment status
+
+        :return: status message
+        :rtype: str
+        """
+        cdef bytes msg = wfa.wavefront_align_strerror(self.wf_aligner.align_status.status)
+        return msg.decode('utf-8')
+
+    @property
+    def align_mode(self):
+        """Returns the WFA variant used for the last alignment
+        ("regular", "biwfa", "biwfa-breakpoint-forward", "biwfa-breakpoint-reverse" or "biwfa-subsidiary")
+
+        :return: alignment mode
+        :rtype: str
+        """
+        cdef wfa.wavefront_align_mode_t mode = self.wf_aligner.align_mode
+        if mode == wfa.wf_align_regular:
+            return "regular"
+        elif mode == wfa.wf_align_biwfa:
+            return "biwfa"
+        elif mode == wfa.wf_align_biwfa_breakpoint_forward:
+            return "biwfa-breakpoint-forward"
+        elif mode == wfa.wf_align_biwfa_breakpoint_reverse:
+            return "biwfa-breakpoint-reverse"
+        else:
+            return "biwfa-subsidiary"
 
     @property
     def score(self):
@@ -544,9 +596,9 @@ cdef class WavefrontAligner:
 
     @memory_mode.setter
     def memory_mode(self, memory_mode):
-        if memory_mode is "high":
+        if memory_mode == "high":
             self.wf_aligner.memory_mode = wfa.wavefront_memory_high
-        elif memory_mode == "med":
+        elif memory_mode == "medium" or memory_mode == "med":
             self.wf_aligner.memory_mode = wfa.wavefront_memory_med
         elif memory_mode == "low":
             self.wf_aligner.memory_mode = wfa.wavefront_memory_low
@@ -557,12 +609,21 @@ cdef class WavefrontAligner:
 
     @property
     def heuristic(self):
-        if self.wf_aligner.heuristic.strategy == wfa.wf_heuristic_none:
+        strategy = self.wf_aligner.heuristic.strategy
+        if strategy == wfa.wf_heuristic_none:
             return None
-        elif self.wf_aligner.heuristic.strategy == wfa.wf_heuristic_wfadaptive:
+        elif strategy == wfa.wf_heuristic_wfadaptive:
             return "adaptive"
-        elif self.wf_aligner.heuristic.strategy == wfa.wf_heuristic_xdrop:
+        elif strategy == wfa.wf_heuristic_xdrop:
             return "X-drop"
+        elif strategy == wfa.wf_heuristic_zdrop:
+            return "Z-drop"
+        elif strategy == wfa.wf_heuristic_banded_static:
+            return "banded-static"
+        elif strategy == wfa.wf_heuristic_banded_adaptive:
+            return "banded-adaptive"
+        elif strategy == wfa.wf_heuristic_wfmash:
+            return "wfmash"
 
     @heuristic.setter
     def heuristic(self, heuristic):
@@ -572,6 +633,14 @@ cdef class WavefrontAligner:
             self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_wfadaptive
         elif heuristic == "X-drop":
             self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_xdrop
+        elif heuristic == "Z-drop":
+            self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_zdrop
+        elif heuristic == "banded-static":
+            self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_banded_static
+        elif heuristic == "banded-adaptive":
+            self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_banded_adaptive
+        elif heuristic == "wfmash":
+            self.wf_aligner.heuristic.strategy = wfa.wf_heuristic_wfmash
         else:
             raise NotImplementedError(f'{heuristic} heuristic not implemented')
 
@@ -606,6 +675,30 @@ cdef class WavefrontAligner:
     @xdrop.setter
     def xdrop(self, int xdrop):
         self.wf_aligner.heuristic.xdrop = xdrop
+
+    @property
+    def zdrop(self):
+        return self.wf_aligner.heuristic.zdrop
+
+    @zdrop.setter
+    def zdrop(self, int zdrop):
+        self.wf_aligner.heuristic.zdrop = zdrop
+
+    @property
+    def min_k(self):
+        return self.wf_aligner.heuristic.min_k
+
+    @min_k.setter
+    def min_k(self, int min_k):
+        self.wf_aligner.heuristic.min_k = min_k
+
+    @property
+    def max_k(self):
+        return self.wf_aligner.heuristic.max_k
+
+    @max_k.setter
+    def max_k(self, int max_k):
+        self.wf_aligner.heuristic.max_k = max_k
 
     def _edit_penalties(self):
         if self.wf_aligner.penalties.distance_metric == wfa.indel:
@@ -727,6 +820,18 @@ cdef class WavefrontAligner:
         if steps <= 0:
             steps = INT_MAX
         wfa.wavefront_aligner_set_max_alignment_steps(self.wf_aligner, steps)
+
+    @property
+    def max_memory(self):
+        """Maximum memory (in bytes) the aligner may use before aborting the alignment. 0 means unlimited (library default)
+        """
+        return self.wf_aligner.system.max_memory_abort
+
+    @max_memory.setter
+    def max_memory(self, unsigned long long memory):
+        if memory == 0:
+            memory = <unsigned long long>-1
+        wfa.wavefront_aligner_set_max_memory(self.wf_aligner, memory, memory)
 
     @property
     def cigarstring(self):
@@ -871,7 +976,7 @@ cdef class WavefrontAligner:
             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, "", "", status)
         else:
             res = AlignmentResult(lp, len(text), locs[0], locs[1], locs[2], locs[3], ct, score, p, text, status)
-        if not self.scope == "full":
+        if self.scope == "full":
             if clip_cigar:
                 res = clip_cigartuples(res, min_aligned_bases_left, min_aligned_bases_right)
             if elide_mismatches:

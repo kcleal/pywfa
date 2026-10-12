@@ -53,55 +53,53 @@ def get_extra_args(flags):
             extra_compile_args.append(f)
     return extra_compile_args
 
-##################
-# WFA2_lib build #
-##################
-extras = ["-Wno-unused-function", "-Wno-unused-result",
-          "-Wno-ignored-qualifiers", "-Wno-deprecated-declarations"]
-extras_pywfa = get_extra_args(extras)
-
 root = os.path.abspath(os.path.dirname(__file__))
 wfa = os.path.join(root, "pywfa/WFA2_lib")
-libraries = [f"{wfa}/lib"]
-library_dirs = [f"{wfa}/lib"]
-include_dirs = [".", root, wfa, f"{wfa}/lib", f"{wfa}/utils", f"{wfa}/wavefront",
-                f"{wfa}/bindings/cpp", f"{wfa}/system", f"{wfa}/alignment", f"{root}/pywfa"]
 
-print("Libs", libraries)
-print("Library dirs", library_dirs)
-print("Include dirs", include_dirs)
 
-# Can't get openmp to behave. Whenever its on (1), the build fails.
-# this has happened on multiple OS with/without `libomp-dev`
-# compiler = ccompiler.new_compiler()
-omp = 0 #1 if has_flag(compiler, "-fopenmp") else 0
-# WFA2-lib's Makefile builds with -march=native, which ties the binary to the build CPU.
-# Set PYWFA_MARCH (e.g. x86-64-v3) to target a portable CPU level instead.
-march = os.environ.get("PYWFA_MARCH")
-cc_flags = f'"CC_FLAGS=-Wall -g -fPIC -O3 -march={march}"' if march else ""
-ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_TOOLS=0 BUILD_EXAMPLES=0 {cc_flags}",
-          shell=True)
-if ret.returncode != 0:
-    print("Unable to build WFA2_lib")
-    print(ret)
-    exit(ret.returncode)
+def build_wfa2_lib():
+    """Compile the vendored WFA2-lib (runs `make`, not needed for sdist/metadata builds)."""
+    # Can't get openmp to behave. Whenever its on (1), the build fails.
+    # this has happened on multiple OS with/without `libomp-dev`
+    # compiler = ccompiler.new_compiler()
+    omp = 0 #1 if has_flag(compiler, "-fopenmp") else 0
+    # WFA2-lib's Makefile builds with -march=native, which ties the binary to the build CPU.
+    # Set PYWFA_MARCH (e.g. x86-64-v3) to target a portable CPU level instead.
+    march = os.environ.get("PYWFA_MARCH")
+    cc_flags = f'"CC_FLAGS=-Wall -g -fPIC -O3 -march={march}"' if march else ""
+    ret = run(f"cd pywfa/WFA2_lib; make clean all BUILD_WFA_PARALLEL={omp} BUILD_TOOLS=0 BUILD_EXAMPLES=0 {cc_flags}",
+              shell=True)
+    if ret.returncode != 0:
+        raise RuntimeError(
+            f"Unable to build WFA2_lib (make exited with code {ret.returncode}). "
+            "A working C compiler and GNU make are required to build pywfa from source."
+        )
+    if not os.path.exists(f"{wfa}/lib/libwfa.a"):
+        raise RuntimeError("WFA2_lib build did not produce lib/libwfa.a")
 
-##################
-# bindings build #
-##################
-m_ext_module = cythonize(Extension("pywfa.align",
-                                ["pywfa/align.pyx"],
-                                libraries=libraries,
-                                library_dirs=library_dirs,
-                                include_dirs=include_dirs,
-                                extra_compile_args=extras_pywfa,
-                                language="c",
-                                extra_objects=[f"{wfa}/lib/libwfa.a"]
-                                ),
-                        **cy_options)
 
-shared = glob.glob(f"{root}/build/lib*/pywfa/*.so") + glob.glob(f"{root}/build/lib*/pywfa/*.dll")
-[shutil.copy(i, f"{root}/pywfa") for i in shared]
+def make_ext_modules():
+    """Cythonize the pywfa.align extension against the compiled WFA2-lib."""
+    extras = ["-Wno-unused-function", "-Wno-unused-result",
+              "-Wno-ignored-qualifiers", "-Wno-deprecated-declarations"]
+    extras_pywfa = get_extra_args(extras)
+
+    libraries = [f"{wfa}/lib"]
+    library_dirs = [f"{wfa}/lib"]
+    include_dirs = [".", root, wfa, f"{wfa}/lib", f"{wfa}/utils", f"{wfa}/wavefront",
+                    f"{wfa}/bindings/cpp", f"{wfa}/system", f"{wfa}/alignment", f"{root}/pywfa"]
+
+    return cythonize(Extension("pywfa.align",
+                               ["pywfa/align.pyx"],
+                               libraries=libraries,
+                               library_dirs=library_dirs,
+                               include_dirs=include_dirs,
+                               extra_compile_args=extras_pywfa,
+                               language="c",
+                               extra_objects=[f"{wfa}/lib/libwfa.a"]
+                               ),
+                     **cy_options)
+
 
 ###################
 # Basic build_ext #
@@ -109,14 +107,11 @@ shared = glob.glob(f"{root}/build/lib*/pywfa/*.so") + glob.glob(f"{root}/build/l
 # Thanks to https://stackoverflow.com/questions/73800736/pyproject-toml-and-cython-extension-module
 class build_py(_build_py):
     def run(self):
-        self.run_command("build_ext")
-        return super().run()
-
-    def initialize_options(self):
-        super().initialize_options()
-        if self.distribution.ext_modules == None:
+        build_wfa2_lib()
+        if self.distribution.ext_modules is None:
             self.distribution.ext_modules = []
-
-        self.distribution.ext_modules.extend(
-            m_ext_module
-        )
+        self.distribution.ext_modules.extend(make_ext_modules())
+        self.run_command("build_ext")
+        shared = glob.glob(f"{root}/build/lib*/pywfa/*.so") + glob.glob(f"{root}/build/lib*/pywfa/*.dll")
+        [shutil.copy(i, f"{root}/pywfa") for i in shared]
+        return super().run()
